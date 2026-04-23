@@ -1,61 +1,36 @@
-# Datzon Kinetic Landing Page
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-Este proyecto es una aplicación web moderna y de alto rendimiento diseñada para **Datzon**, una empresa líder en automatización industrial y robótica. La aplicación ha sido migrada de una estructura SPA a una arquitectura multipágina utilizando **Next.js**, garantizando escalabilidad, SEO y una experiencia de usuario fluida.
+## Getting Started
 
-## 🚀 Tecnologías Utilizadas
+First, run the development server:
 
-*   **Next.js 15 (App Router):** Framework principal para la gestión de rutas basadas en archivos y renderizado optimizado.
-*   **React 19:** Biblioteca base para la construcción de interfaces de usuario.
-*   **Tailwind CSS:** Framework de utilidades CSS para un diseño ultra-moderno y totalmente responsivo.
-*   **Framer Motion (motion/react):** Utilizado para animaciones de alto nivel, micro-interacciones y transiciones suaves entre páginas.
-*   **Lucide React:** Set de iconos vectoriales ligeros y consistentes.
-*   **TypeScript:** Garantiza la robustez del código mediante tipado estático.
-*   **Pnpm:** Gestor de paquetes eficiente para una instalación rápida y estructurada.
-
-## 📁 Estructura del Proyecto
-
-El proyecto sigue las convenciones de Next.js App Router:
-
-```
-landing/
-├── app/                  # Rutas principales y lógica de servidor
-│   ├── equipo/           # Página de "Nuestro Equipo"
-│   ├── solutions/        # Página de "Soluciones de Ingeniería"
-│   ├── layout.tsx        # Layout base con Header/Footer
-│   ├── page.tsx          # Página de Inicio (Landing principal)
-│   └── ClientLayout.tsx  # Wrapper de cliente para animaciones y estados globales
-├── components/           # Componentes UI reutilizables
-│   ├── Header.tsx        # Navegación con logo interactivo
-│   ├── Footer.tsx        # Pie de página técnico
-│   └── ContactModal.tsx  # Portal de contacto con validación
-├── public/               # Activos estáticos (SVG, logos)
-└── tailwind.config.ts    # Configuración del sistema de diseño
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-## 🛠️ Características Principales
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-*   **Navegación Dinámica:** Transiciones suaves entre páginas utilizando `AnimatePresence`.
-*   **Diseño Industrial Premium:** Estética técnica con paleta de colores HSL, tipografías modernas (Inter, Manrope) y efectos de vidrio (glassmorphism).
-*   **Logo Interactivo:** Integración de SVG con estados de hover dinámicos y fondo adaptativo.
-*   **SEO Optimizado:** Estructura semántica HTML5 y metaetiquetas preparadas para buscadores.
-*   **Portal de Contacto:** Modal integrado con efectos de entrada/salida y diseño de "consola técnica".
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-## 📦 Instalación y Desarrollo
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-Para ejecutar el proyecto localmente:
+## Learn More
 
-1. Instalar dependencias:
-   ```bash
-   pnpm install
-   ```
+To learn more about Next.js, take a look at the following resources:
 
-2. Iniciar el servidor de desarrollo:
-   ```bash
-   pnpm dev
-   ```
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-3. El proyecto estará disponible en `http://localhost:3000`.
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## 🌐 Despliegue
+## Deploy on Vercel
 
-Este proyecto está optimizado para su despliegue nativo en **Vercel**. No requiere contenedores externos, ya que Vercel detecta automáticamente la configuración de Next.js.
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
