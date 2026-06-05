@@ -1,28 +1,36 @@
-"use client";
-
-import { motion } from "motion/react";
+import type { Metadata } from "next";
+import Image from "next/image";
 import { ArrowRight, Share, Network } from "lucide-react";
 import Link from "next/link";
+import ContactButton from "@/components/ContactButton";
+
+export const metadata: Metadata = {
+  title: "Inicio",
+  description:
+    "Datzon — Ingeniería de automatización industrial de alto rendimiento. Sistemas de robótica, edge computing y analítica para industrias de precisión.",
+};
 
 export default function Home() {
   return (
     <div className="bg-surface text-on-surface min-h-screen">
-      <main className="">
+      <main>
         {/* Hero Section */}
         <section className="relative h-[921px] flex items-center justify-center overflow-hidden bg-neutral-900">
           <div className="absolute inset-0 z-0">
-            <img
-              alt="Sala de servidores ultra-moderna de alta tecnología"
-              className="w-full h-full object-cover grayscale opacity-60 mix-blend-luminosity contrast-125"
+            <Image
               src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVaagrJTqfithWWrWKfPFaKj424X8sjko9DABhpPYDGhaGPCpMlmzZheDu0KiucB2TU67r6CIQZz1EBj0Z-Tm7XqB_F8QuhyCvwOX9_hVa68sAMMn_m4OoGPoO7OFy9BdTSmfSpgjNoH0GMbfJSk9-FaUfvIqqRnJR2T-kSMaujCJ9rv4L7vVQ_iSg5jfMQHzN6psuFfJNuRbVnta01Kb8HgdjVil06Fbhe6AIT0WT35QuzNMd30N7DZ210C2MGmyV3nh9ryYbQS2s"
-              referrerPolicy="no-referrer"
+              alt="Sala de servidores ultra-moderna de alta tecnología"
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover grayscale opacity-60 mix-blend-luminosity contrast-125"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-surface via-black/40 to-black/80"></div>
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-[radial-gradient(circle,rgba(118,185,0,0.05)_0%,transparent_70%)] pointer-events-none"></div>
           </div>
           <div className="relative z-10 text-center max-w-6xl px-6">
             <div className="inline-block bg-primary-container px-4 py-1 mb-6">
-              <span className="font-sans font-bold uppercase text-xs tracking-widest text-on-primary-container">KINETIC BLUEPRINT V.2.0</span>
+              <span className="font-sans font-bold uppercase text-xs tracking-widest text-on-primary-container">DATZON // INDUSTRIAL AUTOMATION</span>
             </div>
             <h1 className="text-6xl md:text-8xl font-black tracking-tighter text-white leading-none mb-8 font-headline">
               REVOLUCIONANDO <br />
@@ -30,18 +38,18 @@ export default function Home() {
                DE LAS INDUSTRIAS
             </h1>
             <p className="text-white/70 max-w-2xl mx-auto font-sans text-lg mb-10 leading-relaxed">
-              Claridad sin concesiones en la automatización industrial. Arquitectando sistemas de ingeniería de alto rendimiento que redefinen la precisión y la fiabilidad.
+              Diseño, fabricación e integración de sistemas industriales automatizados. Robótica, PLC, SCADA y maquinaria a medida para optimizar la producción de tu planta.
             </p>
             <div className="flex flex-col md:flex-row gap-4 justify-center">
-              <Link 
+              <Link
                 href="/solutions"
                 className="bg-primary-container text-on-primary-container font-black px-10 py-5 text-lg uppercase tracking-tight hover:brightness-110 transition-all font-headline"
               >
                 Explorar Infraestructura
               </Link>
-              <button className="border border-white/30 text-white font-black px-10 py-5 text-lg uppercase tracking-tight backdrop-blur-md hover:bg-white hover:text-black transition-all font-headline">
+              <ContactButton className="border border-white/30 text-white font-black px-10 py-5 text-lg uppercase tracking-tight backdrop-blur-md hover:bg-white hover:text-black transition-all font-headline">
                 Especificaciones Técnicas
-              </button>
+              </ContactButton>
             </div>
           </div>
         </section>
@@ -73,24 +81,27 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
             <div className="md:col-span-8 bg-surface-container-lowest p-12 relative overflow-hidden group">
               <div className="relative z-10">
-                <span className="text-sm font-bold text-primary mb-4 block tracking-widest font-sans uppercase">01 / AUTONOMÍA</span>
-                <h3 className="text-4xl font-black uppercase mb-6 max-w-md font-headline">Ecosistemas de Fábrica Autónomos</h3>
-                <p className="text-secondary max-w-lg mb-8 font-sans">Desplegando clusters de IA y edge-computing para gestionar ciclos de fabricación complejos con cero intervención humana.</p>
-                <button className="flex items-center gap-2 font-black uppercase text-sm tracking-widest group-hover:text-primary transition-colors font-headline">
+                <span className="text-sm font-bold text-primary mb-4 block tracking-widest font-sans uppercase">01 / AUTOMATIZACIÓN</span>
+                <h3 className="text-4xl font-black uppercase mb-6 max-w-md font-headline">Automatización de Planta Industrial</h3>
+                <p className="text-secondary max-w-lg mb-8 font-sans">Integramos sistemas PLC, HMI y SCADA para gestionar ciclos de fabricación con alta precisión, confiabilidad y monitoreo en tiempo real.</p>
+                <ContactButton className="flex items-center gap-2 font-black uppercase text-sm tracking-widest group-hover:text-primary transition-colors font-headline">
                   Ver Plan Maestro <ArrowRight size={16} />
-                </button>
+                </ContactButton>
               </div>
-              <img
-                alt="Vista detallada desde arriba de circuitería de placa base compleja"
-                className="absolute top-0 right-0 h-full w-1/2 object-cover opacity-10 group-hover:opacity-20 transition-opacity"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCF3OKuXu5P4Lr80oBbyOTqc-l_cX9gsb9DFwGKmWuopCiUGd8rEC1X54rxrKty5YfutC8bKHCbNz2qErt6DA206Rhz29WLTV8jr1klfwK-o29sWOAJMJgxEnRxHqE3VqwIPycg38Dzk59gBCZZ59dnlTBz1x5wxKNguU84rixlfcplWEU--R7R-WKuwNOE3eckDLC0CIeF-nrMlhjoVxMzx9HS-qwuUdM7tCFKcSuPMfA1iYgimCiy1ZrCblwmaCDWZx0CEOFFvnZS"
-                referrerPolicy="no-referrer"
-            />
+              <div className="absolute top-0 right-0 h-full w-1/2 overflow-hidden">
+                <Image
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCF3OKuXu5P4Lr80oBbyOTqc-l_cX9gsb9DFwGKmWuopCiUGd8rEC1X54rxrKty5YfutC8bKHCbNz2qErt6DA206Rhz29WLTV8jr1klfwK-o29sWOAJMJgxEnRxHqE3VqwIPycg38Dzk59gBCZZ59dnlTBz1x5wxKNguU84rixlfcplWEU--R7R-WKuwNOE3eckDLC0CIeF-nrMlhjoVxMzx9HS-qwuUdM7tCFKcSuPMfA1iYgimCiy1ZrCblwmaCDWZx0CEOFFvnZS"
+                  alt="Vista detallada desde arriba de circuitería de placa base compleja"
+                  fill
+                  sizes="25vw"
+                  className="object-cover opacity-10 group-hover:opacity-20 transition-opacity"
+                />
+              </div>
             </div>
             <div className="md:col-span-4 bg-inverse-surface text-white p-12 flex flex-col justify-between">
               <div>
-                <span className="text-sm font-bold text-primary-container mb-4 block tracking-widest font-sans uppercase">02 / LOGÍSTICA</span>
-                <h3 className="text-3xl font-black uppercase mb-4 font-headline">Cadena de Suministro Predictiva</h3>
+                <span className="text-sm font-bold text-primary-container mb-4 block tracking-widest font-sans uppercase">02 / CONTROL</span>
+                <h3 className="text-3xl font-black uppercase mb-4 font-headline">Sistemas de Control y SCADA</h3>
               </div>
               <Share className="text-6xl text-primary-container w-12 h-12" />
             </div>
@@ -100,11 +111,12 @@ export default function Home() {
               <p className="text-sm text-secondary font-sans">Cada milisegundo cuenta. Acceso 24/7 a lecturas técnicas de cada nodo activo.</p>
             </div>
             <div className="md:col-span-8 h-80 bg-neutral-200 relative overflow-hidden">
-              <img
+              <Image
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwOlTVaJ0PwDSaauH1DFTdQyhTeDFXiqmmZgXtnnxzwFsald-j5Z7EzjGzmlFnlk8fANqpXxmUwwfachocUkc7nhoQn8Z0X_UBI49DidHBc8iwx9D7ZjGXd3uSy_4FzJT3Hpj5seG6RYtlg-zmhBct0xpK_J_AAct52J_DVXasguQkikyYFMgXI2kPTI4gvajX3ad-KJbJSehGUF7xmQ6SbPhAcek2DKml8tyXRt9Oe4TnfbY7YMTDXxo52kw0-Jcr2VsB4ZWEFFeNv"
                 alt="Brazo de robot industrial soldador"
-                className="w-full h-full object-cover"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwOlTVaJ0PwDSaauH1DFTdQyhTeDFXiqmmZgXtnnxzwFsald-j5Z7EzjGzmlFnlk8fANqpXxmUwwfchocUkc7nhoQn8Z0X_UBI49DidHBc8iwx9D7ZjGXd3uSy_4FzJT3Hpj5seG6RYtlg-zmhBct0xpK_J_AAct52J_DVXasguQkikyYFMgXI2kPTI4gvajX3ad-KJbJSehGUF7xmQ6SbPhAcek2DKml8tyXRt9Oe4TnfbY7YMTDXxo52kw0-Jcr2VsB4ZWEFFeNv"
-                referrerPolicy="no-referrer"
+                fill
+                sizes="(max-width: 768px) 100vw, 66vw"
+                className="object-cover"
               />
               <div className="absolute inset-0 bg-primary-container/20 mix-blend-overlay"></div>
               <div className="absolute bottom-8 left-8 bg-surface-container-lowest/90 backdrop-blur-md p-6 border border-white/20 max-w-xs">
@@ -129,7 +141,7 @@ export default function Home() {
               </div>
               <div className="flex items-center gap-4">
                 <Network size={48} />
-                <span className="text-xl font-bold tracking-widest uppercase font-headline">Robótica Neuronal</span>
+                <span className="text-xl font-bold tracking-widest uppercase font-headline">Robótica Industrial</span>
               </div>
               <div className="flex items-center gap-4">
                 <Network size={48} />
@@ -145,16 +157,15 @@ export default function Home() {
               </div>
               <div className="flex items-center gap-4">
                 <Network size={48} />
-                <span className="text-xl font-bold tracking-widest uppercase font-headline">Logística Cuántica</span>
+                <span className="text-xl font-bold tracking-widest uppercase font-headline">Control SCADA/HMI</span>
               </div>
-              {/* Duplicate */}
               <div className="flex items-center gap-4">
                 <Network size={48} />
                 <span className="text-xl font-bold tracking-widest uppercase font-headline">Edge Computing</span>
               </div>
               <div className="flex items-center gap-4">
                 <Network size={48} />
-                <span className="text-xl font-bold tracking-widest uppercase font-headline">Robótica Neuronal</span>
+                <span className="text-xl font-bold tracking-widest uppercase font-headline">Robótica Industrial</span>
               </div>
             </div>
           </div>
@@ -165,14 +176,14 @@ export default function Home() {
           <div className="px-12 max-w-screen-2xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-24 items-center">
             <div>
               <h2 className="text-5xl font-black text-white uppercase tracking-tighter leading-none mb-12 font-headline">
-                Diseñado para la <br /> <span className="text-primary-container">Escalabilidad</span>
+                Diseñado para la <br /> <span className="text-primary-container">Industria</span>
               </h2>
               <div className="space-y-12">
                 <div className="flex gap-8">
                   <span className="text-primary-container font-mono text-4xl font-bold">01</span>
                   <div>
-                    <h4 className="text-white font-black uppercase text-xl mb-2 font-headline">Malla de Cero Latencia</h4>
-                    <p className="text-white/50 text-sm leading-relaxed font-sans">Protocolos de hardware interconectados que se comunican a velocidades que superan las infraestructuras de red tradicionales.</p>
+                    <h4 className="text-white font-black uppercase text-xl mb-2 font-headline">Comunicación de Ultra-Baja Latencia</h4>
+                    <p className="text-white/50 text-sm leading-relaxed font-sans">Protocolos de hardware interconectados que superan las velocidades de comunicación de las infraestructuras de red tradicionales.</p>
                   </div>
                 </div>
                 <div className="flex gap-8">
@@ -192,7 +203,10 @@ export default function Home() {
                     <p className="text-[10px] text-primary-container uppercase tracking-[0.3em] mb-2 font-sans font-bold">Diagnóstico del Sistema</p>
                     <p className="text-white font-mono text-2xl">ESTADO: NOMINAL</p>
                   </div>
-                  <Share className="text-primary-container animate-pulse" size={24} />
+                  <div className="flex flex-col items-end gap-2">
+                    <Share className="text-primary-container animate-pulse" size={24} />
+                    <span className="text-[8px] font-black font-mono tracking-widest bg-yellow-500/20 border border-yellow-500/40 text-yellow-400 px-2 py-0.5">MODO DEMO</span>
+                  </div>
                 </div>
                 <div className="space-y-4">
                   <div className="h-1 bg-white/10 w-full overflow-hidden">
@@ -203,12 +217,15 @@ export default function Home() {
                     <span>CARGA: 76%</span>
                   </div>
                 </div>
-                <img
-                  alt="Vista macro de hardware de semiconductores"
-                  className="w-full h-48 object-cover opacity-50 grayscale"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdB8mcleoZ2BSk2Xv36bmdY9G4c-58F66HKAzeceshZd73nrTHVB65g4ZpcmcCfPZiXKiO0r-4sNP1-BffIqkNRc5GU-Na93kvfsAzz7urAcorzXTqU45n5sWUhbvseTd6SHOwaFyicYV07ynVpKC1YUexmPULeKdPvRvhgriLCha4WB8miKeqAVb2Blw3X3_Vw2fufBsQZNUvyeXLgTgSULjF5I_BGmuvlOi8P0kvi-K8Clw6-nF0rnWw4t4B3ITBUaKKTk5gCh90"
-                  referrerPolicy="no-referrer"
-                />
+                <div className="relative w-full h-48">
+                  <Image
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdB8mcleoZ2BSk2Xv36bmdY9G4c-58F66HKAzeceshZd73nrTHVB65g4ZpcmcCfPZiXKiO0r-4sNP1-BffIqkNRc5GU-Na93kvfsAzz7urAcorzXTqU45n5sWUhbvseTd6SHOwaFyicYV07ynVpKC1YUexmPULeKdPvRvhgriLCha4WB8miKeqAVb2Blw3X3_Vw2fufBsQZNUjBUmHgTx0CEOFFvnZS"
+                    alt="Vista macro de hardware de semiconductores"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover opacity-50 grayscale"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -220,9 +237,9 @@ export default function Home() {
           <p className="text-xl text-secondary max-w-2xl mx-auto mb-16 leading-relaxed font-sans">
             Contacta a nuestro equipo de ingeniería para integrar los sistemas Datzon en tu infraestructura industrial existente.
           </p>
-          <button className="bg-black text-white hover:bg-primary-container hover:text-black transition-all duration-300 font-black px-16 py-8 text-xl uppercase tracking-widest font-headline">
+          <ContactButton className="bg-black text-white hover:bg-primary-container hover:text-black transition-all duration-300 font-black px-16 py-8 text-xl uppercase tracking-widest font-headline">
             Iniciar Protocolo
-          </button>
+          </ContactButton>
         </section>
       </main>
     </div>

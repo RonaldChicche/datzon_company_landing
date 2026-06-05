@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "motion/react";
 import Header from "@/components/Header";
@@ -11,17 +11,23 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const pathname = usePathname();
 
+  useEffect(() => {
+    const handler = () => setIsContactModalOpen(true);
+    window.addEventListener("open-contact-modal", handler);
+    return () => window.removeEventListener("open-contact-modal", handler);
+  }, []);
+
   return (
     <div className="bg-surface min-h-screen flex flex-col font-sans relative">
-      <Header 
+      <Header
         onContactSales={() => setIsContactModalOpen(true)}
       />
-      
-      <ContactModal 
-        isOpen={isContactModalOpen} 
-        onClose={() => setIsContactModalOpen(false)} 
+
+      <ContactModal
+        isOpen={isContactModalOpen}
+        onClose={() => setIsContactModalOpen(false)}
       />
-      
+
       <main className="flex-1 mt-16 overflow-hidden">
         <AnimatePresence mode="wait">
           <motion.div

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "motion/react";
 
 const teamMembers = [
@@ -41,7 +42,7 @@ export default function TeamPage() {
               Las Mentes Detrás de la <br /> <span className="text-primary-container tracking-tighter italic">Precisión.</span>
             </h1>
             <p className="text-secondary text-lg leading-relaxed max-w-xl">
-              Nuestro equipo multidisciplinario combina décadas de experiencia en robótica, infraestructura y seguridad ciber-física para entregar los sistemas de automatización más fiables del mundo.
+              Nuestro equipo multidisciplinario combina sólida experiencia en robótica, automatización industrial y sistemas de control para diseñar e implementar soluciones de alta confiabilidad.
             </p>
           </div>
         </header>
@@ -49,7 +50,7 @@ export default function TeamPage() {
         {/* Team Grid */}
         <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-20 pb-32">
           {teamMembers.map((member, i) => (
-            <motion.div 
+            <motion.div
               key={i}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -64,14 +65,15 @@ export default function TeamPage() {
                   <div className="absolute top-4 left-4 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                     <span className="text-[8px] font-black text-white bg-black/80 px-2 py-1 tracking-widest font-mono uppercase">NODO_{i+1}_ACTIVO</span>
                   </div>
-                  
-                  <img
+
+                  <Image
                     src={member.image}
                     alt={member.name}
-                    className="w-full h-full object-cover grayscale brightness-90 group-hover:grayscale-0 group-hover:scale-105 group-hover:brightness-100 transition-all duration-1000 ease-out"
-                    referrerPolicy="no-referrer"
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover grayscale brightness-90 group-hover:grayscale-0 group-hover:scale-105 group-hover:brightness-100 transition-all duration-1000 ease-out"
                   />
-                  
+
                   {/* Gradient & Border FX */}
                   <div className="absolute inset-0 bg-neutral-900/10 mix-blend-multiply transition-opacity group-hover:opacity-0"></div>
                   <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/20 to-transparent"></div>
@@ -82,7 +84,7 @@ export default function TeamPage() {
                   <p className="text-[9px] font-black text-primary-container uppercase tracking-[0.3em] mb-2 font-headline">{member.role}</p>
                   <h3 className="text-3xl font-black uppercase tracking-tighter font-headline flex items-center justify-between">
                     {member.name}
-                    <motion.div 
+                    <motion.div
                       className="w-8 h-[1px] bg-primary-container scale-x-0 group-hover:scale-x-100 origin-right transition-transform duration-500"
                     />
                   </h3>
@@ -104,7 +106,10 @@ export default function TeamPage() {
           <p className="text-secondary max-w-lg mb-12">
             Siempre estamos buscando ingenieros excepcionales apasionados por los sistemas de alta precisión. Revisa nuestras vacantes activas.
           </p>
-          <button className="bg-inverse-surface text-inverse-on-surface px-12 py-4 font-black uppercase tracking-widest text-sm hover:bg-primary transition-colors font-headline">
+          <button
+            onClick={() => window.dispatchEvent(new CustomEvent("open-contact-modal"))}
+            className="bg-inverse-surface text-white px-12 py-4 font-black uppercase tracking-widest text-sm hover:bg-primary transition-colors font-headline min-h-[48px]"
+          >
             Ver Carreras
           </button>
         </section>
