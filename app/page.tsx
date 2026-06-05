@@ -18,8 +18,8 @@ export default function Home() {
         <section className="relative h-[921px] flex items-center justify-center overflow-hidden bg-neutral-900">
           <div className="absolute inset-0 z-0">
             <Image
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVaagrJTqfithWWrWKfPFaKj424X8sjko9DABhpPYDGhaGPCpMlmzZheDu0KiucB2TU67r6CIQZz1EBj0Z-Tm7XqB_F8QuhyCvwOX9_hVa68sAMMn_m4OoGPoO7OFy9BdTSmfSpgjNoH0GMbfJSk9-FaUfvIqqRnJR2T-kSMaujCJ9rv4L7vVQ_iSg5jfMQHzN6psuFfJNuRbVnta01Kb8HgdjVil06Fbhe6AIT0WT35QuzNMd30N7DZ210C2MGmyV3nh9ryYbQS2s"
-              alt="Sala de servidores ultra-moderna de alta tecnología"
+              src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1920"
+              alt="Línea de producción industrial automatizada"
               fill
               priority
               sizes="100vw"
@@ -90,8 +90,8 @@ export default function Home() {
               </div>
               <div className="absolute top-0 right-0 h-full w-1/2 overflow-hidden">
                 <Image
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCF3OKuXu5P4Lr80oBbyOTqc-l_cX9gsb9DFwGKmWuopCiUGd8rEC1X54rxrKty5YfutC8bKHCbNz2qErt6DA206Rhz29WLTV8jr1klfwK-o29sWOAJMJgxEnRxHqE3VqwIPycg38Dzk59gBCZZ59dnlTBz1x5wxKNguU84rixlfcplWEU--R7R-WKuwNOE3eckDLC0CIeF-nrMlhjoVxMzx9HS-qwuUdM7tCFKcSuPMfA1iYgimCiy1ZrCblwmaCDWZx0CEOFFvnZS"
-                  alt="Vista detallada desde arriba de circuitería de placa base compleja"
+                  src="https://images.unsplash.com/photo-1565043666747-69f6646db940?auto=format&fit=crop&q=80&w=800"
+                  alt="Sistema robótico industrial automatizado"
                   fill
                   sizes="25vw"
                   className="object-cover opacity-10 group-hover:opacity-20 transition-opacity"
@@ -112,8 +112,8 @@ export default function Home() {
             </div>
             <div className="md:col-span-8 h-80 bg-neutral-200 relative overflow-hidden">
               <Image
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwOlTVaJ0PwDSaauH1DFTdQyhTeDFXiqmmZgXtnnxzwFsald-j5Z7EzjGzmlFnlk8fANqpXxmUwwfachocUkc7nhoQn8Z0X_UBI49DidHBc8iwx9D7ZjGXd3uSy_4FzJT3Hpj5seG6RYtlg-zmhBct0xpK_J_AAct52J_DVXasguQkikyYFMgXI2kPTI4gvajX3ad-KJbJSehGUF7xmQ6SbPhAcek2DKml8tyXRt9Oe4TnfbY7YMTDXxo52kw0-Jcr2VsB4ZWEFFeNv"
-                alt="Brazo de robot industrial soldador"
+                src="https://images.unsplash.com/photo-1565043666747-69f6646db940?auto=format&fit=crop&q=80&w=1200&h=800"
+                alt="Brazo robótico industrial en operación"
                 fill
                 sizes="(max-width: 768px) 100vw, 66vw"
                 className="object-cover"
@@ -219,8 +219,8 @@ export default function Home() {
                 </div>
                 <div className="relative w-full h-48">
                   <Image
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdB8mcleoZ2BSk2Xv36bmdY9G4c-58F66HKAzeceshZd73nrTHVB65g4ZpcmcCfPZiXKiO0r-4sNP1-BffIqkNRc5GU-Na93kvfsAzz7urAcorzXTqU45n5sWUhbvseTd6SHOwaFyicYV07ynVpKC1YUexmPULeKdPvRvhgriLCha4WB8miKeqAVb2Blw3X3_Vw2fufBsQZNUjBUmHgTx0CEOFFvnZS"
-                    alt="Vista macro de hardware de semiconductores"
+                    src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800"
+                    alt="Equipo de automatización industrial"
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover opacity-50 grayscale"
