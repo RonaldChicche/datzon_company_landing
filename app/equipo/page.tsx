@@ -84,9 +84,7 @@ export default function TeamPage() {
                   <p className="text-[9px] font-black text-primary-container uppercase tracking-[0.3em] mb-2 font-headline">{member.role}</p>
                   <h3 className="text-3xl font-black uppercase tracking-tighter font-headline flex items-center justify-between">
                     {member.name}
-                    <motion.div
-                      className="w-8 h-[1px] bg-primary-container scale-x-0 group-hover:scale-x-100 origin-right transition-transform duration-500"
-                    />
+                    <div className="w-8 h-[1px] bg-primary-container scale-x-0 group-hover:scale-x-100 origin-right transition-transform duration-500" />
                   </h3>
                 </div>
               </div>
