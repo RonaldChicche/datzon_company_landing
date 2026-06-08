@@ -25,6 +25,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# claude code (tool config personal, no es parte del proyecto)
+.claude/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
