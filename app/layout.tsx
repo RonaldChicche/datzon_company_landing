@@ -75,7 +75,13 @@ export default async function RootLayout({
         <script
           type="application/ld+json"
           nonce={nonce}
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationJsonLd)
+              .replace(/</g, "\\u003c")
+              .replace(/>/g, "\\u003e")
+              .replace(/&/g, "\\u0026"),
+          }}
         />
       </head>
       <body className="min-h-full flex flex-col font-sans">
