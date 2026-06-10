@@ -34,5 +34,5 @@ jobs:
           CONTACT_EMAIL: ${{ secrets.CONTACT_EMAIL }}
 
       - name: Audit
-        run: pnpm audit --audit-level=high
+        run: pnpm audit --audit-level=moderate
         continue-on-error: true
