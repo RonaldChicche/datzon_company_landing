@@ -6,7 +6,7 @@ export default function NotFound() {
       <main className="text-center max-w-6xl px-6 relative z-10">
         <div className="inline-block bg-primary-container px-4 py-1 mb-6">
           <span className="font-sans font-bold uppercase text-xs tracking-widest text-on-primary-container">
-            DATZON // ERROR 404
+            DATZON · ERROR 404
           </span>
         </div>
         

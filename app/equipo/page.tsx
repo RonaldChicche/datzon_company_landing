@@ -5,29 +5,28 @@ import { motion } from "motion/react";
 
 const teamMembers = [
   {
-    name: "Dr. Aris Varma",
-    role: "Arquitecto Jefe de Robótica",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400&h=400",
+    name: "Danilo Luque",
+    role: "Ing. Mecatrónico",
+    bio: "Ingeniero especializado en diseño y certificación de equipos industriales bajo normativas internacionales.",
+    image: "/equipo/Danilo_Luque.jpg",
   },
   {
-    name: "Elena Rossi",
-    role: "Jefa de Integración de Sistemas",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=400&h=400",
+    name: "Jeffry Huanca",
+    role: "Ing. Mecatrónico",
+    bio: "Proyectista en integración de sistemas, implementación en planta y validación de soluciones industriales.",
+    image: "/equipo/Jeffry_Huanca.jpg",
   },
   {
-    name: "Marcus Chen",
-    role: "Ingeniero Principal de Hardware",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=400&h=400",
+    name: "Jose Zamora",
+    role: "Ing. Mecatrónico",
+    bio: "Especialista en diseño de sistemas automatizados y desarrollo de soluciones electromecánicas para optimización de procesos productivos.",
+    image: "/equipo/Jose_Zamora.jpg",
   },
   {
-    name: "Sofia Khalid",
-    role: "Especialista en Edge Computing",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400&h=400",
-  },
-  {
-    name: "Liam O'Connor",
-    role: "Oficial de Seguridad Industrial",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=400&h=400",
+    name: "John Ojeda",
+    role: "Ing. Electrónico",
+    bio: "Ingeniero especialista en proyectos industriales con más de 25 años de experiencia en minería y plantas de proceso, especializado en ejecución y puesta en marcha de sistemas industriales.",
+    image: "/equipo/John_Ojeda.jpg",
   },
 ];
 
@@ -61,11 +60,6 @@ export default function TeamPage() {
               {/* Card Container */}
               <div className="bg-surface-container-lowest border border-outline-variant/10 p-4 transition-all duration-500 group-hover:border-primary-container/30 group-hover:shadow-[0_20px_50px_rgba(118,185,0,0.05)]">
                 <div className="aspect-[4/5] bg-surface-container-low overflow-hidden mb-8 relative">
-                  {/* Technical Overlays */}
-                  <div className="absolute top-4 left-4 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <span className="text-[8px] font-black text-white bg-black/80 px-2 py-1 tracking-widest font-mono uppercase">NODO_{i+1}_ACTIVO</span>
-                  </div>
-
                   <Image
                     src={member.image}
                     alt={member.name}
@@ -78,6 +72,13 @@ export default function TeamPage() {
                   <div className="absolute inset-0 bg-neutral-900/10 mix-blend-multiply transition-opacity group-hover:opacity-0"></div>
                   <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/20 to-transparent"></div>
                   <div className="absolute inset-0 border border-white/5 group-hover:border-primary-container/20 transition-colors"></div>
+
+                  {/* Bio panel — slides up on hover */}
+                  <div className="absolute inset-x-0 bottom-0 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out z-20 bg-neutral-950/95 backdrop-blur-sm">
+                    <div className="border-t-2 border-primary-container p-5">
+                      <p className="text-white/80 text-[12px] leading-relaxed font-sans">{member.bio}</p>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="relative pl-2 border-l-2 border-outline-variant/30 group-hover:border-primary-container transition-colors">

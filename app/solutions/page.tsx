@@ -36,7 +36,7 @@ export default function SolutionsPage() {
         <section className="py-20 px-12 max-w-screen-2xl mx-auto border-t border-outline-variant/20 relative overflow-hidden">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center relative z-10">
             <div className="flex flex-col bg-surface-container-lowest p-8 border border-outline-variant/10 h-full justify-center">
-              <p className="text-[10px] font-black text-primary-container uppercase tracking-[0.3em] mb-3 font-sans">MÓDULO_01 // MECÁNICA</p>
+              <p className="text-[10px] font-black text-primary-container uppercase tracking-[0.3em] mb-3 font-sans">MÓDULO_01 · MECÁNICA</p>
               <h2 className="text-4xl font-black uppercase tracking-tighter mb-6 font-headline leading-tight text-on-surface">
                 Soluciones Mecánicas <br /> Automatizadas
               </h2>
@@ -105,7 +105,7 @@ export default function SolutionsPage() {
 
           <div className="max-w-screen-2xl mx-auto relative z-10 flex flex-col justify-center min-h-[500px]">
             <div className="text-center mb-16">
-              <p className="text-[10px] font-black text-primary-container uppercase tracking-[0.3em] mb-4 font-sans">MÓDULO 02 // ANALÍTICA</p>
+              <p className="text-[10px] font-black text-primary-container uppercase tracking-[0.3em] mb-4 font-sans">MÓDULO 02 · ANALÍTICA</p>
               <h2 className="text-5xl font-black text-white uppercase tracking-tighter font-headline">
                 ECOSISTEMAS DE DATOS Y ANALÍTICA
               </h2>
@@ -118,7 +118,7 @@ export default function SolutionsPage() {
                   <div className="w-1.5 h-1.5 rounded-full bg-red-500/80"></div>
                   <div className="w-1.5 h-1.5 rounded-full bg-yellow-500/80"></div>
                   <div className="w-1.5 h-1.5 rounded-full bg-green-500/80"></div>
-                  <span className="ml-3 font-mono text-[9px] text-white/40 uppercase tracking-widest">S_ANALYTICS_V4.0 // LIVE</span>
+                  <span className="ml-3 font-mono text-[9px] text-white/40 uppercase tracking-widest">S_ANALYTICS_V4.0 · LIVE</span>
                 </div>
 
                 <div className="grid grid-cols-4 gap-3 mb-10">
@@ -196,7 +196,7 @@ export default function SolutionsPage() {
             </div>
 
             <div className="order-1 md:order-2 flex flex-col justify-center h-full bg-surface-container-lowest/80 backdrop-blur-sm p-8 border border-outline-variant/10">
-              <p className="text-[10px] font-black text-primary-container uppercase tracking-[0.3em] mb-3 font-sans">MÓDULO 03 // ROBÓTICA</p>
+              <p className="text-[10px] font-black text-primary-container uppercase tracking-[0.3em] mb-3 font-sans">MÓDULO 03 · ROBÓTICA</p>
               <h2 className="text-4xl font-black uppercase tracking-tighter mb-6 font-headline leading-tight">
                 ROBÓTICA INDUSTRIAL Y <br /> PALETIZADO
               </h2>

@@ -32,7 +32,7 @@ export default function GlobalError({
           
           <div className="inline-block bg-primary-container px-4 py-1 mb-6">
             <span className="font-sans font-bold uppercase text-xs tracking-widest text-on-primary-container">
-              DATZON // CRITICAL ERROR
+              DATZON · CRITICAL ERROR
             </span>
           </div>
 

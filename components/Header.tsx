@@ -24,9 +24,9 @@ export default function Header({ onContactSales }: HeaderProps) {
         href="/"
         className="shrink-0 cursor-pointer group z-10 block"
       >
-        <div className="bg-white group-hover:bg-primary-container transition-all duration-300 flex items-center justify-center p-0.5">
+        <div className="group-hover:bg-primary-container transition-all duration-300 flex items-center justify-center p-0.5">
           <Image
-            src="/logo.svg"
+            src="/logo_datzon.svg"
             alt="DATZON Logo"
             width={240}
             height={82}
@@ -40,31 +40,28 @@ export default function Header({ onContactSales }: HeaderProps) {
       <div className="hidden md:flex items-center gap-10 absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2">
         <Link
           href="/"
-          className={`font-headline font-bold tracking-tight uppercase transition-colors pb-1 border-b-2 ${
-            isActive("/")
-              ? "text-primary-container border-primary-container"
-              : "text-white/80 hover:text-white border-transparent hover:border-white/20"
-          }`}
+          className={`font-headline font-bold tracking-tight uppercase transition-colors pb-1 border-b-2 ${isActive("/")
+            ? "text-primary-container border-primary-container"
+            : "text-white/80 hover:text-white border-transparent hover:border-white/20"
+            }`}
         >
           Inicio
         </Link>
         <Link
           href="/solutions"
-          className={`font-headline font-bold tracking-tight uppercase transition-colors pb-1 border-b-2 ${
-            isActive("/solutions")
-              ? "text-primary-container border-primary-container"
-              : "text-white/80 hover:text-white border-transparent hover:border-white/20"
-          }`}
+          className={`font-headline font-bold tracking-tight uppercase transition-colors pb-1 border-b-2 ${isActive("/solutions")
+            ? "text-primary-container border-primary-container"
+            : "text-white/80 hover:text-white border-transparent hover:border-white/20"
+            }`}
         >
           Soluciones
         </Link>
         <Link
           href="/equipo"
-          className={`font-headline font-bold tracking-tight uppercase transition-colors pb-1 border-b-2 ${
-            isActive("/equipo")
-              ? "text-primary-container border-primary-container"
-              : "text-white/80 hover:text-white border-transparent hover:border-white/20"
-          }`}
+          className={`font-headline font-bold tracking-tight uppercase transition-colors pb-1 border-b-2 ${isActive("/equipo")
+            ? "text-primary-container border-primary-container"
+            : "text-white/80 hover:text-white border-transparent hover:border-white/20"
+            }`}
         >
           Equipo
         </Link>

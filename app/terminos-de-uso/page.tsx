@@ -12,7 +12,7 @@ export default function TermsOfUsePage() {
       <main className="max-w-3xl mx-auto px-6 py-24">
         <div className="mb-12">
           <p className="text-[10px] font-black text-primary-container uppercase tracking-[0.3em] mb-4 font-headline">
-            PROTOCOLO // TÉRMINOS
+            PROTOCOLO · TÉRMINOS
           </p>
           <h1 className="text-5xl font-black uppercase tracking-tighter font-headline mb-4">
             Términos de Uso

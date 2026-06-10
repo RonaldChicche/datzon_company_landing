@@ -41,7 +41,7 @@ const organizationJsonLd = {
   name: "Datzon",
   legalName: "DATZON S.A.C.",
   url: "https://www.datzoncompany.com",
-  logo: "https://www.datzoncompany.com/logo.svg",
+  logo: "https://www.datzoncompany.com/logo_datzon.svg",
   foundingDate: "2026-03",
   email: "contacto@datzoncompany.com",
   address: {
