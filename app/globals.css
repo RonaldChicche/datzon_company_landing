@@ -348,7 +348,7 @@ header.nav.scrolled {
   transition: .3s var(--ease);
   position: relative; display: flex; flex-direction: column; min-height: 276px; overflow: hidden;
 }
-.svc:hover { transform: translateY(-5px); box-shadow: 0 22px 50px -28px rgba(16,24,8,.4); border-color: transparent; }
+.svc:hover { translate: 0 -5px; box-shadow: 0 22px 50px -28px rgba(16,24,8,.4); border-color: transparent; }
 .svc .num { font-family: var(--font-mono); font-size: 12px; color: var(--muted-d2); letter-spacing: .1em; }
 .svc h3 { font-size: 21px; margin: 16px 0 12px; transition: color .25s; }
 .svc:hover h3 { color: var(--green-deep); }
@@ -381,7 +381,7 @@ header.nav.scrolled {
   border: 1px solid var(--line-d); border-radius: var(--r-md); background: var(--card);
   transition: .3s var(--ease); overflow: hidden; display: flex; flex-direction: column;
 }
-.proj:hover { transform: translateY(-5px); box-shadow: 0 24px 54px -30px rgba(16,24,8,.45); }
+.proj:hover { translate: 0 -5px; box-shadow: 0 24px 54px -30px rgba(16,24,8,.45); }
 .proj .pimg { width: 100% !important; height: auto !important; aspect-ratio: 16/11; display: block; border-bottom: 1px solid var(--line-d); }
 .proj .pbody { padding: 24px 26px 28px; flex: 1; display: flex; flex-direction: column; }
 .proj .ptag { font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--green-deep); }

@@ -2,12 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
 const contactSchema = z.object({
-  nombre: z.string().min(2),
-  email: z.string().email(),
-  telefono: z.string().min(7),
-  disponibilidad: z.string().min(2),
-  mensaje: z.string().min(10),
-  website: z.string().max(0).optional(), // honeypot
+  nombre:   z.string().min(2),
+  empresa:  z.string().optional(),
+  email:    z.string().email(),
+  telefono: z.string().optional(),
+  industria: z.string().optional(),
+  mensaje:  z.string().min(10),
+  website:  z.string().max(0).optional(), // honeypot
 });
 
 // In-memory rate limiting: max 5 requests per IP per hour
@@ -53,13 +54,13 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ ok: true }); // silently discard bot submissions
   }
 
-  const { nombre, email, telefono, disponibilidad, mensaje } = result.data;
+  const { nombre, empresa, email, telefono, industria, mensaje } = result.data;
 
   // TODO: Replace with Resend integration
   // import { Resend } from "resend";
   // const resend = new Resend(process.env.RESEND_API_KEY);
   // await resend.emails.send({ from: "noreply@datzoncompany.com", to: process.env.CONTACT_EMAIL, ... });
-  console.log("[contact-form]", { nombre, email, telefono, disponibilidad, mensaje });
+  console.log("[contact-form]", { nombre, empresa, email, telefono, industria, mensaje });
 
   return NextResponse.json({ ok: true }, { status: 200 });
 }
