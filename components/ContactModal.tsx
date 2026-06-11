@@ -94,7 +94,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
               {/* Header */}
               <div className="sticky top-0 z-20 border-b border-white/10 p-6 flex justify-between items-center bg-black/80 backdrop-blur-md">
                 <div>
-                  <p className="text-[10px] font-black text-primary-container uppercase tracking-[0.3em] mb-1 font-headline">PROTOCOLO // CONTACTO</p>
+                  <p className="text-[10px] font-black text-primary-container uppercase tracking-[0.3em] mb-1 font-headline">PROTOCOLO DE CONTACTO</p>
                   <h2 id="contact-modal-title" className="text-2xl font-black uppercase tracking-tighter text-white font-headline">PORTAL DE CONSULTAS</h2>
                 </div>
                 <button

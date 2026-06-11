@@ -22,6 +22,7 @@ export default function Home() {
               alt="Línea de producción industrial automatizada"
               fill
               priority
+              loading="eager"
               sizes="100vw"
               className="object-cover grayscale opacity-60 mix-blend-luminosity contrast-125"
             />

@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "motion/react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ContactModal from "@/components/ContactModal";
+import FrozenRouter from "@/components/FrozenRouter";
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
@@ -37,7 +38,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
           >
-            {children}
+            <FrozenRouter>{children}</FrozenRouter>
             <Footer />
           </motion.div>
         </AnimatePresence>
