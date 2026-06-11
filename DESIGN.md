@@ -1,161 +1,146 @@
 ---
-name: High-Tech Industrial
+name: Datzon — Deep Space Industrial v3
 colors:
   surface: '#10141a'
-  surface-dim: '#10141a'
-  surface-bright: '#353940'
-  surface-container-lowest: '#0a0e14'
+  surface-dim: '#0a0e14'
   surface-container-low: '#181c22'
   surface-container: '#1c2026'
   surface-container-high: '#262a31'
-  surface-container-highest: '#31353c'
   on-surface: '#dfe2eb'
-  on-surface-variant: '#c4c9ae'
-  inverse-surface: '#dfe2eb'
-  inverse-on-surface: '#2d3137'
-  outline: '#8e937a'
-  outline-variant: '#444934'
-  surface-tint: '#a8d700'
-  primary: '#c5f632'
-  on-primary: '#273500'
-  primary-container: '#aad900'
-  on-primary-container: '#465b00'
-  inverse-primary: '#4f6600'
-  secondary: '#c6c6cb'
-  on-secondary: '#2e3034'
-  secondary-container: '#47494d'
-  on-secondary-container: '#b7b8bd'
-  tertiary: '#e3e5ea'
-  on-tertiary: '#2d3134'
-  tertiary-container: '#c7c9ce'
-  on-tertiary-container: '#515458'
-  error: '#ffb4ab'
-  on-error: '#690005'
-  error-container: '#93000a'
-  on-error-container: '#ffdad6'
-  primary-fixed: '#c3f42f'
-  primary-fixed-dim: '#a8d700'
-  on-primary-fixed: '#161f00'
-  on-primary-fixed-variant: '#3b4d00'
-  secondary-fixed: '#e2e2e7'
-  secondary-fixed-dim: '#c6c6cb'
-  on-secondary-fixed: '#1a1c1f'
-  on-secondary-fixed-variant: '#45474b'
-  tertiary-fixed: '#e1e2e7'
-  tertiary-fixed-dim: '#c4c6cb'
-  on-tertiary-fixed: '#191c1f'
-  on-tertiary-fixed-variant: '#44474b'
+  on-surface-variant: '#9aa1ac'
+  on-surface-faint: '#646b76'
+  outline: 'rgba(255,255,255,.08)'
+  outline-variant: 'rgba(255,255,255,.045)'
+  primary: '#aad900'
+  primary-bright: '#c5f632'
+  primary-dim: 'rgba(170,217,0,.14)'
+  on-primary: '#10141a'
+  primary-deep: '#5f7d00'
+  paper: '#f4f5f1'
+  paper-grid: 'rgba(16,24,8,.05)'
+  on-paper: '#14171c'
+  on-paper-variant: '#555a52'
+  on-paper-faint: '#8b9084'
+  paper-card: '#ffffff'
+  paper-outline: 'rgba(16,24,8,.12)'
   background: '#10141a'
   on-background: '#dfe2eb'
-  surface-variant: '#31353c'
 typography:
+  display-xl:
+    fontFamily: Michroma
+    fontSize: clamp(26px, 4.6vw, 58px)
+    fontWeight: '400'
+    lineHeight: '1.16'
+    textTransform: uppercase
   display-lg:
-    fontFamily: Space Grotesk
-    fontSize: 48px
-    fontWeight: '700'
-    lineHeight: 56px
-    letterSpacing: -0.02em
+    fontFamily: Michroma
+    fontSize: clamp(26px, 4.4vw, 54px)
+    fontWeight: '400'
+    lineHeight: '1.14'
+    textTransform: uppercase
   headline-lg:
-    fontFamily: Space Grotesk
-    fontSize: 32px
-    fontWeight: '600'
-    lineHeight: 40px
-    letterSpacing: -0.01em
-  headline-lg-mobile:
-    fontFamily: Space Grotesk
-    fontSize: 28px
-    fontWeight: '600'
-    lineHeight: 36px
+    fontFamily: Michroma
+    fontSize: clamp(22px, 3vw, 40px)
+    fontWeight: '400'
+    lineHeight: '1.18'
+    textTransform: uppercase
   headline-md:
-    fontFamily: Space Grotesk
-    fontSize: 24px
+    fontFamily: Geist
+    fontSize: 22px
     fontWeight: '600'
-    lineHeight: 32px
+    lineHeight: '1.2'
+    letterSpacing: -0.01em
+  data-lg:
+    fontFamily: Michroma
+    fontSize: clamp(24px, 2.5vw, 34px)
+    fontWeight: '400'
+    lineHeight: '1.1'
   body-lg:
     fontFamily: Geist
-    fontSize: 18px
+    fontSize: 17.5px
     fontWeight: '400'
-    lineHeight: 28px
+    lineHeight: '1.65'
   body-md:
     fontFamily: Geist
-    fontSize: 16px
+    fontSize: 16.5px
     fontWeight: '400'
-    lineHeight: 24px
+    lineHeight: '1.65'
   label-md:
     fontFamily: JetBrains Mono
-    fontSize: 14px
-    fontWeight: '500'
-    lineHeight: 20px
+    fontSize: 13px
+    fontWeight: '600'
+    lineHeight: '1.4'
     letterSpacing: 0.05em
   label-sm:
     fontFamily: JetBrains Mono
-    fontSize: 12px
-    fontWeight: '500'
-    lineHeight: 16px
-    letterSpacing: 0.08em
+    fontSize: 11.5px
+    fontWeight: '600'
+    lineHeight: '1.4'
+    letterSpacing: 0.2em
+    textTransform: uppercase
 rounded:
-  sm: 0.125rem
-  DEFAULT: 0.25rem
-  md: 0.375rem
-  lg: 0.5rem
-  xl: 0.75rem
+  sm: 4px
+  md: 8px
   full: 9999px
 spacing:
   base: 4px
-  gutter: 24px
-  margin-desktop: 64px
-  margin-mobile: 16px
-  unit-1: 4px
-  unit-2: 8px
-  unit-4: 16px
-  unit-8: 32px
-  unit-12: 48px
+  gutter: 28px
+  max-width: 1240px
+  section-y-desktop: 96px
+  section-y-mobile: 64px
+  nav-height: 76px
+motion:
+  ease: cubic-bezier(.2,.7,.2,1)
+  hover-lift: translateY(-2px)
+  reveal: opacity+translateY(18px), 0.6s, staggered .08s
 ---
 
 ## Brand & Style
-This design system embodies an engineered, high-performance aesthetic tailored for industrial technology and precision logistics. The brand personality is authoritative, resilient, and forward-thinking, targeting technical operators and engineers who require clarity in high-pressure environments.
+Datzon is an industrial automation engineering firm. The system speaks the language of the machines it integrates: **deep-space dark surfaces, one kinetic lime accent, and monospace data labels** — every element should feel like a machined component of a control system.
 
-The visual style is **Corporate / Modern** with a **Technical** edge. It prioritizes functional density and structural integrity, utilizing a rigorous grid and high-contrast accents to guide the eye through complex data sets. The emotional response is one of reliability and "over-engineered" precision, where every UI element feels like a machined component of a larger machine.
+The voice is authoritative and precise, never decorative. The signature move is restraint: lime (`#aad900`) appears only on primary actions, status LEDs, accent words inside headlines, and live data. Everything else is tonal grays on near-black.
 
 ## Colors
-The palette is rooted in a "Deep Space" industrial dark mode. The primary background (`#10141A`) provides a high-contrast foundation for the **Kinetic Green** (`#AAD900`) accent, which is reserved exclusively for primary actions, status indicators, and critical data points.
+Two worlds alternate down every page:
 
-Secondary surfaces (`#2B2D31`) are used to define containers and internal modules, creating subtle depth without breaking the dark-theme immersion. Neutral tones are skewed toward cool grays to maintain the metallic, high-tech feel of the interface.
+1. **Dark sections (default).** Background `#10141a` (or dimmer `#0a0e14` for hero/contact), tonal containers `#181c22 → #262a31`, hairlines at `rgba(255,255,255,.08)`. Text is `#dfe2eb` with muted tiers `#9aa1ac` and `#646b76`.
+2. **Paper sections (light counterpoint).** Warm off-white `#f4f5f1` with a 42px **graph-paper grid** (`rgba(16,24,8,.05)` 1px lines) — the engineering-notebook texture. Ink `#14171c`, white `#ffffff` cards, and the accent shifts to the darker `#5f7d00` so lime never sits on light backgrounds.
+
+`::selection` is lime on dark. Use `primary-bright #c5f632` only for hover states of lime elements; `primary-dim` (lime at 14%) for focus rings and glows.
 
 ## Typography
-The typographic scale is engineered for maximum legibility in technical contexts. **Space Grotesk** is utilized for headlines to echo the wide, geometric, and futuristic signature of the brand's logo, providing a distinct "machined" look.
+Three voices, strictly cast:
 
-For body content, **Geist** offers a clean, neutral, and developer-friendly sans-serif that remains legible at smaller sizes. **JetBrains Mono** is used for labels, data values, and metadata to reinforce the technical and precise nature of the system, using uppercase treatments and increased letter spacing for smaller UI elements.
+- **Michroma** — display voice for `h1`/`h2` and big stat numerals only. Always uppercase, weight 400, tight 1.12–1.18 line-height. It echoes the techno-geometric logo; never use it for paragraphs or UI labels.
+- **Geist** — everything readable: body (16.5px/1.65), leads, `h3`/`h4` at weight 600.
+- **JetBrains Mono** — the "machine readout" voice: buttons, chips, kickers, breadcrumbs, nav links, form labels, table/stat metadata. Small sizes (11–13px), uppercase, generous letter-spacing (.05em buttons, .2em chips/kickers).
+
+Accent words inside headlines get a `<span>` in lime (dark sections) or deep green (paper sections).
 
 ## Layout & Spacing
-This design system utilizes a **Fixed Grid** model for desktop, centered within the viewport to maintain a controlled information architecture. 
-
-- **Desktop:** 12-column grid, 1200px max-width, 24px gutters.
-- **Tablet:** 8-column fluid grid, 24px margins.
-- **Mobile:** 4-column fluid grid, 16px margins.
-
-The spacing rhythm is strictly based on a **4px base unit**. All padding and margins must be multiples of 4, ensuring a mathematical rigor to the layout. Horizontal dividers are used frequently to separate data tiers, reflecting an organized, modular blueprint.
+- Content max-width **1240px**, 28px side padding (20px mobile).
+- Sections breathe: ~96px vertical on desktop, 64px mobile.
+- 4px base unit for all padding/margins.
+- Stats and data rows are separated by 1px hairlines, not boxes.
+- Fixed top nav (76px) over a hero that fills the viewport (`min-height:100vh`) with a full-bleed grayscale photo, dark gradient overlay, and centered content.
 
 ## Elevation & Depth
-Depth is achieved through **Tonal Layers** rather than traditional shadows, emphasizing the flat, industrial hardware aesthetic.
-
-1.  **Level 0 (Floor):** `#10141A` - The primary application background.
-2.  **Level 1 (Card/Container):** `#2B2D31` - For primary modules and content groupings.
-3.  **Level 2 (Interaction/Pop-over):** `#3A3D42` - For elements that float above the main UI, such as tooltips or dropdown menus.
-
-Instead of soft ambient shadows, use **Low-contrast outlines** (1px border, 10% opacity white) to define edges. This maintains a crisp, architectural feel. For "Active" states, a subtle glow effect using the Kinetic Green at 15% opacity can be applied to simulate a powered-on status.
+No drop shadows. Depth = **tonal layers + 1px outlines**:
+- Dark: containers step `#181c22 → #1c2026 → #262a31`, edges defined by `rgba(255,255,255,.08)` borders.
+- Paper: white cards on the graph-paper field with `rgba(16,24,8,.12)` borders.
+- "Powered-on" affordance: lime glow ring (`0 0 0 3–4px primary-dim`) on focused inputs and hovered primary buttons; blinking lime LED dots for live status.
 
 ## Shapes
-To align with the high-tech, engineered aesthetic, the shape language is **Soft (0.25rem)**. This provides just enough radius to feel modern and intentional without losing the rigid, structural character of an industrial tool.
-
-- **Standard Elements:** 4px radius (buttons, inputs, chips).
-- **Large Containers:** 8px radius (cards, modals).
-- **Status Indicators:** 0px (sharp) or full pill-shape for specific state badges to differentiate them from functional buttons.
+Engineered-soft: **4px radius** on buttons, chips, inputs; **8px** on cards and large containers. No pills except status LEDs (circles). Corners never exceed 8px.
 
 ## Components
-- **Buttons:** Primary buttons use a solid Kinetic Green (`#AAD900`) background with black text for maximum contrast. Secondary buttons use an outline style with 1px Kinetic Green borders.
-- **Inputs:** Fields should have a `#2B2D31` background with a subtle bottom border. Focus states must trigger a 1px solid Kinetic Green border glow.
-- **Chips:** Small, rectangular tags using JetBrains Mono. Used for status (e.g., "ONLINE", "IDLE") with background tints corresponding to the status severity.
-- **Cards:** No shadows. Use a 1px border of `#3A3D42` to separate from the background. Headers should have a subtle background fill to denote structural hierarchy.
-- **Data Tables:** High-density layouts with strictly aligned columns. Use "Geist" for cell content and "JetBrains Mono" for numerical data to ensure tabular alignment.
-- **Navigation:** Vertical sidebars are preferred to mimic industrial control panels, using high-contrast icons and Space Grotesk for top-level categories.
+- **Buttons:** JetBrains Mono 13px, 15×26px padding. Primary = solid lime, dark text; hover → `#c5f632`, lift -2px, lime-dim ring. Ghost = 1px `rgba(255,255,255,.4)` border; hover → lime border + lime text. On paper sections use the dark-ink ghost variant. Arrows (`→`) slide 4px right on hover.
+- **Chip / kicker:** lime block chip (mono, .2em tracking) for hero badges; text kickers in deep green/lime with .2em tracking elsewhere.
+- **Nav:** fixed, translucent dark with blur on scroll; mono links with lime underline-grow on hover/active.
+- **Forms:** dark container inputs (`#1c2026`), 1px outline, focus → lime border + lime-dim glow.
+- **Stats:** Michroma numerals with lime accent digits, hairline column separators, mono labels.
+- **Simulation canvas (robotics):** isometric canvas on `surface-container-low`, mono HUD labels at corners, lime LED "En ciclo" badge, solid-lime play/pause toggle bottom-left that inverts to lime outline when paused.
+- **Footer:** `#0a0e14`, hairline top border, mono link columns.
+
+## Motion
+One easing curve everywhere: `cubic-bezier(.2,.7,.2,1)`. Scroll-reveals fade+rise 18px over 0.6s with .08s stagger. Hovers lift -2px. Respect `prefers-reduced-motion`: gate all entrance animations so base state is always visible.

@@ -78,6 +78,7 @@ export default async function RootLayout({
   return (
     <html
       lang="es"
+      data-scroll-behavior="smooth"
       className={`${michroma.variable} ${geist.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <head>

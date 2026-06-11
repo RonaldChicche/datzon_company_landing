@@ -39,11 +39,11 @@ Landing page corporativa de **Datzon**, empresa peruana de ingeniería y automat
 
 ### Servicios core (en orden de prioridad)
 
-1. **Diseño, fabricación y robótica industrial** — sistemas automatizados, robots industriales, sistemas de control, maquinaria, dispositivos electrónicos a medida. **PRIORIDAD PRINCIPAL.**
+1. **Diseño, fabricación y robótica industrial** — sistemas automatizados, robots industriales, sistemas de control, impresión 3D y prototipado, maquinaria, dispositivos electrónicos a medida. **PRIORIDAD PRINCIPAL.**
 2. **Automatización industrial y control** — PLC, HMI, SCADA, telemetría, monitoreo remoto, integración de sistemas de control.
 3. **Desarrollo de software y sistemas embebidos** — apps web/móviles, backend/frontend, integración hardware-software, analítica, IA aplicada. **Capacidad menor por ahora.**
 
-Complementarios (NO comunicar como core todavía): impresión 3D y prototipado, consultoría técnica, import/export de equipos, licitaciones.
+Complementarios (NO comunicar como core todavía): consultoría técnica, import/export de equipos, licitaciones.
 
 - **Cliente objetivo:** empresas industriales y de manufactura que buscan automatizar procesos, optimizar producción o implementar sistemas de control. B2B, decisiones racionales.
 - **Mercado:** Perú (base Lima), con capacidad nacional e internacional.
@@ -66,34 +66,6 @@ Complementarios (NO comunicar como core todavía): impresión 3D y prototipado, 
 **Negocio:** transmitir credibilidad técnica a empresas industriales, generar contactos vía formulario, posicionar a Datzon en búsquedas de automatización industrial en Perú.
 
 **NO es prioridad ahora:** integración GenAI, datos en tiempo real, i18n completo, e-commerce.
-
----
-
-## Brand y estilo visual
-
-**Logo:** ícono de "D" estilizada con forma de circuito (nodo central, esquinas recortadas — lenguaje visual PCB/automatización) + wordmark DATZON + subtítulo INDUSTRIAL AUTOMATION.
-
-**Variantes:**
-
-- **V1 Oscura** — ícono verde lima + texto blanco sobre negro. Uso digital, web, presentaciones.
-- **V1 Clara** — ícono negro + texto negro sobre blanco. Documentos, impresión.
-- **V3 EPP/Field** — ícono negro sin caja, texto negro (fondos claros) o blanco (fondos oscuros). Bordado en chalecos, cascos, uniformes. **Regla: nunca verde lima sobre fondos flúor.**
-
-**Paleta** (⚠️ confirmar hex exactos con archivo fuente):
-
-- Negro principal: ~`#0D0D0D`
-- Verde lima accent: ~`#8DC63F`
-- Blanco: `#FFFFFF`
-- Grises intermedios de UI: pendiente definir
-
-**Tipografía:**
-
-- Wordmark DATZON: sans-serif geométrica bold/heavy, mayúsculas (⚠️ confirmar nombre exacto).
-- Web: Inter (body) + Manrope (headings), vía `next/font/google`.
-
-**Tono de voz:** técnico-preciso, directo, sin adornos. El cliente B2B valora competencia sobre creatividad.
-**Personalidad:** ingeniería de precisión. Confiable, técnico, moderno. Startup de ingenieros para ingenieros.
-**Lo que NO es Datzon:** lenguaje vago ("soluciones integrales"), exceso de marketing, promesas sin sustento técnico.
 
 ---
 
