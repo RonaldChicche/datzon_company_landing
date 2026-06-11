@@ -76,7 +76,7 @@ export default function SolutionsPage() {
             <div className="relative group overflow-hidden aspect-square h-full max-h-[500px] w-full mx-auto md:ml-auto">
               <div className="absolute inset-0 bg-neutral-900/10 mix-blend-multiply z-10"></div>
               <Image
-                src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800&h=800"
+                src="/images/industrial-planta.jpg"
                 alt="Línea de rodillos industriales"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
@@ -186,7 +186,7 @@ export default function SolutionsPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center relative z-10">
             <div className="order-2 md:order-1 relative group aspect-square h-full max-h-[500px]">
               <Image
-                src="https://images.unsplash.com/photo-1565043666747-69f6646db940?auto=format&fit=crop&q=80&w=800&h=800"
+                src="/images/industrial-robot.jpg"
                 alt="Brazo robótico industrial"
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"

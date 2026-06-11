@@ -18,7 +18,7 @@ export default function Home() {
         <section className="relative h-[921px] flex items-center justify-center overflow-hidden bg-neutral-900">
           <div className="absolute inset-0 z-0">
             <Image
-              src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=1920"
+              src="/images/industrial-planta.jpg"
               alt="Línea de producción industrial automatizada"
               fill
               priority
@@ -35,7 +35,7 @@ export default function Home() {
             <h1 className="text-6xl md:text-8xl font-black tracking-tighter text-white leading-none mb-8 font-headline">
               REVOLUCIONANDO <br />
               <span className="text-primary-container">EL FUTURO</span> <br />
-               DE LAS INDUSTRIAS
+              DE LAS INDUSTRIAS
             </h1>
             <p className="text-white/70 max-w-2xl mx-auto font-sans text-lg mb-10 leading-relaxed">
               Diseño, fabricación e integración de sistemas industriales automatizados. Robótica, PLC, SCADA y maquinaria a medida para optimizar la producción de tu planta.
@@ -90,7 +90,7 @@ export default function Home() {
               </div>
               <div className="absolute top-0 right-0 h-full w-1/2 overflow-hidden">
                 <Image
-                  src="https://images.unsplash.com/photo-1565043666747-69f6646db940?auto=format&fit=crop&q=80&w=800"
+                  src="/images/industrial-robot.jpg"
                   alt="Sistema robótico industrial automatizado"
                   fill
                   sizes="25vw"
@@ -112,7 +112,7 @@ export default function Home() {
             </div>
             <div className="md:col-span-8 h-80 bg-neutral-200 relative overflow-hidden">
               <Image
-                src="https://images.unsplash.com/photo-1565043666747-69f6646db940?auto=format&fit=crop&q=80&w=1200&h=800"
+                src="/images/industrial-robot.jpg"
                 alt="Brazo robótico industrial en operación"
                 fill
                 sizes="(max-width: 768px) 100vw, 66vw"
@@ -219,7 +219,7 @@ export default function Home() {
                 </div>
                 <div className="relative w-full h-48">
                   <Image
-                    src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800"
+                    src="/images/industrial-planta.jpg"
                     alt="Equipo de automatización industrial"
                     fill
                     sizes="(max-width: 768px) 100vw, 50vw"
