@@ -3,79 +3,77 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
-interface HeaderProps {
-  onContactSales: () => void;
-}
+const NAV_LINKS = [
+  { href: "/", label: "Inicio" },
+  { href: "/robotica", label: "Robótica" },
+  { href: "/proyectos", label: "Proyectos" },
+  { href: "/equipo", label: "Equipo" },
+] as const;
 
-export default function Header({ onContactSales }: HeaderProps) {
+export default function Header() {
   const pathname = usePathname();
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
-  const isActive = (path: string) => {
-    if (path === "/" && pathname === "/") return true;
-    if (path !== "/" && pathname.startsWith(path)) return true;
-    return false;
-  };
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Close mobile menu on navigation
+  useEffect(() => { setMobileOpen(false); }, [pathname]);
+
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
-    <nav className="bg-neutral-900 text-white fixed top-0 left-0 w-full z-[100] flex justify-between items-center px-6 md:px-12 py-4 h-20">
-      {/* Logo */}
-      <Link
-        href="/"
-        className="shrink-0 cursor-pointer group z-10 block"
-      >
-        <div className="group-hover:bg-primary-container transition-all duration-300 flex items-center justify-center p-0.5">
+    <header className={`nav${scrolled ? " scrolled" : ""}`} id="nav">
+      <div className="nav-inner">
+        {/* Logo */}
+        <Link href="/" className="nav-logo" aria-label="Datzon — inicio">
           <Image
             src="/logo_datzon.svg"
-            alt="DATZON Logo"
-            width={240}
-            height={82}
-            className="w-auto h-12 md:h-14 block"
+            alt="Datzon Industrial Automation"
+            width={140}
+            height={48}
+            className="h-7 w-auto"
             priority
           />
+        </Link>
+
+        {/* Desktop nav links */}
+        <nav
+          className={`nav-links${mobileOpen ? " open" : ""}`}
+          aria-label="Navegación principal"
+        >
+          {NAV_LINKS.map(({ href, label }) => (
+            <Link key={href} href={href} className={isActive(href) ? "active" : ""}>
+              {label}
+            </Link>
+          ))}
+        </nav>
+
+        {/* CTA + burger */}
+        <div className="nav-cta">
+          <Link href="/#cotizar" className="btn btn-primary">
+            Cotizar
+          </Link>
+          <button
+            className="nav-burger"
+            aria-label={mobileOpen ? "Cerrar menú" : "Abrir menú"}
+            aria-expanded={mobileOpen}
+            onClick={() => setMobileOpen((v) => !v)}
+          >
+            <span />
+            <span />
+            <span />
+          </button>
         </div>
-      </Link>
-
-      {/* Navigation Links - Centered Absolutely */}
-      <div className="hidden md:flex items-center gap-10 absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2">
-        <Link
-          href="/"
-          className={`font-headline font-bold tracking-tight uppercase transition-colors pb-1 border-b-2 ${isActive("/")
-            ? "text-primary-container border-primary-container"
-            : "text-white/80 hover:text-white border-transparent hover:border-white/20"
-            }`}
-        >
-          Inicio
-        </Link>
-        <Link
-          href="/solutions"
-          className={`font-headline font-bold tracking-tight uppercase transition-colors pb-1 border-b-2 ${isActive("/solutions")
-            ? "text-primary-container border-primary-container"
-            : "text-white/80 hover:text-white border-transparent hover:border-white/20"
-            }`}
-        >
-          Soluciones
-        </Link>
-        <Link
-          href="/equipo"
-          className={`font-headline font-bold tracking-tight uppercase transition-colors pb-1 border-b-2 ${isActive("/equipo")
-            ? "text-primary-container border-primary-container"
-            : "text-white/80 hover:text-white border-transparent hover:border-white/20"
-            }`}
-        >
-          Equipo
-        </Link>
       </div>
-
-      {/* Right Side */}
-      <div className="flex items-center z-10">
-        <button
-          onClick={onContactSales}
-          className="bg-primary-container text-on-primary-container font-headline font-bold uppercase py-3 px-6 hover:brightness-110 active:scale-95 transition-all text-xs tracking-tight min-h-[48px]"
-        >
-          Contactar Ventas
-        </button>
-      </div>
-    </nav>
+    </header>
   );
 }
