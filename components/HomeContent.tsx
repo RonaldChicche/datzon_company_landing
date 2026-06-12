@@ -162,9 +162,9 @@ export default function HomeContent() {
           <div className="stats-grid">
             {[
               { n: <><b>6</b></>, l: "Dominios de ingeniería integrados, de la celda robótica al dato" },
-              { n: <>3 <b>nubes</b></>, l: "Soluciones sobre Azure, AWS y Google Cloud" },
+              { n: <>-<b>30%</b></>, l: "Reducción promedio en tiempos de ciclo" },
               { n: <><b>24/7</b></>, l: "Monitoreo y soporte de líneas y sistemas críticos" },
-              { n: <><b>0</b> silos</>, l: "Planta, PLC y ERP/SAP conectados en un mismo flujo" },
+              { n: <>+<b>20</b></>, l: "Años de experiencia acumulada" },
             ].map((stat, i) => (
               <motion.div key={i} {...rv(i * 0.08)} className="stat">
                 <div className="n">{stat.n}</div>
