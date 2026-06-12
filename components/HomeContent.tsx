@@ -8,8 +8,8 @@ import ContactForm from "@/components/ContactForm";
 const EASE = [0.2, 0.7, 0.2, 1] as [number, number, number, number];
 
 const BRANDS = [
-  "AWS", "Microsoft Azure", "Google Cloud", "Siemens", "SAP",
-  "Rockwell", "Schneider Electric", "ABB", "FANUC", "Databricks", "Power BI",
+  "Microsoft Azure", "Power BI", "SAP", "ABB", "Universal Robots", "Yaskawa", "Siemens",
+  "Festo", "Schneider Electric", "Raspberry Pi", "Farino"
 ];
 
 const SERVICES = [
