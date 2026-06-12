@@ -192,8 +192,8 @@ export default function HomeContent() {
               <div className="info-row">
                 <div className="k">Empresa</div>
                 <div className="v">
-                  DATZON S.A.C.
-                  <span>RUC 20615575624 · Industrial Automation</span>
+                  Datzon Industrial Automation
+                  <span>RUC 20615575624</span>
                 </div>
               </div>
               <div className="info-row">

@@ -578,7 +578,7 @@ header.nav.scrolled {
 
 /* watermark — "DAT" rotated 90° (letters tilt sideways, fill section height) */
 .watermark {
-  position: absolute; top: 50%; right: -2%;
+  position: absolute; top: 50%; right: 4%;
   transform: translateY(-50%);
   font-family: var(--font-display);
   font-size: 24vh; line-height: 1;
@@ -1418,7 +1418,7 @@ body.page-light .page-head .grid-bg {
   background-size: 42px 42px;
 }
 
-.page-head .watermark { font-size: min(26vh, 200px); right: -2%; z-index: 0; }
+.page-head .watermark { font-size: min(26vh, 200px); right: 4%; z-index: 0; }
 
 body.page-light .page-head .wrap {
   position: relative;

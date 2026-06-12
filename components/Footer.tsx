@@ -36,7 +36,7 @@ export default function Footer() {
 
           {/* Col 3 — Datos de empresa */}
           <div className="ft-col">
-            <h4>Datzon S.A.C.</h4>
+            <h4>Datzon Industrial Automation</h4>
             <span className="block text-muted text-sm py-[5px]">RUC 20615575624</span>
             <span className="block text-muted text-sm py-[5px]">Cal. Mercator 484, Dpto. 101</span>
             <span className="block text-muted text-sm py-[5px]">San Borja, Lima, Perú</span>
@@ -62,7 +62,7 @@ export default function Footer() {
         </div>
 
         <div className="ft-bottom">
-          <p>© {year} Datzon S.A.C. · Industrial Automation</p>
+          <p>© {year} Datzon S.A.C</p>
           <p>Diseñado y operado desde Lima, Perú</p>
         </div>
       </div>

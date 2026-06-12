@@ -30,7 +30,7 @@ Landing page corporativa de **Datzon**, empresa peruana de ingeniería y automat
 
 ## Identidad de la empresa
 
-- **Razón social:** DATZON S.A.C. — **RUC:** 20615575624
+- **Razón social:** DATZON S.A.C — **RUC:** 20615575624
 - **Nombre Comercial:** DATZON INDUSTRIAL AUTOMATION
 - **Fundación:** marzo 2026 (startup en lanzamiento)
 - **Domicilio:** Cal. Mercator 484, Dpto. 101, San Borja, Lima, Perú

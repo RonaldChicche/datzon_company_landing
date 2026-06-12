@@ -48,7 +48,7 @@ const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "Datzon",
-  legalName: "DATZON S.A.C.",
+  legalName: "Datzon Industrial Automation",
   url: "https://www.datzoncompany.com",
   logo: "https://www.datzoncompany.com/logo_datzon.svg",
   foundingDate: "2026-03",
