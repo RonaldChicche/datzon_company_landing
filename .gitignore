@@ -25,6 +25,12 @@ yarn-error.log*
 .env*
 !.env.example
 
+# imágenes de staging del script de subida
+# (las fuentes pesadas ya viven en Supabase Storage, no en el repo;
+#  conservamos solo el .gitkeep para mantener la carpeta)
+/scripts/images-to-upload/*
+!/scripts/images-to-upload/.gitkeep
+
 # vercel
 .vercel
 
