@@ -9,6 +9,7 @@ interface Readouts {
   state: string;
   boxes: number;
   pallets: number;
+  totalEmpaquetado: number;
 }
 
 interface PalletizerSimProps {
@@ -24,7 +25,7 @@ export default function PalletizerSim({ className = "" }: PalletizerSimProps) {
   const [pattern, setPattern] = useState<Pattern>("2x2");
   const [speed, setSpeed] = useState(100);
   const [paused, setPaused] = useState(false);
-  const [readouts, setReadouts] = useState<Readouts>({ state: "ESPERA", boxes: 0, pallets: 0 });
+  const [readouts, setReadouts] = useState<Readouts>({ state: "ESPERA", boxes: 0, pallets: 0, totalEmpaquetado: 0 });
 
   const prefersReduced = useReducedMotion() ?? false;
 
@@ -115,9 +116,10 @@ export default function PalletizerSim({ className = "" }: PalletizerSimProps) {
         transfer: null as { phase: "out" | "in"; t: number } | null,
         shift: 0,
         boxesTotal: 0,
+        totalEmpaquetado: 0,
         palletsDone: 0,
         state: "ESPERA",
-        onReadout: (_r: Readouts) => {},
+        onReadout: (_r: Readouts) => { },
         cleanup: ro.disconnect.bind(ro),
       };
 
@@ -125,7 +127,13 @@ export default function PalletizerSim({ className = "" }: PalletizerSimProps) {
 
       function setState(s: string) {
         sim.state = s;
-        sim.onReadout({ state: s, boxes: sim.boxesTotal, pallets: sim.palletsDone });
+        const capacity = slots().length;
+        sim.onReadout({
+          state: s,
+          boxes: sim.nextIdx % capacity,
+          pallets: sim.palletsDone,
+          totalEmpaquetado: sim.totalEmpaquetado
+        });
       }
 
       function slots(): Slot[] {
@@ -192,9 +200,18 @@ export default function PalletizerSim({ className = "" }: PalletizerSimProps) {
                 sim.placed.push(sl);
                 sim.nextIdx++;
                 sim.boxesTotal++;
-                if (sim.nextIdx >= slots().length)
+                const capacity = slots().length;
+                if (sim.nextIdx >= capacity) {
+                  sim.totalEmpaquetado += capacity;
+                  sim.palletsDone++;
                   sim.transfer = { phase: "out", t: 0 };
-                sim.onReadout({ state: sim.state, boxes: sim.boxesTotal, pallets: sim.palletsDone });
+                }
+                sim.onReadout({
+                  state: sim.state,
+                  boxes: sim.nextIdx % capacity,
+                  pallets: sim.palletsDone,
+                  totalEmpaquetado: sim.totalEmpaquetado
+                });
               },
             },
             { p: { x: sl.x, y: sl.y, z: 88 }, d: 0.45 },
@@ -219,10 +236,15 @@ export default function PalletizerSim({ className = "" }: PalletizerSimProps) {
             sim.shift = e * 250;
             sim.outOff = (sim.outOff + sp * dt) % 16;
             if (sim.transfer.t >= 1) {
-              sim.palletsDone++;
               sim.placed = []; sim.nextIdx = 0;
               sim.transfer = { phase: "in", t: 0 };
-              sim.onReadout({ state: sim.state, boxes: sim.boxesTotal, pallets: sim.palletsDone });
+              const capacity = slots().length;
+              sim.onReadout({
+                state: sim.state,
+                boxes: sim.nextIdx % capacity,
+                pallets: sim.palletsDone,
+                totalEmpaquetado: sim.totalEmpaquetado
+              });
             }
           } else {
             sim.shift = -140 * (1 - e);
@@ -277,7 +299,7 @@ export default function PalletizerSim({ className = "" }: PalletizerSimProps) {
         const m = 3.2;
         poly(
           [P(x - m, y - BS / 2, zb + BH + 0.1), P(x + m, y - BS / 2, zb + BH + 0.1),
-           P(x + m, y + BS / 2, zb + BH + 0.1), P(x - m, y + BS / 2, zb + BH + 0.1)],
+          P(x + m, y + BS / 2, zb + BH + 0.1), P(x - m, y + BS / 2, zb + BH + 0.1)],
           "rgba(120,95,50,.5)"
         );
       }
@@ -291,7 +313,7 @@ export default function PalletizerSim({ className = "" }: PalletizerSimProps) {
         box((xa + xb) / 2, y, top - 9, xb - xa, wd, 9, "#22262d", "#181c22", "#14181d", "rgba(0,0,0,.45)");
         poly(
           [P(xa, y - wd / 2 + 3, top + 0.1), P(xb, y - wd / 2 + 3, top + 0.1),
-           P(xb, y + wd / 2 - 3, top + 0.1), P(xa, y + wd / 2 - 3, top + 0.1)],
+          P(xb, y + wd / 2 - 3, top + 0.1), P(xa, y + wd / 2 - 3, top + 0.1)],
           "#101319"
         );
         if (withStripes) {
@@ -299,14 +321,14 @@ export default function PalletizerSim({ className = "" }: PalletizerSimProps) {
           for (let sx = xa + (off % 16); sx < xb - 2; sx += 16)
             poly(
               [P(sx, y - wd / 2 + 4, top + 0.2), P(sx + 2, y - wd / 2 + 4, top + 0.2),
-               P(sx + 2, y + wd / 2 - 4, top + 0.2), P(sx, y + wd / 2 - 4, top + 0.2)],
+              P(sx + 2, y + wd / 2 - 4, top + 0.2), P(sx, y + wd / 2 - 4, top + 0.2)],
               "#262c35"
             );
           ctx.restore();
         }
         poly(
           [P(xa, y - wd / 2, top + 0.15), P(xb, y - wd / 2, top + 0.15),
-           P(xb, y - wd / 2 + 1.6, top + 0.15), P(xa, y - wd / 2 + 1.6, top + 0.15)],
+          P(xb, y - wd / 2 + 1.6, top + 0.15), P(xa, y - wd / 2 + 1.6, top + 0.15)],
           "rgba(170,217,0,.35)"
         );
       }
@@ -319,7 +341,7 @@ export default function PalletizerSim({ className = "" }: PalletizerSimProps) {
           const gx = cx - pw / 2 + (pw / 3) * i;
           poly(
             [P(gx - 0.8, cy - pd / 2, OUT_TOP + PAL_H + 0.1), P(gx + 0.8, cy - pd / 2, OUT_TOP + PAL_H + 0.1),
-             P(gx + 0.8, cy + pd / 2, OUT_TOP + PAL_H + 0.1), P(gx - 0.8, cy + pd / 2, OUT_TOP + PAL_H + 0.1)],
+            P(gx + 0.8, cy + pd / 2, OUT_TOP + PAL_H + 0.1), P(gx - 0.8, cy + pd / 2, OUT_TOP + PAL_H + 0.1)],
             "rgba(0,0,0,.3)"
           );
         }
@@ -362,8 +384,7 @@ export default function PalletizerSim({ className = "" }: PalletizerSimProps) {
         ctx.lineWidth = 2.5; ctx.strokeStyle = "#ff6a2b"; ctx.stroke();
       }
 
-      function drawRobot() {
-        const sf = SC / 1.8;
+      function drawRobotBase() {
         shadow(0, 0, 26, 0.28);
         box(0, 0, 0, 30, 30, 6, "#31353c", "#262a31", "#1c2026", "rgba(0,0,0,.4)");
         const [bx0, by0] = P(0, 0, 6), [bx1, by1] = P(0, 0, 31);
@@ -377,6 +398,10 @@ export default function PalletizerSim({ className = "" }: PalletizerSimProps) {
         ctx.beginPath(); ctx.ellipse(bx1, by1, cr, cry, 0, 0, Math.PI * 2);
         ctx.fillStyle = "#f1f2f4"; ctx.fill();
         ctx.lineWidth = 2.2; ctx.strokeStyle = "#ff6a2b"; ctx.stroke();
+      }
+
+      function drawRobotArm() {
+        const sf = SC / 1.8;
         const j = ik();
         if (sim.carrying) { shadow(sim.tool.x, sim.tool.y, 15, 0.14); carton(sim.tool.x, sim.tool.y, sim.tool.z - BH); }
         thickLine(j.sh, j.el, 11 * sf, "#eef0f3", "#b9bdc6");
@@ -407,6 +432,9 @@ export default function PalletizerSim({ className = "" }: PalletizerSimProps) {
       function draw() {
         ctx.clearRect(0, 0, W, H);
         drawFloor();
+        conveyorX(IN_X0 - 10, PICK_X + 22, IN_Y, IN_TOP, 36, sim.beltOff, true);
+        [...sim.queue].reverse().forEach((x) => carton(x, IN_Y, IN_TOP));
+        drawRobotBase();
         conveyorX(OUT_X0, OUT_X1, OUT_Y, OUT_TOP, 12 + 2 * PITCH + 14, sim.outOff, true);
         const vis = sim.shift > -139;
         if (vis) {
@@ -415,9 +443,7 @@ export default function PalletizerSim({ className = "" }: PalletizerSimProps) {
             .sort((a, b) => (a.x + a.y) - (b.x + b.y))
             .forEach((s) => carton(s.x + sim.shift, s.y, PAL_TOP));
         }
-        conveyorX(IN_X0 - 10, PICK_X + 22, IN_Y, IN_TOP, 36, sim.beltOff, true);
-        sim.queue.forEach((x) => carton(x, IN_Y, IN_TOP));
-        drawRobot();
+        drawRobotArm();
       }
 
       /* rAF loop */
@@ -559,6 +585,10 @@ export default function PalletizerSim({ className = "" }: PalletizerSimProps) {
           <div className="readrow">
             <span className="lab">Parihuelas</span>
             <span className="val">{readouts.pallets}</span>
+          </div>
+          <div className="readrow">
+            <span className="lab">Total empaquetado</span>
+            <span className="val">{readouts.totalEmpaquetado}</span>
           </div>
         </div>
 
