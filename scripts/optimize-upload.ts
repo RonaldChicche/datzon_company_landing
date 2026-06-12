@@ -75,7 +75,7 @@ async function optimizeToWebp(
   let tmpFile: string | null = null;
 
   try {
-    const image = sharp(filePath, { failOnError: false });
+    const image = sharp(filePath, { failOn: "none" });
     const { width = MAX_WIDTH, size: originalSize = 0 } = await image.metadata();
     const buffer = await image
       .resize({ width: Math.min(width, MAX_WIDTH), withoutEnlargement: true })
@@ -92,7 +92,7 @@ async function optimizeToWebp(
     execSync(`sips -s format jpeg "${filePath}" --out "${tmpFile}"`, { stdio: "pipe" });
     workPath = tmpFile;
 
-    const image = sharp(workPath, { failOnError: false });
+    const image = sharp(workPath, { failOn: "none" });
     const { width = MAX_WIDTH } = await image.metadata();
     const buffer = await image
       .resize({ width: Math.min(width, MAX_WIDTH), withoutEnlargement: true })
