@@ -158,15 +158,17 @@ La credencial secreta **nunca** aparece en código de la aplicación. Usarla en 
 - Toda tabla lleva RLS habilitado, con grants explícitos y mínimos por rol. Desde el 2026-10-30 Supabase deja de auto-exponer tablas al Data API en todos los proyectos, así que los grants explícitos son obligatorios de todos modos.
 - `SECURITY DEFINER` está prohibido salvo justificación escrita en el propio archivo SQL.
 - Los cambios de schema van por migraciones del CLI en `supabase/migrations/`, versionadas. No se aplica DDL suelto: `.mcp.json` usa `read_only=true` justamente para impedirlo.
+- El CLI de Supabase ya está instalado e inicializado (`supabase/config.toml`), pero el enlace al proyecto remoto (`supabase link`) todavía está **pendiente**: requiere un personal access token y la contraseña de la base de datos. Hasta que se enlace, `supabase/migrations/` no existe; se creará junto con la primera migración.
 
 ### Storage
 
-Todos los objetos van al bucket **`landing`**, con exactamente dos prefijos de primer nivel:
+Todos los objetos van al bucket **`landing`**. Su contenido vive bajo estos prefijos de primer nivel:
 
 | Prefijo | Contenido |
 |---|---|
 | `project/<slug>/` | Fotos de las galerías de proyectos. Un slug por proyecto, generado por `pnpm optimize-images` a partir del nombre de la carpeta. |
 | `site/` | Todo lo demás: retratos del equipo, imágenes de páginas y logos. |
+| `raw/` | **No es un prefijo de contenido.** Es el destino de descarte de `scripts/optimize-upload.ts` cuando en `scripts/images-to-upload/` hay imágenes sueltas (sin subcarpetas) y no se indica un proyecto por argumento. No lo uses para nada que el sitio referencie. Está previsto eliminarlo cuando se revise ese script en otro sub-proyecto. |
 
 No crees prefijos nuevos de primer nivel sin actualizar esta tabla. No antepongas `landing/` dentro del bucket: sería redundante con su nombre. Si en el futuro este proyecto Supabase aloja otra aplicación, va en **otro bucket**, no en una carpeta de este.
 
