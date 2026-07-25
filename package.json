@@ -8,6 +8,7 @@
     "analyze": "cross-env ANALYZE=true next build --webpack",
     "start": "next start",
     "lint": "eslint",
+    "test": "vitest run",
     "optimize-images": "tsx scripts/optimize-upload.ts"
   },
   "dependencies": {
@@ -40,6 +41,7 @@
     "sharp": "^0.35.1",
     "tailwindcss": "^4",
     "tsx": "^4.22.4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^4.1.10"
   }
 }
