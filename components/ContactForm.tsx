@@ -3,29 +3,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-
-const schema = z.object({
-  nombre:    z.string().min(2, "Nombre requerido (mín. 2 caracteres)"),
-  empresa:   z.string().optional(),
-  email:     z.string().email("Correo electrónico inválido"),
-  telefono:  z.string().optional(),
-  industria: z.string().optional(),
-  mensaje:   z.string().min(10, "Describe brevemente tu necesidad (mín. 10 caracteres)"),
-  website:   z.string().max(0).optional(), // honeypot
-});
-
-type FormData = z.infer<typeof schema>;
-
-const INDUSTRIES = [
-  "Minería",
-  "Energía & utilities",
-  "Manufactura",
-  "Alimentos & bebidas",
-  "Logística & retail",
-  "Agroindustria",
-  "Otra",
-];
+import { contactFieldsSchema, type ContactFields, INDUSTRIES } from "@/lib/contact-schema";
 
 const ERR = { color: "#c0452f", fontSize: "11.5px", marginTop: "5px", display: "block", fontFamily: "var(--font-mono)", letterSpacing: ".03em" } as const;
 
@@ -37,15 +15,15 @@ export default function ContactForm() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<FormData>({ resolver: zodResolver(schema) });
+  } = useForm<ContactFields>({ resolver: zodResolver(contactFieldsSchema) });
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: ContactFields) => {
     setServerError(null);
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, source: "home" }),
       });
       if (!res.ok) {
         const body = (await res.json()) as { error?: string };
