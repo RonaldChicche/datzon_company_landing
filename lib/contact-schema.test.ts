@@ -41,6 +41,21 @@ describe("contactFieldsSchema", () => {
     expect(r.success).toBe(false);
   });
 
+  it("rechaza nombre de 121 caracteres", () => {
+    const r = contactFieldsSchema.safeParse({ ...minimoValido, nombre: "A".repeat(121) });
+    expect(r.success).toBe(false);
+  });
+
+  it("rechaza mensaje de 5001 caracteres", () => {
+    const r = contactFieldsSchema.safeParse({ ...minimoValido, mensaje: "A".repeat(5001) });
+    expect(r.success).toBe(false);
+  });
+
+  it("acepta mensaje de exactamente 5000 caracteres", () => {
+    const r = contactFieldsSchema.safeParse({ ...minimoValido, mensaje: "A".repeat(5000) });
+    expect(r.success).toBe(true);
+  });
+
   it("el honeypot relleno PASA la validación (se evalúa en el servidor)", () => {
     const r = contactFieldsSchema.safeParse({ ...minimoValido, website: "spam.com" });
     expect(r.success).toBe(true);

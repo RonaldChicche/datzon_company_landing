@@ -3,8 +3,10 @@ import { NextRequest } from "next/server";
 
 const insertMock = vi.fn();
 const fromMock = vi.fn(() => ({ insert: insertMock }));
+/** Indirección para poder variar el comportamiento (incluso lanzar) por test. */
+const getSupabaseClientMock = vi.fn(() => ({ from: fromMock }));
 vi.mock("@/lib/supabase/client", () => ({
-  getSupabaseClient: () => ({ from: fromMock }),
+  getSupabaseClient: () => getSupabaseClientMock(),
 }));
 
 const sendMock = vi.fn();
@@ -46,6 +48,7 @@ describe("POST /api/contact", () => {
     vi.unstubAllEnvs();
     insertMock.mockReset().mockResolvedValue({ error: null });
     fromMock.mockClear();
+    getSupabaseClientMock.mockReset().mockImplementation(() => ({ from: fromMock }));
     sendMock.mockReset().mockResolvedValue({ data: { id: "email_1" }, error: null });
     vi.stubEnv("RESEND_API_KEY", "re_test");
     vi.stubEnv("CONTACT_EMAIL", "contacto@datzoncompany.com");
@@ -97,6 +100,17 @@ describe("POST /api/contact", () => {
     expect(res.status).toBe(500);
     const body = (await res.json()) as { error: string };
     expect(body.error).toContain("contacto@datzoncompany.com");
+  });
+
+  it("getSupabaseClient lanza (env ausente en el host) → 500 JSON con el correo de contacto", async () => {
+    getSupabaseClientMock.mockImplementationOnce(() => {
+      throw new Error("Missing SUPABASE_URL");
+    });
+    const res = await POST(requestWith({ ...leadValido }));
+    expect(res.status).toBe(500);
+    const body = (await res.json()) as { error: string };
+    expect(body.error).toContain("contacto@datzoncompany.com");
+    expect(insertMock).not.toHaveBeenCalled();
   });
 
   it("email falla → 200 igual (el lead ya está guardado)", async () => {

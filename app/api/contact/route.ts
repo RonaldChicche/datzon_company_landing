@@ -93,22 +93,37 @@ export async function POST(request: NextRequest) {
 
   const { website: _website, ...lead } = result.data;
 
-  // Insert SIN .select(): devolver la fila exigiría permiso de lectura y
-  // rompería el modelo de buzón (anon solo tiene INSERT).
-  const { error } = await getSupabaseClient()
-    .from("leads")
-    .insert({ ...lead, ip_hash: hashIp(ip) });
-
-  if (error) {
-    // Solo código y mensaje del error; nunca el contenido del lead.
-    console.error("[contact] insert falló:", error.code, error.message);
-    return NextResponse.json(
+  const insertFailedResponse = () =>
+    NextResponse.json(
       {
         error:
           "No pudimos registrar tu solicitud. Escríbenos directamente a contacto@datzoncompany.com.",
       },
       { status: 500 }
     );
+
+  // getSupabaseClient() puede lanzar (p. ej. falta SUPABASE_URL o
+  // SUPABASE_PUBLISHABLE_KEY en el host) y el insert puede fallar sin lanzar
+  // (error en el resultado). Ambos casos deben terminar en el mismo 500 JSON
+  // diseñado, nunca en un 500 genérico del framework por una excepción sin
+  // capturar. Nunca loguear el contenido del lead, solo el mensaje del error.
+  try {
+    // Insert SIN .select(): devolver la fila exigiría permiso de lectura y
+    // rompería el modelo de buzón (anon solo tiene INSERT).
+    const { error } = await getSupabaseClient()
+      .from("leads")
+      .insert({ ...lead, ip_hash: hashIp(ip) });
+
+    if (error) {
+      console.error("[contact] insert falló:", error.code, error.message);
+      return insertFailedResponse();
+    }
+  } catch (err) {
+    console.error(
+      "[contact] cliente de Supabase o insert lanzó una excepción:",
+      err instanceof Error ? err.message : String(err)
+    );
+    return insertFailedResponse();
   }
 
   try {
