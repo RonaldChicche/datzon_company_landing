@@ -1,37 +1,53 @@
 -- ============================================================
--- RLS para el bucket "landing" en Supabase Storage
--- Ejecutar en: Dashboard Datzon → SQL Editor
+-- Estado de RLS del bucket "landing" — proyecto Datzon
+-- (adnvzdcqcneqjemxneht)
 --
--- Modelo de seguridad:
---   LECTURA  → pública (bucket public: true — cualquier visitante ve las fotos)
---   ESCRITURA → solo service role (script local con .env.local)
---
--- Por qué no necesitamos políticas para el service role:
---   El service role bypasea RLS por diseño de Supabase/PostgreSQL.
---   Las políticas de abajo protegen contra que el rol `anon` o `authenticated`
---   puedan escribir o borrar archivos (por ejemplo, alguien usando el anon key).
+-- ESTE ARCHIVO NO SE EJECUTA. Documenta la configuración real,
+-- verificada el 2026-07-25. Ver el spec en
+-- docs/superpowers/specs/2026-07-25-reglas-conexion-supabase-design.md
 -- ============================================================
 
--- ── LECTURA: cualquier visitante puede ver las imágenes ───────────────────────
--- (Redundante si el bucket ya es public: true, pero explícito es mejor.)
-CREATE POLICY "landing_lectura_publica"
-ON storage.objects FOR SELECT
-TO public
-USING (bucket_id = 'landing');
+-- ── Estado actual ─────────────────────────────────────────────────────────────
+--
+--   Bucket "landing"        → public = true
+--   storage.objects         → RLS habilitado, CERO políticas
+--
+-- Consecuencias, y por qué esto es correcto:
+--
+--   LECTURA   Las imágenes se sirven por la URL pública del bucket. Funciona
+--             porque el bucket es public, no por una política de RLS.
+--
+--   ESCRITURA Denegada para anon y authenticated. Con RLS habilitado y sin
+--             políticas, Postgres deniega por defecto: no hace falta escribir
+--             una política de denegación explícita.
+--
+--   SCRIPTS   scripts/optimize-upload.ts sube con la service_role key, que
+--             tiene BYPASSRLS. Por eso funciona sin ninguna política.
 
--- ── ESCRITURA: bloqueada para anon y authenticated ────────────────────────────
--- Sin estas políticas, por defecto RLS deniega todo de todas formas.
--- Las dejamos comentadas como documentación explícita de la intención.
--- Si en el futuro querés dar acceso de escritura a un usuario autenticado,
--- agregás una política aquí en lugar de tocar el service role.
+-- ── Por qué NO hay una política de lectura pública ────────────────────────────
+--
+-- Una versión anterior de este archivo proponía:
+--
+--   CREATE POLICY "landing_lectura_publica"
+--   ON storage.objects FOR SELECT TO public
+--   USING (bucket_id = 'landing');
+--
+-- Nunca se ejecutó, y se decidió NO ejecutarla. Es redundante con
+-- public = true, y sería una política más que mantener y auditar sin que
+-- cambie el comportamiento observable.
+--
+-- No la agregues "para que quede explícito". Si en algún momento el bucket
+-- pasa a private, entonces sí hará falta una política de lectura, y este
+-- comentario deja de aplicar.
 
--- CREATE POLICY "landing_upload_denegado_anon"
--- ON storage.objects FOR INSERT TO anon WITH CHECK (false);
+-- ── Si en el futuro hace falta escritura desde el cliente ─────────────────────
+--
+-- Agregar una política acotada acá, en lugar de repartir la service_role key.
+-- La regla del proyecto (CLAUDE.md) es que la credencial secreta vive solo en
+-- scripts locales.
 
--- CREATE POLICY "landing_upload_denegado_authenticated"
--- ON storage.objects FOR INSERT TO authenticated WITH CHECK (false);
-
--- ── RATE LIMITING (futuro) ────────────────────────────────────────────────────
+-- ── Rate limiting ─────────────────────────────────────────────────────────────
+--
 -- Proteger contra abuso de peticiones de lectura se maneja a nivel de
--- infraestructura (Vercel CDN cache, Supabase plan limits), no de RLS.
+-- infraestructura (Vercel CDN cache, límites del plan de Supabase), no de RLS.
 -- RLS no es el lugar para rate limiting.
