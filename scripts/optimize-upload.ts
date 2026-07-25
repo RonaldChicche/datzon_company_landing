@@ -23,6 +23,7 @@ import { readdir, stat, writeFile, unlink } from "fs/promises";
 import { execSync } from "child_process";
 import { tmpdir } from "os";
 import path from "path";
+import { assertDatzonProject } from "@/lib/supabase/project";
 
 // ── Config ────────────────────────────────────────────────────────────────────
 const BUCKET = "landing";
@@ -46,6 +47,16 @@ if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
     "    SUPABASE_URL=https://adnvzdcqcneqjemxneht.supabase.co\n" +
     "    SUPABASE_SERVICE_ROLE_KEY=<Settings → API → service_role secret>\n"
   );
+  process.exit(1);
+}
+
+// ── Restricción de proyecto único ─────────────────────────────────────────────
+// Este script usa la service_role key, que bypasea RLS. Fallar acá evita
+// escribir en un proyecto que no es el de Datzon.
+try {
+  assertDatzonProject(SUPABASE_URL);
+} catch (err) {
+  console.error(`\n❌  ${err instanceof Error ? err.message : String(err)}\n`);
   process.exit(1);
 }
 
