@@ -1,4 +1,4 @@
-import { createClient, type SupabaseClient } from "@supabase/supabase-js";
+import { createClient } from "@supabase/supabase-js";
 import { assertDatzonProject } from "./project";
 
 /**
@@ -9,9 +9,27 @@ import { assertDatzonProject } from "./project";
  * La clave NO lleva prefijo NEXT_PUBLIC_ a propósito: solo se usa en el
  * servidor (Route Handlers) y no debe empaquetarse hacia el navegador.
  */
-let client: SupabaseClient<any, any, any, any, any> | null = null;
 
-export function getSupabaseClient(): SupabaseClient<any, any, any, any, any> {
+/**
+ * Constructor auxiliar que crea el cliente Supabase con schema `landing`.
+ * La inferencia de tipos de TypeScript captura el schema específico.
+ */
+function buildSupabaseClient(url: string, key: string) {
+  return createClient(url, key, {
+    auth: { persistSession: false },
+    db: { schema: "landing" },
+  });
+}
+
+/**
+ * Tipo inducido del cliente, preservando el schema literal "landing"
+ * sin necesidad de especificar genéricos explícitamente.
+ */
+type DatzonSupabaseClient = ReturnType<typeof buildSupabaseClient>;
+
+let client: DatzonSupabaseClient | null = null;
+
+export function getSupabaseClient(): DatzonSupabaseClient {
   if (client) return client;
 
   const url = assertDatzonProject(process.env.SUPABASE_URL);
@@ -22,10 +40,7 @@ export function getSupabaseClient(): SupabaseClient<any, any, any, any, any> {
     );
   }
 
-  client = createClient(url, key, {
-    auth: { persistSession: false },
-    db: { schema: "landing" },
-  });
+  client = buildSupabaseClient(url, key);
   return client;
 }
 
