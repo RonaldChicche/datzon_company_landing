@@ -116,7 +116,7 @@ Falla ruidosamente y en el arranque, así que alguien que clone el repo con cred
 
 Sección nueva que declara la restricción de proyecto único, el modelo de credenciales de la sección 2 y la ubicación de las tablas. Es advisory: sirve para orientar a agentes y personas, no bloquea nada por sí sola.
 
-En la misma edición se corrige el comentario que da a entender que `.claude/CLAUDE.md` está versionado. No lo está: `.claude/` figura en `.gitignore`.
+En la misma edición se deja constancia de que `.claude/` está en `.gitignore` (línea 38) y por lo tanto es configuración **local, no versionada**. Hoy `.claude/CLAUDE.md` contiene una regla de graphify que nadie que clone el repositorio recibe. Dado que todo este sub-proyecto trata de reglas que deben sobrevivir a un clon, conviene que el `CLAUDE.md` de la raíz diga explícitamente que es la única fuente de reglas compartidas.
 
 ### 2. Modelo de acceso a datos
 
@@ -206,7 +206,7 @@ Como `read_only=true` bloquea el DDL vía MCP, esto va como **la primera migraci
 | `lib/supabase/project.ts` | Nuevo. `EXPECTED_PROJECT_REF` y `assertDatzonProject`. |
 | `scripts/optimize-upload.ts` | Editar. Llamar a `assertDatzonProject` antes de crear el cliente. |
 | `scripts/supabase-storage-rls.sql` | Reescribir. Documentar el estado real. |
-| `CLAUDE.md` | Editar. Sección de reglas de Supabase; corregir la nota sobre `.claude/`. |
+| `CLAUDE.md` | Editar. Sección de reglas de Supabase; nota de que `.claude/` es local y no versionado. |
 | `.gitignore` | Editar. Añadir `graphify-out/`. |
 | `supabase/` | Nuevo, generado por `supabase init`. |
 
