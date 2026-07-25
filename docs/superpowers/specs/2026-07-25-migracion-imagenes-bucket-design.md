@@ -30,7 +30,7 @@ Que todo el contenido editorial se sirva desde el bucket `landing` bajo la estru
 | Enfoque | **Todo al bucket** (aceptadas las concesiones: LCP desde origen externo, `dangerouslyAllowSVG`) |
 | Hero nuevo | **Pexels 34207359** — robot seis ejes amarillo en nave industrial. Licencia Pexels (uso comercial libre, sin atribución). Original ≥3000 px. Elegida por el usuario entre 4 candidatas vistas |
 | Retrato Ronald | **Se mantiene 3:4** y su `objectPosition: "center 15%"`; solo se comprime a webp |
-| Retrato Danilo | Recorte 600×600 → **540×540** (se eliminan 60 px del borde inferior y derecho, fuera el glifo de IA) |
+| Retrato Danilo | **Se mantiene 600×600.** El glifo de IA se borra con un parche local (clonado del fondo desenfocado vecino sobre ~40×40 px, esquina inferior derecha). Sustituye al recorte 540×540 que figuraba antes |
 | Staging (`scripts/images-to-upload/`) | **Se vacía** (salvo `.gitkeep`); las 19 legítimas ya están en el bucket |
 | Isotipo triplicado | **Se acepta la duplicación y se documenta** en DESIGN.md (generador = sobre-ingeniería) |
 | `raw/` | **Se elimina** del script y de la tabla de CLAUDE.md |
@@ -104,7 +104,7 @@ Riesgo aceptado y mitigado: solo `service_role` escribe en el bucket (no hay SVG
 |---|---|---|
 | Hero (original Pexels) | Redimensionar a 2400 px de ancho, webp q≈80 | ≤ 350 KB |
 | `industrial-planta.jpg` | webp, máx 1600 px | ≤ 150 KB |
-| Danilo | Recorte a 540×540 anclado arriba-izquierda + webp | ~40–60 KB, sin glifo |
+| Danilo | Parche del glifo en la esquina inferior derecha + webp, **600×600 intactos** | ~40–60 KB, sin glifo |
 | Jeffry, Jose, John | webp directo | ~40–60 KB |
 | Ronald | webp directo, se conserva 3:4 | ≤ 100 KB |
 
@@ -131,9 +131,30 @@ Todo respeta el límite duro de 2 MB por archivo del bucket.
 - **El hero se ve en B/N** por la clase `grayscale` existente; la foto elegida se evaluó sabiéndolo.
 - **Los originales de los retratos solo existen localmente** hasta subirse; el staging se vacía **después** de verificar la subida, no antes.
 
+## Delegación a CLIs externos (evaluado 2026-07-25)
+
+El bridge `antigravity-cli-mcp` expone Antigravity (Gemini), Codex, Copilot y Cursor como sub-agentes sobre la cuota del usuario. Se evaluó qué partes de este spec podían delegarse. **Decisión: por ahora nada se delega**, pero el análisis queda registrado para cuando el spec pase a plan ejecutable.
+
+**Regenerar el retrato de Danilo con IA quedó descartado**, por tres motivos:
+
+1. Codex **no genera imágenes**; el único generador del bridge es `antigravity_image` (Gemini).
+2. El glifo actual **es la marca de Gemini**. Pedirle a Gemini que lo corrija devuelve con alta probabilidad la misma marca, además de SynthID invisible. Se cambia un watermark por otro.
+3. Es el rostro de una **persona real identificable**. Los modelos o rechazan editarlo, o devuelven una cara sutilmente distinta — peor que cualquier recorte en una página de credibilidad.
+
+**Si en el futuro se delega, el reparto sería:**
+
+| Delegable a Codex (`workspace-write`) | Se queda local, no se delega |
+|---|---|
+| Refactor de `scripts/optimize-upload.ts` (aislado, 234 LOC, spec preciso) | **Subida al bucket** — escritura irreversible a producción con `service_role` |
+| Migración de componentes a `siteAssetUrl` (mecánico, 6 archivos) | Procesado sharp y descarga del hero — deterministas, más baratos en local |
+| | `CLAUDE.md` / `DESIGN.md` — necesitan criterio de proyecto |
+| | `pnpm build` / `tsc` / `test` — la verificación no se delega |
+
+**Precondición obligatoria de cualquier corrida delegada:** `.env.local` contiene `SUPABASE_SERVICE_ROLE_KEY` en texto plano en la raíz del workspace. Un agente al que se le pida tocar `optimize-upload.ts` lo abrirá para entender el contrato de env, y ese contenido termina en un transcript de un tercero. **Mover `.env.local` fuera del repo antes de lanzar el agente y devolverlo al terminar** — instruir al agente a no leerlo es más frágil y no se acepta como mitigación.
+
 ## Fuera de alcance
 
 - **Sub-proyecto C:** CSP inexistente (`next.config.ts` menciona un `middleware.ts` que no existe).
 - **Formulario de contacto** (leads perdidos en `console.log`) — más urgente que B y C, pendiente de su propio ciclo.
 - **`pnpm lint` roto** (override de `brace-expansion`) — sin dueño asignado.
-- Reemplazar el retrato generado por IA por una foto real (el recorte elimina el glifo, no el origen; decisión de negocio pendiente).
+- Reemplazar el retrato generado por IA por una foto real (el parche elimina el glifo, no el origen; decisión de negocio pendiente).
