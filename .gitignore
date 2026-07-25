@@ -40,3 +40,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# salida generada por graphify (grafo de conocimiento, no es fuente)
+graphify-out/
+
+# scratch del proceso de desarrollo asistido (ledger, briefs, reportes)
+.superpowers/
