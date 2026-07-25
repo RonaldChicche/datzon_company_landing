@@ -11,7 +11,7 @@ Landing page corporativa de **Datzon**, empresa peruana de ingeniería y automat
 
 - **Producción:** https://www.datzoncompany.com
 - **Hosting / CI-CD:** Vercel
-- **Estado:** funcional pero incompleto. Varias secciones son demos estáticas. El formulario de contacto aún no envía datos reales. No hay i18n real.
+- **Estado:** funcional pero incompleto. Varias secciones son demos estáticas. El formulario de contacto ya persiste los envíos en `landing.leads`; la notificación por email queda inerte hasta configurar `RESEND_API_KEY` (cuenta de Resend con dominio verificado, pendiente de operaciones). No hay i18n real.
 
 ### Stack
 
@@ -157,8 +157,16 @@ La credencial secreta **nunca** aparece en código de la aplicación. Usarla en 
 - **Todas las tablas de este proyecto van en el schema `landing`.** Ninguna en `public`.
 - Toda tabla lleva RLS habilitado, con grants explícitos y mínimos por rol. Desde el 2026-10-30 Supabase deja de auto-exponer tablas al Data API en todos los proyectos, así que los grants explícitos son obligatorios de todos modos.
 - `SECURITY DEFINER` está prohibido salvo justificación escrita en el propio archivo SQL.
+- La tabla `landing.leads` (leads del formulario de contacto) es un **buzón de
+  solo escritura**: `anon` tiene INSERT y nada más. No añadir grants de
+  lectura; los leads se consultan en el dashboard o con la credencial secreta
+  en scripts. El Route Handler usa la clave publishable
+  (`SUPABASE_PUBLISHABLE_KEY`, sin `NEXT_PUBLIC_`) vía `lib/supabase/client.ts`.
 - Los cambios de schema van por migraciones del CLI en `supabase/migrations/`, versionadas. No se aplica DDL suelto: `.mcp.json` usa `read_only=true` justamente para impedirlo.
-- El CLI de Supabase ya está instalado e inicializado (`supabase/config.toml`), pero el enlace al proyecto remoto (`supabase link`) todavía está **pendiente**: requiere un personal access token y la contraseña de la base de datos. Hasta que se enlace, `supabase/migrations/` no existe; se creará junto con la primera migración.
+- El CLI de Supabase está instalado, inicializado y **enlazado** al proyecto.
+  Las migraciones viven en `supabase/migrations/` y se aplican con
+  `supabase db push --linked` (requiere un personal access token con sesión
+  iniciada).
 
 ### Storage
 
