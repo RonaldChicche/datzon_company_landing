@@ -14,6 +14,10 @@
  *   pnpm optimize-images site
  *     → Sube el contenido de scripts/images-to-upload/ a landing/site/,
  *       respetando un nivel de subcarpetas (site/<subcarpeta>/).
+ *       El staging de site/ ya viene pre-optimizado a mano (ej. hero a
+ *       2400px): en este modo los .webp se suben tal cual, sin volver a
+ *       pasar por sharp ni reescalarse a MAX_WIDTH. Los .svg también se
+ *       suben tal cual, como en los demás modos.
  *
  * Flag --dry-run (funciona con los tres modos anteriores):
  *   → Simula la subida: imprime qué se subiría y a dónde, sin llamar a
@@ -24,7 +28,8 @@
  *   SUPABASE_SERVICE_ROLE_KEY   (Settings → API → service_role secret)
  *
  * Formatos soportados: jpg · jpeg · png · webp · avif · tiff · bmp
- *   (se recomprimen a webp). Los .svg se suben tal cual, sin pasar por sharp.
+ *   (se recomprimen a webp; excepción: .webp en modo site, ver arriba).
+ *   Los .svg se suben siempre tal cual, sin pasar por sharp.
  */
 
 import sharp from "sharp";
@@ -99,6 +104,10 @@ function isSvg(filename: string): boolean {
   return path.extname(filename).toLowerCase() === ".svg";
 }
 
+function isWebp(filename: string): boolean {
+  return path.extname(filename).toLowerCase() === ".webp";
+}
+
 async function optimizeToWebp(
   filePath: string
 ): Promise<{ buffer: Buffer; originalKB: number; optimizedKB: number }> {
@@ -140,7 +149,11 @@ async function optimizeToWebp(
   }
 }
 
-async function uploadImages(sourceDir: string, storagePath: string): Promise<{ ok: number; fail: number }> {
+async function uploadImages(
+  sourceDir: string,
+  storagePath: string,
+  opts: { passthroughWebp?: boolean } = {}
+): Promise<{ ok: number; fail: number }> {
   const entries = await readdir(sourceDir);
   const imageFiles = entries.filter((f) => isImage(f) || isSvg(f));
 
@@ -154,6 +167,9 @@ async function uploadImages(sourceDir: string, storagePath: string): Promise<{ o
   for (const file of imageFiles) {
     const filePath = path.join(sourceDir, file);
     const svg = isSvg(file);
+    // En modo site el staging ya viene pre-optimizado (ej. hero a 2400px):
+    // el .webp no debe recomprimirse ni reescalarse a MAX_WIDTH.
+    const webpPassthrough = (opts.passthroughWebp ?? false) && isWebp(file);
     const destName = svg
       ? file
       : `${path.basename(file, path.extname(file))}.webp`;
@@ -163,19 +179,26 @@ async function uploadImages(sourceDir: string, storagePath: string): Promise<{ o
     // Supabase Storage. Ninguna llamada de red de subida ocurre aquí.
     if (DRY_RUN) {
       const kb = Math.round((await stat(filePath)).size / 1024);
-      console.log(`    [dry-run] ${file.padEnd(45)} → ${BUCKET}/${destPath}  (~${kb}KB${svg ? ", svg tal cual" : " origen, se recomprime a webp"})`);
+      const nota = svg
+        ? ", svg tal cual"
+        : webpPassthrough
+        ? ", webp tal cual"
+        : " origen, se recomprime a webp";
+      console.log(`    [dry-run] ${file.padEnd(45)} → ${BUCKET}/${destPath}  (~${kb}KB${nota})`);
       ok++;
       continue;
     }
 
-    // Passthrough: el .svg se sube tal cual, sin pasar por sharp/webp.
-    if (svg) {
+    // Passthrough: el .svg (siempre) y el .webp (solo en modo site) se
+    // suben tal cual, sin pasar por sharp.
+    if (svg || webpPassthrough) {
       const buffer = await readFile(filePath);
+      const contentType = svg ? "image/svg+xml" : "image/webp";
       const { error } = await supabase.storage
         .from(BUCKET)
-        .upload(destPath, buffer, { contentType: "image/svg+xml", upsert: true });
+        .upload(destPath, buffer, { contentType, upsert: true });
       if (error) { console.log(`✗  ${error.message}`); fail++; continue; }
-      console.log(`✓  svg tal cual (${Math.round(buffer.length / 1024)}KB)`);
+      console.log(`✓  ${svg ? "svg" : "webp"} tal cual (${Math.round(buffer.length / 1024)}KB)`);
       ok++;
       continue;
     }
@@ -210,7 +233,8 @@ async function uploadSite(): Promise<void> {
   let totalOk = 0, totalFail = 0;
 
   // Archivos sueltos del staging → site/
-  const { ok, fail } = await uploadImages(INPUT_DIR, "site");
+  // passthroughWebp: true — este staging viene pre-optimizado a mano.
+  const { ok, fail } = await uploadImages(INPUT_DIR, "site", { passthroughWebp: true });
   totalOk += ok; totalFail += fail;
 
   // Subcarpetas (un nivel) → site/<subcarpeta>/
@@ -219,7 +243,7 @@ async function uploadSite(): Promise<void> {
     const fullPath = path.join(INPUT_DIR, entry);
     if ((await stat(fullPath)).isDirectory()) {
       console.log(`  📂  "${entry}"  →  ${BUCKET}/site/${entry}/`);
-      const r = await uploadImages(fullPath, `site/${entry}`);
+      const r = await uploadImages(fullPath, `site/${entry}`, { passthroughWebp: true });
       totalOk += r.ok; totalFail += r.fail;
     }
   }
