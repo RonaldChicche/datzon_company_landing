@@ -14,8 +14,9 @@ export default function Footer() {
             <Image
               src="/logo_datzon.svg"
               alt="Datzon Industrial Automation"
-              width={110}
-              height={38}
+              // Proporción intrínseca del SVG (viewBox 614×120) — ver Header.
+              width={614}
+              height={120}
               className="h-[26px] w-auto mb-[18px]"
             />
             <p>
