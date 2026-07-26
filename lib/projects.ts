@@ -15,10 +15,7 @@
  * NOTA: el copy (title, tag, description) son borradores — editar libremente.
  */
 
-// Base pública del bucket. No es un secreto: es de solo lectura y el host ya
-// está declarado en next.config.ts (remotePatterns).
-const SUPABASE_PUBLIC =
-  "https://adnvzdcqcneqjemxneht.supabase.co/storage/v1/object/public/landing";
+import { STORAGE_PUBLIC_BASE } from "./site-assets";
 
 export type Project = {
   /** Carpeta en Supabase: project/<slug>/ */
@@ -33,7 +30,7 @@ export type Project = {
 
 /** Arma la URL pública de una imagen de proyecto. */
 export function projectImageUrl(slug: string, file: string): string {
-  return `${SUPABASE_PUBLIC}/project/${slug}/${encodeURIComponent(file)}`;
+  return `${STORAGE_PUBLIC_BASE}/project/${slug}/${encodeURIComponent(file)}`;
 }
 
 export const PROJECTS: Project[] = [
