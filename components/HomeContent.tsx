@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
 import ContactForm from "@/components/ContactForm";
+import { siteAssetUrl } from "@/lib/site-assets";
 
 const EASE = [0.2, 0.7, 0.2, 1] as [number, number, number, number];
 
@@ -70,8 +71,8 @@ export default function HomeContent() {
         {/* Full-bleed B/N photo */}
         <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
           <Image
-            src="/images/industrial-planta.jpg"
-            alt="Planta industrial automatizada"
+            src={siteAssetUrl("hero.webp")}
+            alt="Robot industrial de seis ejes operando en una nave de producción"
             fill
             priority
             fetchPriority="high"

@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { siteAssetUrl } from "@/lib/site-assets";
 
 const NAV_LINKS = [
   { href: "/", label: "Inicio" },
@@ -36,7 +37,7 @@ export default function Header() {
         {/* Logo */}
         <Link href="/" className="nav-logo" aria-label="Datzon — inicio">
           <Image
-            src="/logo_datzon.svg"
+            src={siteAssetUrl("logo_datzon.svg")}
             alt="Datzon Industrial Automation"
             // Proporción intrínseca del SVG (viewBox 614×120): una proporción
             // equivocada aquí hace que el navegador reserve mal el espacio y
