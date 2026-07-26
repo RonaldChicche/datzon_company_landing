@@ -26,7 +26,7 @@ export default function PrivacyPolicyPage() {
               1. Responsable del Tratamiento
             </h2>
             <p>
-              <strong>DATZON S.A.C.</strong> (en adelante, "Datzon") es el responsable del tratamiento de los datos personales
+              <strong>DATZON S.A.C</strong> (en adelante, "Datzon") es el responsable del tratamiento de los datos personales
               que usted nos facilite a través de este sitio web (<em>datzoncompany.com</em>) o por cualquier otro medio de contacto.
             </p>
             <p className="mt-2">

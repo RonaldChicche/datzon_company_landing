@@ -11,7 +11,7 @@ Landing page corporativa de **Datzon**, empresa peruana de ingeniería y automat
 
 - **Producción:** https://www.datzoncompany.com
 - **Hosting / CI-CD:** Vercel
-- **Estado:** funcional pero incompleto. Varias secciones son demos estáticas. El formulario de contacto aún no envía datos reales. No hay i18n real.
+- **Estado:** funcional pero incompleto. Varias secciones son demos estáticas. El formulario de contacto ya persiste los envíos en `landing.leads`; la notificación por email queda inerte hasta configurar `RESEND_API_KEY` (cuenta de Resend con dominio verificado, pendiente de operaciones). No hay i18n real.
 
 ### Stack
 
@@ -30,7 +30,7 @@ Landing page corporativa de **Datzon**, empresa peruana de ingeniería y automat
 
 ## Identidad de la empresa
 
-- **Razón social:** DATZON S.A.C. — **RUC:** 20615575624
+- **Razón social:** DATZON S.A.C — **RUC:** 20615575624
 - **Nombre Comercial:** DATZON INDUSTRIAL AUTOMATION
 - **Fundación:** marzo 2026 (startup en lanzamiento)
 - **Domicilio:** Cal. Mercator 484, Dpto. 101, San Borja, Lima, Perú
@@ -39,11 +39,11 @@ Landing page corporativa de **Datzon**, empresa peruana de ingeniería y automat
 
 ### Servicios core (en orden de prioridad)
 
-1. **Diseño, fabricación y robótica industrial** — sistemas automatizados, robots industriales, sistemas de control, maquinaria, dispositivos electrónicos a medida. **PRIORIDAD PRINCIPAL.**
+1. **Diseño, fabricación y robótica industrial** — sistemas automatizados, robots industriales, sistemas de control, impresión 3D y prototipado, maquinaria, dispositivos electrónicos a medida. **PRIORIDAD PRINCIPAL.**
 2. **Automatización industrial y control** — PLC, HMI, SCADA, telemetría, monitoreo remoto, integración de sistemas de control.
 3. **Desarrollo de software y sistemas embebidos** — apps web/móviles, backend/frontend, integración hardware-software, analítica, IA aplicada. **Capacidad menor por ahora.**
 
-Complementarios (NO comunicar como core todavía): impresión 3D y prototipado, consultoría técnica, import/export de equipos, licitaciones.
+Complementarios (NO comunicar como core todavía): consultoría técnica, import/export de equipos, licitaciones.
 
 - **Cliente objetivo:** empresas industriales y de manufactura que buscan automatizar procesos, optimizar producción o implementar sistemas de control. B2B, decisiones racionales.
 - **Mercado:** Perú (base Lima), con capacidad nacional e internacional.
@@ -66,34 +66,6 @@ Complementarios (NO comunicar como core todavía): impresión 3D y prototipado, 
 **Negocio:** transmitir credibilidad técnica a empresas industriales, generar contactos vía formulario, posicionar a Datzon en búsquedas de automatización industrial en Perú.
 
 **NO es prioridad ahora:** integración GenAI, datos en tiempo real, i18n completo, e-commerce.
-
----
-
-## Brand y estilo visual
-
-**Logo:** ícono de "D" estilizada con forma de circuito (nodo central, esquinas recortadas — lenguaje visual PCB/automatización) + wordmark DATZON + subtítulo INDUSTRIAL AUTOMATION.
-
-**Variantes:**
-
-- **V1 Oscura** — ícono verde lima + texto blanco sobre negro. Uso digital, web, presentaciones.
-- **V1 Clara** — ícono negro + texto negro sobre blanco. Documentos, impresión.
-- **V3 EPP/Field** — ícono negro sin caja, texto negro (fondos claros) o blanco (fondos oscuros). Bordado en chalecos, cascos, uniformes. **Regla: nunca verde lima sobre fondos flúor.**
-
-**Paleta** (⚠️ confirmar hex exactos con archivo fuente):
-
-- Negro principal: ~`#0D0D0D`
-- Verde lima accent: ~`#8DC63F`
-- Blanco: `#FFFFFF`
-- Grises intermedios de UI: pendiente definir
-
-**Tipografía:**
-
-- Wordmark DATZON: sans-serif geométrica bold/heavy, mayúsculas (⚠️ confirmar nombre exacto).
-- Web: Inter (body) + Manrope (headings), vía `next/font/google`.
-
-**Tono de voz:** técnico-preciso, directo, sin adornos. El cliente B2B valora competencia sobre creatividad.
-**Personalidad:** ingeniería de precisión. Confiable, técnico, moderno. Startup de ingenieros para ingenieros.
-**Lo que NO es Datzon:** lenguaje vago ("soluciones integrales"), exceso de marketing, promesas sin sustento técnico.
 
 ---
 
@@ -148,6 +120,75 @@ El dueño del proyecto está aprendiendo desarrollo web moderno. Tiene base, no 
 
 **Contexto:** proyecto real de una startup peruana en lanzamiento. Las decisiones técnicas impactan el negocio. Priorizar solidez sobre features.
 
+### Dónde viven las reglas
+
+Este archivo (`CLAUDE.md` en la raíz) es la **única fuente de reglas compartidas** del proyecto: está versionado y lo recibe cualquiera que clone el repositorio.
+
+`.claude/` está en `.gitignore`. Es configuración local de cada máquina. Una regla escrita ahí no la hereda nadie más, así que no pongas ahí nada que el equipo deba cumplir.
+
+---
+
+## Supabase
+
+### Proyecto único
+
+Este repositorio solo puede conectarse al proyecto **`adnvzdcqcneqjemxneht`** (`Datzon`, sa-east-1).
+
+La organización contiene además `thwotgoldsncfsgndlii` (`datzon_company`, pausado). **Está prohibido usarlo.** No migrar datos ahí, no apuntar variables de entorno ahí, no crear tablas ahí.
+
+La regla está respaldada por dos barreras técnicas, no solo por este texto:
+
+- `.mcp.json` acota el servidor MCP con `project_ref`, lo que desactiva las herramientas de cuenta. Requiere que el conector de Supabase de claude.ai esté **desactivado**; si está activo, es una vía sin acotar en paralelo.
+- `lib/supabase/project.ts` valida `SUPABASE_URL` y falla al arranque. Todo cliente nuevo de Supabase debe llamar a `assertDatzonProject` antes de conectarse.
+
+### Credenciales
+
+Dos clientes, nunca intercambiables:
+
+| Cliente | Credencial | Dónde | Frente a RLS |
+|---|---|---|---|
+| App en runtime | `sb_publishable_…` (o legacy `anon`) | Route Handlers, Server Components | **Sujeto a RLS** |
+| Scripts locales | `sb_secret_…` (o legacy `service_role`) | Solo `scripts/*.ts`, leyendo `.env.local` | Lo bypasea |
+
+La credencial secreta **nunca** aparece en código de la aplicación. Usarla en el servidor "porque es más fácil" deja el RLS de adorno.
+
+### Base de datos
+
+- **Todas las tablas de este proyecto van en el schema `landing`.** Ninguna en `public`.
+- Toda tabla lleva RLS habilitado, con grants explícitos y mínimos por rol. Desde el 2026-10-30 Supabase deja de auto-exponer tablas al Data API en todos los proyectos, así que los grants explícitos son obligatorios de todos modos.
+- La tabla `landing.leads` (leads del formulario de contacto) es un **buzón de
+  solo escritura** para `anon`: solo tiene INSERT y nada más. No añadir
+  grants de lectura a `anon`. Hoy los leads se leen **únicamente desde el
+  dashboard de Supabase**: la migración no otorga ningún grant a
+  `service_role` (BYPASSRLS exime de las políticas, no de los grants que
+  falten), así que la credencial secreta en scripts todavía no puede leerlos.
+  Dar esos grants a `service_role` (`usage` sobre el schema `landing` +
+  `select` sobre la tabla) es una migración pendiente. El Route Handler usa
+  la clave publishable (`SUPABASE_PUBLISHABLE_KEY`, sin `NEXT_PUBLIC_`) vía
+  `lib/supabase/client.ts`.
+- `SECURITY DEFINER` está prohibido salvo justificación escrita en el propio archivo SQL.
+- Los cambios de schema van por migraciones del CLI en `supabase/migrations/`, versionadas. No se aplica DDL suelto: `.mcp.json` usa `read_only=true` justamente para impedirlo.
+- El CLI de Supabase está instalado, inicializado y **enlazado** al proyecto.
+  Las migraciones viven en `supabase/migrations/` y se aplican con
+  `supabase db push --linked` (requiere un personal access token con sesión
+  iniciada).
+
+### Storage
+
+Todos los objetos van al bucket **`landing`**. Su contenido vive bajo estos prefijos de primer nivel:
+
+| Prefijo | Contenido |
+|---|---|
+| `project/<slug>/` | Fotos de las galerías de proyectos. Un slug por proyecto, generado por `pnpm optimize-images` a partir del nombre de la carpeta. |
+| `site/` | Todo lo demás: retratos del equipo, imágenes de páginas y logos. |
+| `raw/` | **No es un prefijo de contenido.** Es el destino de descarte de `scripts/optimize-upload.ts` cuando en `scripts/images-to-upload/` hay imágenes sueltas (sin subcarpetas) y no se indica un proyecto por argumento. No lo uses para nada que el sitio referencie. Está previsto eliminarlo cuando se revise ese script en otro sub-proyecto. |
+
+No crees prefijos nuevos de primer nivel sin actualizar esta tabla. No antepongas `landing/` dentro del bucket: sería redundante con su nombre. Si en el futuro este proyecto Supabase aloja otra aplicación, va en **otro bucket**, no en una carpeta de este.
+
+El bucket tiene un límite de **2 MB por archivo** (`file_size_limit`), más estricto que el del plan. Cualquier asset que lo supere tras optimizar será rechazado.
+
+El estado real de RLS del bucket está documentado en `scripts/supabase-storage-rls.sql`. Ese archivo **no se ejecuta**: describe la configuración vigente y por qué es correcta.
+
 ## Referencias de Notion
 
 Cuando se mencione "Notion", "el roadmap", "las tareas" o "el backlog", consultar:
@@ -167,3 +208,13 @@ Para leer una tarea, usar el fetch de Notion con el ID o URL de la página.
 <!-- SPECKIT START -->
 <!-- Esta sección la gestiona Spec Kit automáticamente al correr `specify init`. No editar a mano. -->
 <!-- SPECKIT END -->
+
+## graphify
+
+This project has a knowledge graph at graphify-out/ with god nodes, community structure, and cross-file relationships.
+
+Rules:
+- For codebase questions, first run `graphify query "<question>"` when graphify-out/graph.json exists. Use `graphify path "<A>" "<B>"` for relationships and `graphify explain "<concept>"` for focused concepts. These return a scoped subgraph, usually much smaller than GRAPH_REPORT.md or raw grep output.
+- If graphify-out/wiki/index.md exists, use it for broad navigation instead of raw source browsing.
+- Read graphify-out/GRAPH_REPORT.md only for broad architecture review or when query/path/explain do not surface enough context.
+- After modifying code, run `graphify update .` to keep the graph current (AST-only, no API cost).

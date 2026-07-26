@@ -19,17 +19,15 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
   }, []);
 
   return (
-    <div className="bg-surface min-h-screen flex flex-col font-sans relative">
-      <Header
-        onContactSales={() => setIsContactModalOpen(true)}
-      />
+    <div className="min-h-screen flex flex-col relative">
+      <Header />
 
       <ContactModal
         isOpen={isContactModalOpen}
         onClose={() => setIsContactModalOpen(false)}
       />
 
-      <main className="flex-1 mt-16 overflow-hidden">
+      <main className="flex-1 overflow-x-hidden">
         <AnimatePresence mode="wait">
           <motion.div
             key={pathname}

@@ -18,6 +18,9 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  // Permite acceder al dev server desde otros equipos de la red local
+  // (ej. probar en el celular). Solo aplica en `next dev`, no en producción.
+  allowedDevOrigins: ["192.168.18.137"],
   async headers() {
     return [
       {
@@ -29,6 +32,7 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "images.unsplash.com" },
+      { protocol: "https", hostname: "adnvzdcqcneqjemxneht.supabase.co" },
     ],
   },
 };

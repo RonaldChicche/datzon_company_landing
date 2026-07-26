@@ -18,7 +18,8 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          # supabase-js 2.110 exige Node >= 22 (WebSocket nativo); ver engines en package.json
+          node-version: 22
           cache: pnpm
 
       - name: Install dependencies
@@ -26,6 +27,9 @@ jobs:
 
       - name: Type check
         run: pnpm exec tsc --noEmit
+
+      - name: Tests
+        run: pnpm test
 
       - name: Build
         run: pnpm build

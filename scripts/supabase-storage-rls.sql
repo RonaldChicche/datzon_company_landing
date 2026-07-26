@@ -1,0 +1,53 @@
+-- ============================================================
+-- Estado de RLS del bucket "landing" — proyecto Datzon
+-- (adnvzdcqcneqjemxneht)
+--
+-- ESTE ARCHIVO NO SE EJECUTA. Documenta la configuración real,
+-- verificada el 2026-07-25. Ver el spec en
+-- docs/superpowers/specs/2026-07-25-reglas-conexion-supabase-design.md
+-- ============================================================
+
+-- ── Estado actual ─────────────────────────────────────────────────────────────
+--
+--   Bucket "landing"        → public = true
+--   storage.objects         → RLS habilitado, CERO políticas
+--
+-- Consecuencias, y por qué esto es correcto:
+--
+--   LECTURA   Las imágenes se sirven por la URL pública del bucket. Funciona
+--             porque el bucket es public, no por una política de RLS.
+--
+--   ESCRITURA Denegada para anon y authenticated. Con RLS habilitado y sin
+--             políticas, Postgres deniega por defecto: no hace falta escribir
+--             una política de denegación explícita.
+--
+--   SCRIPTS   scripts/optimize-upload.ts sube con la service_role key, que
+--             tiene BYPASSRLS. Por eso funciona sin ninguna política.
+
+-- ── Por qué NO hay una política de lectura pública ────────────────────────────
+--
+-- Una versión anterior de este archivo proponía:
+--
+--   CREATE POLICY "landing_lectura_publica"
+--   ON storage.objects FOR SELECT TO public
+--   USING (bucket_id = 'landing');
+--
+-- Nunca se ejecutó, y se decidió NO ejecutarla. Es redundante con
+-- public = true, y sería una política más que mantener y auditar sin que
+-- cambie el comportamiento observable.
+--
+-- No la agregues "para que quede explícito". Si en algún momento el bucket
+-- pasa a private, entonces sí hará falta una política de lectura, y este
+-- comentario deja de aplicar.
+
+-- ── Si en el futuro hace falta escritura desde el cliente ─────────────────────
+--
+-- Agregar una política acotada acá, en lugar de repartir la service_role key.
+-- La regla del proyecto (CLAUDE.md) es que la credencial secreta vive solo en
+-- scripts locales.
+
+-- ── Rate limiting ─────────────────────────────────────────────────────────────
+--
+-- Proteger contra abuso de peticiones de lectura se maneja a nivel de
+-- infraestructura (Vercel CDN cache, límites del plan de Supabase), no de RLS.
+-- RLS no es el lugar para rate limiting.

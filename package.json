@@ -2,15 +2,21 @@
   "name": "datzon_company_landing",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "analyze": "cross-env ANALYZE=true next build --webpack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "vitest run",
+    "optimize-images": "tsx scripts/optimize-upload.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.4.0",
+    "@supabase/supabase-js": "^2.110.8",
     "@vercel/analytics": "^2.0.1",
     "lucide-react": "^1.8.0",
     "motion": "^12.38.0",
@@ -18,6 +24,7 @@
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-hook-form": "^7.77.0",
+    "resend": "^6.18.0",
     "zod": "^4.4.3"
   },
   "pnpm": {
@@ -29,13 +36,17 @@
   "devDependencies": {
     "@next/bundle-analyzer": "^16.2.7",
     "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
+    "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "cross-env": "^10.1.0",
     "eslint": "^9",
     "eslint-config-next": "16.2.6",
+    "sharp": "^0.35.1",
+    "supabase": "^2.109.1",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "tsx": "^4.22.4",
+    "typescript": "^5",
+    "vitest": "^4.1.10"
   }
 }
