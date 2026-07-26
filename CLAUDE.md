@@ -158,14 +158,12 @@ La credencial secreta **nunca** aparece en código de la aplicación. Usarla en 
 - Toda tabla lleva RLS habilitado, con grants explícitos y mínimos por rol. Desde el 2026-10-30 Supabase deja de auto-exponer tablas al Data API en todos los proyectos, así que los grants explícitos son obligatorios de todos modos.
 - La tabla `landing.leads` (leads del formulario de contacto) es un **buzón de
   solo escritura** para `anon`: solo tiene INSERT y nada más. No añadir
-  grants de lectura a `anon`. Hoy los leads se leen **únicamente desde el
-  dashboard de Supabase**: la migración no otorga ningún grant a
-  `service_role` (BYPASSRLS exime de las políticas, no de los grants que
-  falten), así que la credencial secreta en scripts todavía no puede leerlos.
-  Dar esos grants a `service_role` (`usage` sobre el schema `landing` +
-  `select` sobre la tabla) es una migración pendiente. El Route Handler usa
-  la clave publishable (`SUPABASE_PUBLISHABLE_KEY`, sin `NEXT_PUBLIC_`) vía
-  `lib/supabase/client.ts`.
+  grants de lectura a `anon`. Los leads se leen desde el dashboard de
+  Supabase **o con la credencial secreta en scripts locales** (`service_role`
+  tiene `usage` sobre el schema y `select` sobre la tabla por migración; sin
+  `update`/`delete` — editar o borrar sigue siendo del dashboard). El Route
+  Handler usa la clave publishable (`SUPABASE_PUBLISHABLE_KEY`, sin
+  `NEXT_PUBLIC_`) vía `lib/supabase/client.ts`.
 - `SECURITY DEFINER` está prohibido salvo justificación escrita en el propio archivo SQL.
 - Los cambios de schema van por migraciones del CLI en `supabase/migrations/`, versionadas. No se aplica DDL suelto: `.mcp.json` usa `read_only=true` justamente para impedirlo.
 - El CLI de Supabase está instalado, inicializado y **enlazado** al proyecto.

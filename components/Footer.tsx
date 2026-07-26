@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { WHATSAPP_URL } from "@/lib/contact-links";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -13,8 +14,9 @@ export default function Footer() {
             <Image
               src="/logo_datzon.svg"
               alt="Datzon Industrial Automation"
-              width={110}
-              height={38}
+              // Proporción intrínseca del SVG (viewBox 614×120) — ver Header.
+              width={614}
+              height={120}
               className="h-[26px] w-auto mb-[18px]"
             />
             <p>
@@ -45,6 +47,14 @@ export default function Footer() {
               className="block text-muted text-sm py-[5px] hover:text-lime transition-colors"
             >
               contacto@datzoncompany.com
+            </a>
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block text-muted text-sm py-[5px] hover:text-lime transition-colors"
+            >
+              Escríbenos por WhatsApp
             </a>
             <Link
               href="/politica-privacidad"

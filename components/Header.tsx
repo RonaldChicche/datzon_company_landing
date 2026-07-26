@@ -38,8 +38,11 @@ export default function Header() {
           <Image
             src="/logo_datzon.svg"
             alt="Datzon Industrial Automation"
-            width={140}
-            height={48}
+            // Proporción intrínseca del SVG (viewBox 614×120): una proporción
+            // equivocada aquí hace que el navegador reserve mal el espacio y
+            // el layout salte al cargar (CLS medido en la auditoría).
+            width={614}
+            height={120}
             className="h-7 w-auto"
             priority
           />
@@ -59,9 +62,19 @@ export default function Header() {
 
         {/* CTA + burger */}
         <div className="nav-cta">
-          <Link href="/#cotizar" className="btn btn-primary">
-            Cotizar
-          </Link>
+          {pathname === "/" ? (
+            <Link href="/#cotizar" className="btn btn-primary">
+              Cotizar
+            </Link>
+          ) : (
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={() => window.dispatchEvent(new CustomEvent("open-contact-modal"))}
+            >
+              Cotizar
+            </button>
+          )}
           <button
             className="nav-burger"
             aria-label={mobileOpen ? "Cerrar menú" : "Abrir menú"}

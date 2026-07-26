@@ -74,6 +74,7 @@ export default function HomeContent() {
             alt="Planta industrial automatizada"
             fill
             priority
+            fetchPriority="high"
             sizes="100vw"
             className="object-cover grayscale"
           />
