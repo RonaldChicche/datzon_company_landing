@@ -59,9 +59,19 @@ export default function Header() {
 
         {/* CTA + burger */}
         <div className="nav-cta">
-          <Link href="/#cotizar" className="btn btn-primary">
-            Cotizar
-          </Link>
+          {pathname === "/" ? (
+            <Link href="/#cotizar" className="btn btn-primary">
+              Cotizar
+            </Link>
+          ) : (
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={() => window.dispatchEvent(new CustomEvent("open-contact-modal"))}
+            >
+              Cotizar
+            </button>
+          )}
           <button
             className="nav-burger"
             aria-label={mobileOpen ? "Cerrar menú" : "Abrir menú"}
