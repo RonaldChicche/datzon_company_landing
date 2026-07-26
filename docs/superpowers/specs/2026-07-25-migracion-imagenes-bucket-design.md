@@ -30,7 +30,7 @@ Que todo el contenido editorial se sirva desde el bucket `landing` bajo la estru
 | Enfoque | **Todo al bucket** (aceptadas las concesiones: LCP desde origen externo, `dangerouslyAllowSVG`) |
 | Hero nuevo | **Pexels 34207359** — robot seis ejes amarillo en nave industrial. Licencia Pexels (uso comercial libre, sin atribución). Original ≥3000 px. Elegida por el usuario entre 4 candidatas vistas |
 | Retrato Ronald | **Se mantiene 3:4** y su `objectPosition: "center 15%"`; solo se comprime a webp |
-| Retrato Danilo | **Se mantiene 600×600.** El glifo de IA se borra con un parche local (clonado del fondo desenfocado vecino sobre ~40×40 px, esquina inferior derecha). Sustituye al recorte 540×540 que figuraba antes |
+| Retrato Danilo | **Se mantiene 600×600.** El glifo se elimina con una **edición IA localizada** (`antigravity_image`, aprobada por el usuario el 2026-07-26 tras verificar cara píxel-idéntica — diff 0.0 — y esquina sin costuras). Esta decisión ANULA tanto el recorte 540×540 original como el parche sharp intermedio: el experimento comparativo demostró que la vía IA no estampa el glifo visible (verificado por el usuario) y no altera el rostro (verificado por diff), invalidando las dos objeciones registradas abajo |
 | Staging (`scripts/images-to-upload/`) | **Se vacía** (salvo `.gitkeep`); las 19 legítimas ya están en el bucket |
 | Isotipo triplicado | **Se acepta la duplicación y se documenta** en DESIGN.md (generador = sobre-ingeniería) |
 | `raw/` | **Se elimina** del script y de la tabla de CLAUDE.md |

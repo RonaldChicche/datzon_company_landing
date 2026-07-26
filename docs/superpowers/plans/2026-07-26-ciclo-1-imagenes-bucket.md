@@ -312,17 +312,16 @@ async function main() {
   // Planta (deja de ser hero, queda disponible): 1600px ≤ 150KB
   await toWebp("public/images/industrial-planta.jpg", path.join(OUT, "industrial-planta.webp"), 1600, 80);
 
-  // Danilo: parche del glifo de IA (esquina inferior derecha) manteniendo 600×600.
-  // El glifo es la estrella de 4 puntas ~(548..596, 540..588). Se clona un
-  // parche de fondo desenfocado inmediatamente a su izquierda y se compone encima.
-  const danilo = "public/equipo/Danilo_Luque.jpg";
-  const parche = await sharp(danilo).extract({ left: 486, top: 536, width: 56, height: 56 }).toBuffer();
-  const buf = await sharp(danilo)
-    .composite([{ input: parche, left: 542, top: 536 }])
-    .webp({ quality: 82 })
-    .toBuffer();
-  await sharp(buf).toFile(path.join(EQUIPO, "danilo-luque.webp"));
-  console.log(`danilo-luque.webp (parcheado) ${Math.round(buf.length / 1024)}KB`);
+  // Danilo: versión editada por IA (antigravity_image, inpaint localizado),
+  // APROBADA por el usuario el 2026-07-26 tras verificar cara píxel-idéntica
+  // (diff 0.0 en la zona facial) y esquina sin costuras. Mantiene 600×600.
+  // Fuente estable dentro del workspace del plan:
+  await toWebp(
+    ".superpowers/sdd/2026-07-26-ciclo-1-imagenes-bucket/danilo-aprobado.png",
+    path.join(EQUIPO, "danilo-luque.webp"),
+    null,
+    82
+  );
 
   // Resto del equipo: webp directo (Ronald conserva su 3:4)
   await toWebp("public/equipo/Jeffry_Huanca.jpg", path.join(EQUIPO, "jeffry-huanca.webp"), null, 82);
@@ -339,9 +338,9 @@ async function main() {
 main().catch((e) => { console.error(e); process.exit(1); });
 ```
 
-- [ ] **Step 4: Verificación visual del parche de Danilo — BLOQUEANTE**
+- [ ] **Step 4: Verificación visual de Danilo — BLOQUEANTE**
 
-Abrir/leer `scripts/images-to-upload/equipo/danilo-luque.webp` como imagen y comprobar que el glifo desapareció sin dejar borde visible ni repetir textura evidente. Si queda resto: ajustar las coordenadas `extract`/`composite` (el glifo ronda x 548–596, y 540–588) y re-ejecutar. Iterar hasta que quede limpio.
+Abrir/leer `scripts/images-to-upload/equipo/danilo-luque.webp` como imagen y comprobar: sin glifo en la esquina inferior derecha, 600×600, y la cara intacta (la fuente aprobada ya lo garantiza; esto verifica que la conversión a webp no rompió nada). Si la fuente `danilo-aprobado.png` no existiera (workspace del plan borrado), PARAR y avisar al orquestador — no improvisar un parche.
 
 - [ ] **Step 5: Verificar pesos y dimensiones**
 
