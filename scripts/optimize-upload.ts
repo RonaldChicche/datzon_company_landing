@@ -5,21 +5,31 @@
  *   pnpm optimize-images
  *     → Si hay subcarpetas en scripts/images-to-upload/, procesa cada una
  *       como project/<slug-del-nombre-de-carpeta>/
- *     → Si solo hay imágenes sueltas, sube a landing/raw/
+ *     → Si solo hay imágenes sueltas (sin subcarpetas), el destino es
+ *       ambiguo: el script falla y pide usar uno de los modos explícitos.
  *
  *   pnpm optimize-images <nombre>
  *     → Sube las imágenes sueltas de scripts/images-to-upload/ a landing/project/<nombre>/
+ *
+ *   pnpm optimize-images site
+ *     → Sube el contenido de scripts/images-to-upload/ a landing/site/,
+ *       respetando un nivel de subcarpetas (site/<subcarpeta>/).
+ *
+ * Flag --dry-run (funciona con los tres modos anteriores):
+ *   → Simula la subida: imprime qué se subiría y a dónde, sin llamar a
+ *     Supabase Storage.
  *
  * Requisito en .env.local:
  *   SUPABASE_URL
  *   SUPABASE_SERVICE_ROLE_KEY   (Settings → API → service_role secret)
  *
  * Formatos soportados: jpg · jpeg · png · webp · avif · tiff · bmp
+ *   (se recomprimen a webp). Los .svg se suben tal cual, sin pasar por sharp.
  */
 
 import sharp from "sharp";
 import { createClient } from "@supabase/supabase-js";
-import { readdir, stat, writeFile, unlink } from "fs/promises";
+import { readdir, stat, writeFile, unlink, readFile } from "fs/promises";
 import { execSync } from "child_process";
 import { tmpdir } from "os";
 import path from "path";
@@ -33,6 +43,11 @@ const WEBP_QUALITY = 80;
 const SUPPORTED_EXTS = new Set([
   ".jpg", ".jpeg", ".png", ".webp", ".avif", ".tiff", ".bmp",
 ]);
+
+// Se lee a nivel de módulo (no solo dentro de main()) porque uploadImages,
+// que está definida fuera de main(), también necesita saber si debe
+// simular la subida en lugar de escribir en Supabase Storage.
+const DRY_RUN = process.argv.includes("--dry-run");
 
 // ── Cargar .env.local (Node 20.12+ nativo) ────────────────────────────────────
 try {
@@ -79,6 +94,11 @@ function isImage(filename: string): boolean {
   return SUPPORTED_EXTS.has(path.extname(filename).toLowerCase());
 }
 
+/** Los .svg no pasan por sharp: se suben tal cual (passthrough). */
+function isSvg(filename: string): boolean {
+  return path.extname(filename).toLowerCase() === ".svg";
+}
+
 async function optimizeToWebp(
   filePath: string
 ): Promise<{ buffer: Buffer; originalKB: number; optimizedKB: number }> {
@@ -122,7 +142,7 @@ async function optimizeToWebp(
 
 async function uploadImages(sourceDir: string, storagePath: string): Promise<{ ok: number; fail: number }> {
   const entries = await readdir(sourceDir);
-  const imageFiles = entries.filter(isImage);
+  const imageFiles = entries.filter((f) => isImage(f) || isSvg(f));
 
   if (imageFiles.length === 0) {
     console.log(`  ⚠️  Sin imágenes en ${sourceDir}`);
@@ -133,8 +153,32 @@ async function uploadImages(sourceDir: string, storagePath: string): Promise<{ o
 
   for (const file of imageFiles) {
     const filePath = path.join(sourceDir, file);
-    const destName = `${path.basename(file, path.extname(file))}.webp`;
+    const svg = isSvg(file);
+    const destName = svg
+      ? file
+      : `${path.basename(file, path.extname(file))}.webp`;
     const destPath = `${storagePath}/${destName}`;
+
+    // --dry-run: se imprime la línea completa y se sale ANTES de tocar
+    // Supabase Storage. Ninguna llamada de red de subida ocurre aquí.
+    if (DRY_RUN) {
+      const kb = Math.round((await stat(filePath)).size / 1024);
+      console.log(`    [dry-run] ${file.padEnd(45)} → ${BUCKET}/${destPath}  (~${kb}KB${svg ? ", svg tal cual" : " origen, se recomprime a webp"})`);
+      ok++;
+      continue;
+    }
+
+    // Passthrough: el .svg se sube tal cual, sin pasar por sharp/webp.
+    if (svg) {
+      const buffer = await readFile(filePath);
+      const { error } = await supabase.storage
+        .from(BUCKET)
+        .upload(destPath, buffer, { contentType: "image/svg+xml", upsert: true });
+      if (error) { console.log(`✗  ${error.message}`); fail++; continue; }
+      console.log(`✓  svg tal cual (${Math.round(buffer.length / 1024)}KB)`);
+      ok++;
+      continue;
+    }
 
     process.stdout.write(`    ${file.padEnd(45)} `);
 
@@ -160,14 +204,48 @@ async function uploadImages(sourceDir: string, storagePath: string): Promise<{ o
   return { ok, fail };
 }
 
+/** Sube el contenido del staging a site/, respetando un nivel de subcarpetas. */
+async function uploadSite(): Promise<void> {
+  const entries = await readdir(INPUT_DIR);
+  let totalOk = 0, totalFail = 0;
+
+  // Archivos sueltos del staging → site/
+  const { ok, fail } = await uploadImages(INPUT_DIR, "site");
+  totalOk += ok; totalFail += fail;
+
+  // Subcarpetas (un nivel) → site/<subcarpeta>/
+  for (const entry of entries) {
+    if (entry === ".gitkeep") continue;
+    const fullPath = path.join(INPUT_DIR, entry);
+    if ((await stat(fullPath)).isDirectory()) {
+      console.log(`  📂  "${entry}"  →  ${BUCKET}/site/${entry}/`);
+      const r = await uploadImages(fullPath, `site/${entry}`);
+      totalOk += r.ok; totalFail += r.fail;
+    }
+  }
+
+  console.log(`\n${"─".repeat(60)}\n✅  ${totalOk} subida(s)  |  ❌  ${totalFail} falla(s)${DRY_RUN ? "  (dry-run: nada se subió)" : ""}\n`);
+}
+
 // ── Main ──────────────────────────────────────────────────────────────────────
 async function main() {
-  const projectArg = process.argv[2];
+  // DRY_RUN se lee a nivel de módulo (arriba) porque uploadImages, que
+  // vive fuera de main(), también lo necesita. Acá solo se filtra el
+  // flag para encontrar el modo (site | <nombre>).
+  const args = process.argv.slice(2);
+  const modeArg = args.find((a) => !a.startsWith("--"));
+
+  // Modo site: pnpm optimize-images site
+  if (modeArg === "site") {
+    console.log(`\n🔧  Staging → ${BUCKET}/site/${DRY_RUN ? "  (dry-run)" : ""}\n`);
+    await uploadSite();
+    return;
+  }
 
   // Modo explícito: pnpm optimize-images <nombre>
-  if (projectArg) {
-    console.log(`\n🔧  Subiendo imágenes sueltas → project/${projectArg}/\n`);
-    const { ok, fail } = await uploadImages(INPUT_DIR, `project/${projectArg}`);
+  if (modeArg) {
+    console.log(`\n🔧  Subiendo imágenes sueltas → project/${modeArg}/\n`);
+    const { ok, fail } = await uploadImages(INPUT_DIR, `project/${modeArg}`);
     console.log(`\n${"─".repeat(60)}\n✅  ${ok} subida(s)  |  ❌  ${fail} falla(s)\n`);
     return;
   }
@@ -191,7 +269,7 @@ async function main() {
     const info = await stat(fullPath);
     if (info.isDirectory()) {
       subdirs.push(entry);
-    } else if (isImage(entry)) {
+    } else if (isImage(entry) || isSvg(entry)) {
       looseImages.push(entry);
     }
   }
@@ -217,15 +295,17 @@ async function main() {
     return;
   }
 
-  // Sin subcarpetas: imágenes sueltas → raw/
-  if (looseImages.length === 0) {
-    console.log(`\nℹ️   Sin imágenes en scripts/images-to-upload/\n`);
-    return;
+  // Imágenes sueltas sin modo: destino ambiguo. raw/ se eliminó (CLAUDE.md).
+  if (looseImages.length > 0) {
+    console.error(
+      `\n❌  Hay ${looseImages.length} imagen(es) suelta(s) en el staging y ningún destino.\n` +
+      `    Usa:  pnpm optimize-images <proyecto>   → project/<proyecto>/\n` +
+      `          pnpm optimize-images site         → site/ (respeta subcarpetas)\n` +
+      `    Añade --dry-run para previsualizar sin subir.\n`
+    );
+    process.exit(1);
   }
-
-  console.log(`\n🔧  ${looseImages.length} imagen(es) suelta(s) → ${BUCKET}/raw/\n`);
-  const { ok, fail } = await uploadImages(INPUT_DIR, "raw");
-  console.log(`\n${"─".repeat(60)}\n✅  ${ok} subida(s)  |  ❌  ${fail} falla(s)\n`);
+  console.log(`\nℹ️   Sin imágenes en scripts/images-to-upload/\n`);
 }
 
 main().catch((err) => {
