@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { WHATSAPP_URL } from "@/lib/contact-links";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -45,6 +46,14 @@ export default function Footer() {
               className="block text-muted text-sm py-[5px] hover:text-lime transition-colors"
             >
               contacto@datzoncompany.com
+            </a>
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block text-muted text-sm py-[5px] hover:text-lime transition-colors"
+            >
+              Escríbenos por WhatsApp
             </a>
             <Link
               href="/politica-privacidad"

@@ -3,6 +3,7 @@ import { Michroma, Geist, JetBrains_Mono } from "next/font/google";
 import { headers } from "next/headers";
 import "./globals.css";
 import ClientLayout from "./ClientLayout";
+import WhatsAppButton from "@/components/WhatsAppButton";
 import { Analytics } from "@vercel/analytics/next";
 
 const michroma = Michroma({
@@ -96,6 +97,7 @@ export default async function RootLayout({
       </head>
       <body className="min-h-full flex flex-col">
         <ClientLayout>{children}</ClientLayout>
+        <WhatsAppButton />
         <Analytics />
       </body>
     </html>
