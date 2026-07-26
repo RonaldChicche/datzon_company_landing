@@ -13,7 +13,7 @@ Con el formulario entregando leads en producción (verificado: fila en `landing.
 
 | Decisión | Valor |
 |---|---|
-| Título de la pestaña | **"DatzonCompany"** a secas en la home (pedido explícito; se advirtió el costo SEO de omitir el tagline y lo aceptó). Subpáginas: `"%s | DatzonCompany"` |
+| Título de la pestaña | **"Datzon \| Ingeniería y Automatización Industrial"** — el default que `app/layout.tsx` ya define. Decisión final del usuario tras evaluar "DatzonCompany" a secas y su costo SEO. Subpáginas: `"%s \| Datzon"` (template existente) |
 | Número de WhatsApp | **+51 956 956 778** (confirmado por el usuario) |
 | Mensaje pre-armado | **"Hola, quiero cotizar un proyecto con Datzon."** |
 | Ubicación del WhatsApp | **Ambos**: burbuja flotante global + enlace en el footer. La burbuja se muestra en captura de dev **antes** de commitear; si no convence, se ajusta |
@@ -22,11 +22,11 @@ Con el formulario entregando leads en producción (verificado: fila en `landing.
 
 ## Cambios
 
-### 1. Título de pestaña — `app/layout.tsx` y `app/page.tsx`
+### 1. Título de pestaña — `app/page.tsx`
 
-- `app/page.tsx`: eliminar el override `title: "Inicio"` (la home hereda el default).
-- `app/layout.tsx`: `default: "DatzonCompany"`, `template: "%s | DatzonCompany"`. La `description` y el bloque `openGraph` conservan las palabras clave de automatización industrial (mitigación SEO); el `title` de openGraph pasa a `"DatzonCompany"` por consistencia.
-- `app/equipo/page.tsx` conserva `title: "Equipo"` → pestaña "Equipo | DatzonCompany".
+- `app/page.tsx`: eliminar el override `title: "Inicio"`. La home hereda el default de `app/layout.tsx`, que ya es exactamente el título elegido: `"Datzon | Ingeniería y Automatización Industrial"`.
+- `app/layout.tsx` **no se toca**: default, template, description y openGraph ya están correctos.
+- `app/equipo/page.tsx` conserva `title: "Equipo"` → pestaña "Equipo | Datzon".
 
 ### 2. WhatsApp — constante única + dos consumidores
 
