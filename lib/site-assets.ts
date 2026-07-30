@@ -13,6 +13,11 @@ export const STORAGE_PUBLIC_BASE =
  * en nave industrial) — https://www.pexels.com/photo/34207359/
  * Licencia Pexels: uso comercial libre, sin atribución requerida.
  */
+// A diferencia de `projectImageUrl`, esta función NO aplica encodeURIComponent:
+// acepta subrutas como "equipo/danilo-luque.webp" y codificarlas rompería la
+// barra. Los nombres bajo site/ son kebab-case sin espacios ni acentos, así que
+// no hace falta; si algún día se sube un archivo con caracteres raros, hay que
+// renombrarlo, no encodear aquí.
 export function siteAssetUrl(file: string): string {
   return `${STORAGE_PUBLIC_BASE}/site/${file}`;
 }
