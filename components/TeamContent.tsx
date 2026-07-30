@@ -94,6 +94,9 @@ export default function TeamContent() {
                     alt={member.name}
                     fill
                     sizes="(max-width: 680px) 100vw, (max-width: 980px) 50vw, 33vw"
+                    // Los retratos son el contenido más escrutado de la página:
+                    // a la calidad por defecto (75) la recompresión se nota.
+                    quality={90}
                     style={{ objectFit: "cover", objectPosition: member.objectPosition }}
                   />
                   {/* Bio panel — slides up on hover via .bio-panel CSS */}
