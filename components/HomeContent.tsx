@@ -187,7 +187,7 @@ export default function HomeContent() {
             </h2>
             <p className="lead">
               Cuéntanos qué proceso quieres automatizar o qué dato necesitas ver.
-              Te respondemos con una propuesta concreta en un día hábil.
+              Te contactamos en máximo 1 día hábil.
             </p>
 
             <div style={{ marginTop: "32px" }}>

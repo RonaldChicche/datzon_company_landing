@@ -83,8 +83,8 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
               {/* Header */}
               <div className="sticky top-0 z-20 border-b border-white/10 p-6 flex justify-between items-center bg-black/80 backdrop-blur-md">
                 <div>
-                  <p className="text-[10px] font-black text-primary-container uppercase tracking-[0.3em] mb-1 font-headline">PROTOCOLO DE CONTACTO</p>
-                  <h2 id="contact-modal-title" className="text-2xl font-black uppercase tracking-tighter text-white font-headline">PORTAL DE CONSULTAS</h2>
+                  <p className="text-[10px] font-black text-primary-container uppercase tracking-[0.3em] mb-1 font-headline">Contacto</p>
+                  <h2 id="contact-modal-title" className="text-2xl font-black uppercase tracking-tighter text-white font-headline">Cuéntanos tu proyecto</h2>
                 </div>
                 <button
                   ref={firstFocusRef}
@@ -99,8 +99,8 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
               {/* Form Content */}
               {status === "success" ? (
                 <div className="p-8 text-center">
-                  <p className="text-primary-container font-black uppercase text-xl mb-4 font-headline">TRANSMISIÓN RECIBIDA</p>
-                  <p className="text-white/70 text-sm mb-8">Nos pondremos en contacto contigo en breve.</p>
+                  <p className="text-primary-container font-black uppercase text-xl mb-4 font-headline">¡Solicitud enviada!</p>
+                  <p className="text-white/70 text-sm mb-8">Te contactamos en máximo 1 día hábil.</p>
                   <button
                     onClick={onClose}
                     className="bg-primary-container text-on-primary-container py-4 px-8 font-black uppercase text-xs tracking-widest hover:brightness-110 font-headline"
@@ -124,7 +124,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                       </label>
                       <div className="relative">
                         <User size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/50" />
-                        <input id="cm-nombre" {...register("nombre")} type="text" placeholder="IDENTIFICAR REMITENTE" className={inputClass} />
+                        <input id="cm-nombre" {...register("nombre")} type="text" placeholder="Tu nombre" className={inputClass} />
                       </div>
                       {errors.nombre && <p className="text-red-400 text-[10px] mt-1">{errors.nombre.message}</p>}
                     </div>
@@ -136,11 +136,11 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                           htmlFor="cm-email"
                           className="block text-[10px] font-black text-white/70 uppercase tracking-widest mb-2 font-headline group-focus-within:text-primary-container transition-colors"
                         >
-                          DIRECCIÓN DE RETORNO_
+                          CORREO_
                         </label>
                         <div className="relative">
                           <Mail size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/50" />
-                          <input id="cm-email" {...register("email")} type="email" placeholder="CORREO@DOMINIO.COM" className={inputClass} />
+                          <input id="cm-email" {...register("email")} type="email" placeholder="nombre@empresa.com" className={inputClass} />
                         </div>
                         {errors.email && <p className="text-red-400 text-[10px] mt-1">{errors.email.message}</p>}
                       </div>
@@ -215,7 +215,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                         htmlFor="cm-mensaje"
                         className="block text-[10px] font-black text-white/70 uppercase tracking-widest mb-2 font-headline group-focus-within:text-primary-container transition-colors"
                       >
-                        DESCRIPCIÓN DE LA CONSULTA_
+                        TU PROYECTO_
                       </label>
                       <div className="relative">
                         <MessageSquare size={14} className="absolute left-4 top-5 text-white/50" />
@@ -223,7 +223,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                           id="cm-mensaje"
                           {...register("mensaje")}
                           rows={4}
-                          placeholder="DEFINE TUS REQUERIMIENTOS O PROPUESTA..."
+                          placeholder="Describe brevemente el proceso o la línea que quieres automatizar"
                           className="w-full bg-black/60 border border-white/10 p-4 pl-10 text-base font-mono uppercase tracking-tight text-white placeholder:text-white/30 focus:outline-none focus:border-primary-container/50 transition-all resize-none"
                         />
                       </div>
@@ -243,7 +243,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                     className="w-full bg-primary-container text-on-primary-container py-5 font-black uppercase text-xs tracking-widest hover:brightness-110 active:scale-[0.98] transition-all flex items-center justify-center gap-3 font-headline disabled:opacity-70 min-h-[48px]"
                   >
                     <Send size={16} />
-                    {status === "loading" ? "TRANSMITIENDO..." : "TRANSMITIR SOLICITUD"}
+                    {status === "loading" ? "Enviando…" : "Enviar solicitud"}
                   </button>
 
                   <p className="text-[10px] text-center text-white/30 font-mono mt-2">
