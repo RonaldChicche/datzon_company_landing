@@ -79,15 +79,28 @@ Sustituciones de texto, sin tocar estructura, clases ni lógica:
 | `TRANSMITIR SOLICITUD` | `Enviar solicitud` |
 | `TRANSMITIENDO...` (estado de carga) | `Enviando…` |
 | `TRANSMISIÓN RECIBIDA` | `¡Solicitud enviada!` |
-| `Nos pondremos en contacto contigo en breve.` | `Te respondemos en 1 día hábil con una propuesta concreta.` |
+| `Nos pondremos en contacto contigo en breve.` | `Te contactamos en máximo 1 día hábil.` |
 
-Las dos últimas alinean el mensaje de éxito con el de `ContactForm.tsx`, que ya promete el mismo plazo que el footer.
+### 3.b `components/ContactForm.tsx` — corregir una promesa excesiva
+
+El formulario de la home dice hoy, **en producción**:
+
+> "Te respondemos en 1 día hábil **con una propuesta concreta**."
+
+Prometer una propuesta concreta en 24 horas es prometer de más: sin conocer la línea, el volumen ni las restricciones de la planta, ninguna propuesta seria cabe en ese plazo. El primer contacto real sirve para entender la necesidad y coordinar una reunión.
+
+Pasa a decir lo mismo que el modal:
+
+> "Te contactamos en máximo 1 día hábil."
+
+Ambos formularios quedan así con el mismo mensaje de éxito, y ninguno promete lo que no se puede cumplir.
 
 Las etiquetas de campo (`NOMBRE COMPLETO_`, `DIRECCIÓN DE RETORNO_`, `TELÉFONO_`, `EMPRESA_`, `INDUSTRIA_`, `DESCRIPCIÓN DE LA CONSULTA_`) **conservan mayúsculas y guion bajo**. Solo se revisa que su redacción sea natural: `DIRECCIÓN DE RETORNO_` pasa a `CORREO_` y `DESCRIPCIÓN DE LA CONSULTA_` a `TU PROYECTO_`, por ser las dos que arrastran el registro de ciencia ficción.
 
 ## Fuera de alcance
 
 - El titular del hero y las seis descripciones de servicios.
+- El bloque de contacto del footer (`Respuesta en 1 día hábil`): coherente con el mensaje nuevo y no promete de más, así que se deja. Si se quisiera unificar la fórmula exacta, sería `Respuesta en máximo 1 día hábil` — decisión menor, fuera de este ciclo.
 - Marcas y acrónimos técnicos.
 - `/robotica`, `/proyectos`, `/equipo`, `/politica-privacidad`, `/terminos-de-uso`.
 - Los textos de `PalletizerSim.tsx` (`SIM 01 · PALETIZADO · VISTA ISOMÉTRICA`): son etiquetas técnicas de una simulación y el registro es apropiado ahí.
