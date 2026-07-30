@@ -19,7 +19,11 @@
   --color-surface-3: #262a31;
   --color-ink: #dfe2eb;
   --color-muted: #9aa1ac;
-  --color-muted-2: #646b76;
+  /* Aclarado de #646b76 a #8b929d: sobre el fondo oscuro daba 3.44:1 y WCAG AA
+     exige 4.5 para texto normal. Ahora da 5.89:1. Los usos de este token sobre
+     fondo claro (.ind, .breadcrumb de /equipo) llevan su propia regla con
+     --muted-d, porque este valor sobre papel bajaría a 2.97:1. */
+  --color-muted-2: #8b929d;
   --color-line: rgba(255, 255, 255, .08);
   --color-line-2: rgba(255, 255, 255, .045);
 
@@ -54,7 +58,7 @@
   --line-2: rgba(255, 255, 255, .045);
   --ink: #dfe2eb;
   --muted: #9aa1ac;
-  --muted-2: #646b76;
+  --muted-2: #8b929d;
   --paper: #f8f9f5;
   --paper-line: rgba(16, 24, 8, .075);
   --ink-d: #14171c;
@@ -884,6 +888,12 @@ header.nav.scrolled {
   margin-top: 4px;
 }
 
+/* .ind vive dentro de .section-light: sobre papel, --muted-2 daría 2.97:1.
+   --muted-d da 6.69:1. */
+.section-light .ind p {
+  color: var(--muted-d);
+}
+
 /* ============================================================
    TEAM
    ============================================================ */
@@ -1217,7 +1227,9 @@ footer.ft {
   max-width: 34ch;
 }
 
-.ft-col h4 {
+/* h2 y no h4: Lighthouse marcaba salto de jerarquía (no hay h3 antes).
+   El aspecto visual es idéntico — solo cambia el nivel semántico. */
+.ft-col h2 {
   font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 500;
@@ -1298,6 +1310,12 @@ footer.ft {
   color: var(--muted-2);
   margin-bottom: 22px;
   position: relative;
+}
+
+/* El mismo .breadcrumb aparece sobre fondo oscuro (/proyectos, /robotica) y
+   sobre papel (/equipo). Sobre papel necesita el token claro. */
+.page-head--light .breadcrumb {
+  color: var(--muted-d);
 }
 
 .breadcrumb a {

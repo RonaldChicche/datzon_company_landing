@@ -34,7 +34,7 @@
 
 import sharp from "sharp";
 import { createClient } from "@supabase/supabase-js";
-import { readdir, stat, writeFile, unlink, readFile } from "fs/promises";
+import { readdir, stat, unlink, readFile } from "fs/promises";
 import { execSync } from "child_process";
 import { tmpdir } from "os";
 import path from "path";
@@ -215,7 +215,6 @@ async function uploadImages(
 
       if (error) throw error;
 
-      const { data } = supabase.storage.from(BUCKET).getPublicUrl(destPath);
       console.log(`✓  ${originalKB}KB → ${optimizedKB}KB (-${saving}%)`);
       ok++;
     } catch (err) {

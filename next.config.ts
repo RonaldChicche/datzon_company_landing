@@ -38,7 +38,13 @@ const nextConfig: NextConfig = {
     // (medido: RMSE 2.54 a q75 frente a 1.60 a q90).
     qualities: [75, 90],
     remotePatterns: [
-      { protocol: "https", hostname: "adnvzdcqcneqjemxneht.supabase.co" },
+      {
+        protocol: "https",
+        hostname: "adnvzdcqcneqjemxneht.supabase.co",
+        // Acotado al bucket público: sin pathname, cualquier objeto del
+        // proyecto Supabase sería proxeable a través de /_next/image.
+        pathname: "/storage/v1/object/public/landing/**",
+      },
     ],
   },
 };

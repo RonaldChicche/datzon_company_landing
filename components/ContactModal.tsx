@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { X, Send, User, Mail, MessageSquare, Phone, Building2, Factory } from "lucide-react";
+import { X, Send, User, Mail, MessageSquare, Phone, Building2, Factory, ChevronDown } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
@@ -24,10 +24,20 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
     formState: { errors },
   } = useForm<ContactFields>({ resolver: zodResolver(contactFieldsSchema) });
 
+  // El estado se reinicia durante el render al detectar que el modal acaba de
+  // abrirse (patrón de React para "resetear al cambiar una prop"), no dentro
+  // del efecto: ahí provocaba un render en cascada.
+  const [prevOpen, setPrevOpen] = useState(isOpen);
+  if (prevOpen !== isOpen) {
+    setPrevOpen(isOpen);
+    if (isOpen) setStatus("idle");
+  }
+
+  // El foco y el reset del formulario sí son efectos legítimos: tocan el DOM y
+  // la librería de formularios, no el estado de este componente.
   useEffect(() => {
     if (isOpen) {
       firstFocusRef.current?.focus();
-      setStatus("idle");
     } else {
       reset();
     }
@@ -205,6 +215,13 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                               </option>
                             ))}
                           </select>
+                          {/* appearance-none quita la flecha nativa: sin este chevron
+                              el campo parece de escritura como los otros cuatro. */}
+                          <ChevronDown
+                            size={16}
+                            className="absolute right-4 top-1/2 -translate-y-1/2 text-primary-container pointer-events-none"
+                            aria-hidden="true"
+                          />
                         </div>
                       </div>
                     </div>

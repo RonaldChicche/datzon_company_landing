@@ -28,7 +28,7 @@ export default function Footer() {
 
           {/* Col 2 — Navegación */}
           <div className="ft-col">
-            <h4>Navegación</h4>
+            <h2>Navegación</h2>
             <Link href="/">Inicio</Link>
             <Link href="/#soluciones">Soluciones</Link>
             <Link href="/robotica">Robótica</Link>
@@ -39,7 +39,7 @@ export default function Footer() {
 
           {/* Col 3 — Datos de empresa */}
           <div className="ft-col">
-            <h4>Datzon Industrial Automation</h4>
+            <h2>Datzon Industrial Automation</h2>
             <span className="block text-muted text-sm py-[5px]">RUC 20615575624</span>
             <span className="block text-muted text-sm py-[5px]">Cal. Mercator 484, Dpto. 101</span>
             <span className="block text-muted text-sm py-[5px]">San Borja, Lima, Perú</span>

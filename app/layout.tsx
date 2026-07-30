@@ -84,6 +84,11 @@ export default async function RootLayout({
       className={`${michroma.variable} ${geist.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <head>
+        {/* No ayuda al LCP: con el loader por defecto, next/image pide las
+            imágenes a /_next/image en nuestro propio origen, y Vercel las
+            proxea desde Supabase en el servidor. Se mantiene porque el
+            navegador sí abre esta conexión si algún día se enlaza un asset
+            del bucket en directo, y una conexión especulativa no cuesta nada. */}
         <link rel="preconnect" href="https://adnvzdcqcneqjemxneht.supabase.co" />
         <script
           type="application/ld+json"
