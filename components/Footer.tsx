@@ -21,7 +21,7 @@ export default function Footer() {
               className="h-[26px] w-auto mb-[18px]"
             />
             <p>
-              Ingeniería y automatización industrial de extremo a extremo.
+              Ingeniería industrial de extremo a extremo.
               Diseñamos, fabricamos y automatizamos.
             </p>
           </div>
