@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { X, Send, User, Mail, MessageSquare, Phone, Building2, Factory } from "lucide-react";
+import { X, Send, User, Mail, MessageSquare, Phone, Building2, Factory, ChevronDown } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
@@ -205,6 +205,13 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                               </option>
                             ))}
                           </select>
+                          {/* appearance-none quita la flecha nativa: sin este chevron
+                              el campo parece de escritura como los otros cuatro. */}
+                          <ChevronDown
+                            size={16}
+                            className="absolute right-4 top-1/2 -translate-y-1/2 text-primary-container pointer-events-none"
+                            aria-hidden="true"
+                          />
                         </div>
                       </div>
                     </div>

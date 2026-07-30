@@ -10,7 +10,7 @@ const EASE = [0.2, 0.7, 0.2, 1] as [number, number, number, number];
 
 const BRANDS = [
   "Microsoft Azure", "Power BI", "SAP", "ABB", "Universal Robots", "Yaskawa", "Siemens",
-  "Festo", "Schneider Electric", "Raspberry Pi", "Farino"
+  "Festo", "Schneider Electric", "Raspberry Pi", "FAIRINO"
 ];
 
 const SERVICES = [
