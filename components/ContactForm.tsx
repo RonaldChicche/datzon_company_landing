@@ -41,7 +41,7 @@ export default function ContactForm() {
       <div className="form form-success">
         <div className="ico">✓</div>
         <h3>¡Solicitud enviada!</h3>
-        <p>Te respondemos en 1 día hábil con una propuesta concreta.</p>
+        <p>Te contactamos en máximo 1 día hábil.</p>
       </div>
     );
   }

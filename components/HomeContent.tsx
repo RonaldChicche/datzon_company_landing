@@ -84,7 +84,7 @@ export default function HomeContent() {
 
         <div className="hero-content">
           <motion.span {...fd(0)} className="chip" style={{ display: "inline-block" }}>
-            Industrial Automation
+            Automatización Industrial
           </motion.span>
 
           <motion.h1 {...fd(0.1)}>
@@ -109,7 +109,7 @@ export default function HomeContent() {
         </div>
 
         <div className="hero-scroll" aria-hidden="true">
-          <span>Scroll</span>
+          <span>Desliza</span>
           <span className="ln" />
         </div>
       </section>
@@ -163,7 +163,7 @@ export default function HomeContent() {
         <div className="wrap">
           <div className="stats-grid">
             {[
-              { n: <><b>6</b></>, l: "Dominios de ingeniería integrados, de la celda robótica al dato" },
+              { n: <><b>6</b></>, l: "Dominios de ingeniería integrados" },
               { n: <>-<b>30%</b></>, l: "Reducción promedio en tiempos de ciclo" },
               { n: <><b>24/7</b></>, l: "Monitoreo y soporte de líneas y sistemas críticos" },
               { n: <>+<b>20</b></>, l: "Años de experiencia acumulada" },
@@ -187,7 +187,7 @@ export default function HomeContent() {
             </h2>
             <p className="lead">
               Cuéntanos qué proceso quieres automatizar o qué dato necesitas ver.
-              Te respondemos con una propuesta concreta en un día hábil.
+              Te contactamos en máximo 1 día hábil.
             </p>
 
             <div style={{ marginTop: "32px" }}>

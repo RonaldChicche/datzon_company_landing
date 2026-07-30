@@ -21,8 +21,8 @@ export default function Footer() {
               className="h-[26px] w-auto mb-[18px]"
             />
             <p>
-              Ingeniería y automatización industrial de extremo a extremo.
-              De la celda robótica al tablero en la nube.
+              Ingeniería industrial de extremo a extremo.
+              Diseñamos, fabricamos y automatizamos.
             </p>
           </div>
 
