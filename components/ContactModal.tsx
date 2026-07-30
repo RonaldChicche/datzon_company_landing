@@ -140,7 +140,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                         </label>
                         <div className="relative">
                           <Mail size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/50" />
-                          <input id="cm-email" {...register("email")} type="email" placeholder="nombre@empresa.com" className={inputClass} />
+                          <input id="cm-email" {...register("email")} type="email" placeholder="tu@empresa.com" className={inputClass} />
                         </div>
                         {errors.email && <p className="text-red-400 text-[10px] mt-1">{errors.email.message}</p>}
                       </div>
@@ -155,7 +155,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                         </label>
                         <div className="relative">
                           <Phone size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-white/50" />
-                          <input id="cm-telefono" {...register("telefono")} type="tel" placeholder="+51 ... (OPCIONAL)" className={inputClass} />
+                          <input id="cm-telefono" {...register("telefono")} type="tel" placeholder="+51 ..." className={inputClass} />
                         </div>
                         {errors.telefono && <p className="text-red-400 text-[10px] mt-1">{errors.telefono.message}</p>}
                       </div>
@@ -176,7 +176,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                             id="cm-empresa"
                             {...register("empresa")}
                             type="text"
-                            placeholder="ORGANIZACIÓN (OPCIONAL)"
+                            placeholder="Tu empresa"
                             className={inputClass}
                           />
                         </div>
@@ -198,7 +198,7 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
                             className={`${inputClass} appearance-none cursor-pointer`}
                             defaultValue=""
                           >
-                            <option value="">SELECCIONA (OPCIONAL)</option>
+                            <option value="">Selecciona</option>
                             {INDUSTRIES.map((ind) => (
                               <option key={ind} value={ind}>
                                 {ind.toUpperCase()}
