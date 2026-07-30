@@ -22,7 +22,7 @@ export default function Footer() {
             />
             <p>
               Ingeniería y automatización industrial de extremo a extremo.
-              De la celda robótica al tablero en la nube.
+              Diseñamos, fabricamos y automatizamos.
             </p>
           </div>
 
