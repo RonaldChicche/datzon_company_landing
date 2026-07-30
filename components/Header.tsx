@@ -25,8 +25,15 @@ export default function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Close mobile menu on navigation
-  useEffect(() => { setMobileOpen(false); }, [pathname]);
+  // Cerrar el menú móvil al navegar. Se ajusta durante el render comparando con
+  // el valor anterior — el patrón que React documenta para "resetear estado
+  // cuando cambia una prop" — en vez de setState dentro de un efecto, que
+  // renderiza dos veces en cascada.
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  if (prevPathname !== pathname) {
+    setPrevPathname(pathname);
+    setMobileOpen(false);
+  }
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);

@@ -52,6 +52,11 @@ export default function GlobalError({
             >
               RECARGAR SISTEMA
             </button>
+            {/* <a> a propósito, no <Link>: global-error se renderiza cuando el
+                layout raíz ha fallado, así que el router de cliente puede no
+                estar disponible. Un enlace nativo fuerza una recarga completa,
+                que es la recuperación correcta aquí. */}
+            {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
             <a
               href="/"
               className="border border-white/30 text-white font-black px-10 py-5 text-lg uppercase tracking-tight hover:bg-white hover:text-black transition-all font-headline text-center"

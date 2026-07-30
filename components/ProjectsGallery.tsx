@@ -10,7 +10,7 @@
  * - Respeta prefers-reduced-motion.
  */
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
@@ -29,8 +29,14 @@ export default function ProjectsGallery() {
 
   // El lightbox se monta vía portal en <body> para escapar del stacking
   // context de la sección (si no, el Header lo taparía). Solo en cliente.
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+  // useSyncExternalStore es la forma idiomática de preguntar "¿ya estoy en el
+  // cliente?": devuelve false en el servidor y true en el navegador, sin
+  // setState dentro de un efecto (que provoca un render en cascada).
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
 
   const project = openProject !== null ? PROJECTS[openProject] : null;
   const total = project?.images.length ?? 0;

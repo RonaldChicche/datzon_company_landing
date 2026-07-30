@@ -13,6 +13,23 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
   ]),
+  {
+    rules: {
+      // Convención: un guion bajo delante marca "descartado a propósito".
+      // Lo usamos al desestructurar para excluir campos (p. ej. el honeypot
+      // `website` antes de insertar el lead) y en parámetros que la firma
+      // exige pero no se usan.
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+          destructuredArrayIgnorePattern: "^_",
+          caughtErrorsIgnorePattern: "^_",
+        },
+      ],
+    },
+  },
 ]);
 
 export default eslintConfig;

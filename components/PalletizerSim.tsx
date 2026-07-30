@@ -465,7 +465,6 @@ export default function PalletizerSim({ className = "" }: PalletizerSimProps) {
 
       return sim;
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [prefersReduced]
   );
 

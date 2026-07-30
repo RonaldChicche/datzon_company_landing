@@ -26,7 +26,7 @@ export default function TermsOfUsePage() {
               1. Aceptación de los Términos
             </h2>
             <p>
-              Al acceder y utilizar el sitio web <em>datzoncompany.com</em> (el "Sitio"), usted acepta quedar vinculado por estos
+              Al acceder y utilizar el sitio web <em>datzoncompany.com</em> (el «Sitio»), usted acepta quedar vinculado por estos
               Términos de Uso. Si no está de acuerdo con alguno de estos términos, le rogamos que no utilice el Sitio.
             </p>
           </section>
