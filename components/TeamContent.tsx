@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
+import { siteAssetUrl } from "@/lib/site-assets";
 
 const EASE = [0.2, 0.7, 0.2, 1] as [number, number, number, number];
 
@@ -11,35 +12,35 @@ const teamMembers = [
     name: "Danilo Luque",
     role: "Ing. Mecatrónico",
     bio: "Ingeniero especializado en diseño y certificación de equipos industriales bajo normativas internacionales.",
-    image: "/equipo/Danilo_Luque.jpg",
+    image: siteAssetUrl("equipo/danilo-luque.webp"),
     objectPosition: "center top",
   },
   {
     name: "Jeffry Huanca",
     role: "Ing. Mecatrónico",
     bio: "Proyectista en integración de sistemas, implementación en planta y validación de soluciones industriales.",
-    image: "/equipo/Jeffry_Huanca.jpg",
+    image: siteAssetUrl("equipo/jeffry-huanca.webp"),
     objectPosition: "center top",
   },
   {
     name: "Jose Zamora",
     role: "Ing. Mecatrónico",
     bio: "Especialista en diseño de sistemas automatizados y desarrollo de soluciones electromecánicas para optimización de procesos productivos.",
-    image: "/equipo/Jose_Zamora.jpg",
+    image: siteAssetUrl("equipo/jose-zamora.webp"),
     objectPosition: "center top",
   },
   {
     name: "John Ojeda",
     role: "Ing. Electrónico",
     bio: "Ingeniero especialista en proyectos industriales con más de 25 años de experiencia en minería y plantas de proceso, especializado en ejecución y puesta en marcha de sistemas industriales.",
-    image: "/equipo/John_Ojeda.jpg",
+    image: siteAssetUrl("equipo/john-ojeda.webp"),
     objectPosition: "center top",
   },
   {
     name: "Ronald Chicche",
     role: "Ing. Mecatrónico",
     bio: "Especialista en automatización, integración digital, análisis de datos e inteligencia aplicada a procesos industriales.",
-    image: "/equipo/Ronald_Chicche.jpg",
+    image: siteAssetUrl("equipo/ronald-chicche.webp"),
     objectPosition: "center 15%",
   },
 ];
@@ -93,6 +94,9 @@ export default function TeamContent() {
                     alt={member.name}
                     fill
                     sizes="(max-width: 680px) 100vw, (max-width: 980px) 50vw, 33vw"
+                    // Los retratos son el contenido más escrutado de la página:
+                    // a la calidad por defecto (75) la recompresión se nota.
+                    quality={90}
                     style={{ objectFit: "cover", objectPosition: member.objectPosition }}
                   />
                   {/* Bio panel — slides up on hover via .bio-panel CSS */}

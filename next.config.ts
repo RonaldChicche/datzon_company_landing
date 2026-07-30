@@ -30,8 +30,14 @@ const nextConfig: NextConfig = {
     ];
   },
   images: {
+    dangerouslyAllowSVG: true,
+    contentDispositionType: "attachment",
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    // Next 16 exige declarar aquí toda calidad que se use en un <Image quality={...}>.
+    // 90 es para los retratos del equipo: a 75 la recompresión era visible
+    // (medido: RMSE 2.54 a q75 frente a 1.60 a q90).
+    qualities: [75, 90],
     remotePatterns: [
-      { protocol: "https", hostname: "images.unsplash.com" },
       { protocol: "https", hostname: "adnvzdcqcneqjemxneht.supabase.co" },
     ],
   },

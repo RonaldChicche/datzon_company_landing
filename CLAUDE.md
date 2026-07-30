@@ -179,9 +179,10 @@ Todos los objetos van al bucket **`landing`**. Su contenido vive bajo estos pref
 |---|---|
 | `project/<slug>/` | Fotos de las galerías de proyectos. Un slug por proyecto, generado por `pnpm optimize-images` a partir del nombre de la carpeta. |
 | `site/` | Todo lo demás: retratos del equipo, imágenes de páginas y logos. |
-| `raw/` | **No es un prefijo de contenido.** Es el destino de descarte de `scripts/optimize-upload.ts` cuando en `scripts/images-to-upload/` hay imágenes sueltas (sin subcarpetas) y no se indica un proyecto por argumento. No lo uses para nada que el sitio referencie. Está previsto eliminarlo cuando se revise ese script en otro sub-proyecto. |
 
-No crees prefijos nuevos de primer nivel sin actualizar esta tabla. No antepongas `landing/` dentro del bucket: sería redundante con su nombre. Si en el futuro este proyecto Supabase aloja otra aplicación, va en **otro bucket**, no en una carpeta de este.
+Los subdirectorios bajo `site/` son libres (`site/equipo/`, …): la regla de esta tabla solo fija los prefijos de primer nivel.
+
+No crees prefijos nuevos de primer nivel sin actualizar esta tabla. No antepongas `landing/` dentro del bucket: sería redundante con su nombre. Si en el futuro este proyecto Supabase aloja otra aplicación, va en **otro bucket**, no en una carpeta de este. Si `scripts/images-to-upload/` recibe imágenes sueltas (sin subcarpeta) y no se indica un proyecto por argumento, `scripts/optimize-upload.ts` falla con error — ya no existe un destino de descarte tipo `raw/`.
 
 El bucket tiene un límite de **2 MB por archivo** (`file_size_limit`), más estricto que el del plan. Cualquier asset que lo supere tras optimizar será rechazado.
 

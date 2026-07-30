@@ -117,12 +117,15 @@ Three voices, strictly cast:
 
 Accent words inside headlines get a `<span>` in lime (dark sections) or deep green (paper sections).
 
+The isotipo lives in 3 files that must stay in sync: `app/icon.svg` (favicon), and `site/logo_datzon.svg` + `site/logo_datzon_full.svg` served from the bucket (nav mark and full lockup respectively). A rebrand touches all three.
+
 ## Layout & Spacing
 - Content max-width **1240px**, 28px side padding (20px mobile).
 - Sections breathe: ~96px vertical on desktop, 64px mobile.
 - 4px base unit for all padding/margins.
 - Stats and data rows are separated by 1px hairlines, not boxes.
 - Fixed top nav (76px) over a hero that fills the viewport (`min-height:100vh`) with a full-bleed grayscale photo, dark gradient overlay, and centered content.
+- **Hero photo provenance:** Pexels photo #34207359, Pexels license (free for commercial use, no attribution required). Served from the bucket as `site/hero.webp` at 2400px; the B/W look is applied in CSS via the `grayscale` class, not baked into the asset.
 
 ## Elevation & Depth
 No drop shadows. Depth = **tonal layers + 1px outlines**:

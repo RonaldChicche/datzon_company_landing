@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { WHATSAPP_URL } from "@/lib/contact-links";
+import { siteAssetUrl } from "@/lib/site-assets";
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -12,7 +13,7 @@ export default function Footer() {
           {/* Col 1 — Logo + descripción */}
           <div className="ft-logo">
             <Image
-              src="/logo_datzon.svg"
+              src={siteAssetUrl("logo_datzon.svg")}
               alt="Datzon Industrial Automation"
               // Proporción intrínseca del SVG (viewBox 614×120) — ver Header.
               width={614}

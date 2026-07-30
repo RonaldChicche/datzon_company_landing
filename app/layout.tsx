@@ -5,6 +5,7 @@ import "./globals.css";
 import ClientLayout from "./ClientLayout";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import { Analytics } from "@vercel/analytics/next";
+import { siteAssetUrl } from "@/lib/site-assets";
 
 const michroma = Michroma({
   variable: "--font-michroma",
@@ -51,7 +52,7 @@ const organizationJsonLd = {
   name: "Datzon",
   legalName: "Datzon Industrial Automation",
   url: "https://www.datzoncompany.com",
-  logo: "https://www.datzoncompany.com/logo_datzon.svg",
+  logo: siteAssetUrl("logo_datzon.svg"),
   foundingDate: "2026-03",
   email: "contacto@datzoncompany.com",
   address: {
@@ -83,6 +84,7 @@ export default async function RootLayout({
       className={`${michroma.variable} ${geist.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <head>
+        <link rel="preconnect" href="https://adnvzdcqcneqjemxneht.supabase.co" />
         <script
           type="application/ld+json"
           nonce={nonce}
