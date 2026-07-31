@@ -5,8 +5,10 @@ const withBundleAnalyzer = bundleAnalyzer({
   enabled: process.env.ANALYZE === "true",
 });
 
-// CSP is handled dynamically by middleware.ts (nonce-based, per request).
-// These static headers apply to all routes and don't change per request.
+// El CSP se genera por petición en `proxy.ts` (nonce dinámico). En Next 16 ese
+// archivo se llamaba antes `middleware.ts`; el nombre viejo estuvo aquí siete
+// semanas mientras el archivo real no existía.
+// Estas cabeceras son estáticas: iguales en todas las rutas y peticiones.
 const securityHeaders = [
   { key: "X-Content-Type-Options", value: "nosniff" },
   { key: "X-Frame-Options", value: "DENY" },
