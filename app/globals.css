@@ -2054,7 +2054,17 @@ body.page-light .sim-note b {
   background: var(--bg-2);
   position: relative;
   overflow: hidden;
-  padding: 128px 0 56px;
+  padding: 128px 0 44px;
+}
+
+.rb-head .accent {
+  color: var(--lime);
+}
+
+.rb-head h1 {
+  font-size: clamp(25px, 3.6vw, 44px);
+  line-height: 1.16;
+  margin: 20px 0 14px;
 }
 
 .rb-head-glow {
@@ -2064,25 +2074,23 @@ body.page-light .sim-note b {
   background: radial-gradient(800px 360px at 90% -20%, var(--lime-dim), transparent 60%);
 }
 
-/* sección oscura que envuelve el estudio; padding vertical igual que .sec */
+/* sección oscura que envuelve el estudio; empieza justo tras la cabecera
+   (sin padding-top propio), el padding-bottom sigue el ritmo de .sec */
 .rb-estudio-seccion {
   background: var(--bg-2);
   border-bottom: 1px solid var(--line);
-  padding-top: 116px;
   padding-bottom: 116px;
   position: relative;
 }
 
 @media (max-width: 1000px) {
   .rb-estudio-seccion {
-    padding-top: 88px;
     padding-bottom: 88px;
   }
 }
 
 @media (max-width: 680px) {
   .rb-estudio-seccion {
-    padding-top: 64px;
     padding-bottom: 64px;
   }
 }
@@ -2381,7 +2389,23 @@ body.page-light .sim-note b {
   color: var(--lime);
 }
 
+.rb-rail-nota {
+  padding: 14px 16px;
+  border-top: 1px solid var(--line-2);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+  line-height: 1.8;
+}
+
 /* aplicaciones, lista abierta sobre papel */
+.rb-apps h2 {
+  font-size: clamp(22px, 2.6vw, 34px);
+  margin: 14px 0 10px;
+}
+
 .rb-apps-sub {
   color: var(--muted-d);
   max-width: 60ch;
