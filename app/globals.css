@@ -2261,7 +2261,8 @@ body.page-light .sim-note b {
   margin-top: 6px;
 }
 
-.rb-copy .rb-variants p {
+.rb-copy .rb-variants p,
+.rb-variants-titulo {
   font-family: var(--font-mono);
   font-size: 10.5px;
   letter-spacing: .18em;
