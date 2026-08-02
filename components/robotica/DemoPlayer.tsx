@@ -12,19 +12,27 @@ export default function DemoPlayer({ src, poster, etiqueta, activo }: Props) {
   const [actual, setActual] = useState(0);
   const [duracion, setDuracion] = useState(0);
   const [visible, setVisible] = useState(false);
-  const [cargado, setCargado] = useState(false);
+  const [cargadoPorInterseccion, setCargadoPorInterseccion] = useState(false);
+  // derivado, no estado propio: cuando activo es true ya sabemos desde el
+  // primer render (sin esperar a un efecto) que hay que cargar, así que no
+  // hace falta duplicar esa señal en un setState dentro de un efecto.
+  const cargado = cargadoPorInterseccion || activo;
 
   // visibilidad del reproductor (no reproducir fuera de pantalla) y arranque
   // diferido de la carga: src/poster no se piden hasta el primer hit del
   // IntersectionObserver, para que el poster del vídeo no compita con el H1
   // por el LCP (Largest Contentful Paint) en la carga inicial.
+  // Acoplado a que DemoStudio oculta las escenas inactivas con
+  // `.rb-scene { display: none }`: solo la escena activa intersecta al
+  // montar. Si eso cambiara a opacity/visibility, este observer dispararía
+  // también para escenas no activas.
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
     const io = new IntersectionObserver(
       ([e]) => {
         setVisible(e.isIntersecting);
-        if (e.isIntersecting) setCargado(true);
+        if (e.isIntersecting) setCargadoPorInterseccion(true);
       },
       { threshold: 0.35 }
     );
@@ -44,6 +52,14 @@ export default function DemoPlayer({ src, poster, etiqueta, activo }: Props) {
   const alternar = () => {
     const v = videoRef.current;
     if (!v) return;
+    if (!cargado) {
+      // defensa: en la práctica activo ya implica cargado (ver arriba), pero
+      // si algún día deja de ser así, un clic no debe quedar sin efecto.
+      // El efecto de autoplay se encarga de reproducir en cuanto el <video>
+      // tenga src asignado.
+      setCargadoPorInterseccion(true);
+      return;
+    }
     if (v.paused) v.play().catch(() => setPausado(true));
     else v.pause();
   };
