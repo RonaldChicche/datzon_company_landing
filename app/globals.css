@@ -2354,7 +2354,7 @@ body.page-light .sim-note b {
   filter: saturate(.8);
 }
 
-.rb-chan .t {
+.rb-chan-nombre {
   display: block;
   font-weight: 600;
   font-size: 15px;
@@ -2362,7 +2362,7 @@ body.page-light .sim-note b {
   line-height: 1.3;
 }
 
-.rb-chan .a {
+.rb-chan-app {
   display: block;
   font-family: var(--font-mono);
   font-size: 10px;
@@ -2372,7 +2372,7 @@ body.page-light .sim-note b {
   margin-top: 4px;
 }
 
-.rb-chan.on .a {
+.rb-chan.on .rb-chan-app {
   color: var(--lime);
 }
 
