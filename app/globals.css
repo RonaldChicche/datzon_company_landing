@@ -2045,11 +2045,16 @@ body.page-light .sim-note b {
    ROBOTICA · SALA DE CONTROL
    ============================================================ */
 
-/* cabecera compacta: fondo oscuro profundo + glow radial lima */
+/* cabecera compacta: fondo oscuro profundo + glow radial lima.
+   header.nav es fixed (fuera del flujo), así que el padding-top tiene que
+   cubrir su alto (~84px) o el h1/breadcrumb quedan tapados detrás; el resto
+   es aire hasta el estudio, más corto que el de .page-head (150px) porque
+   esta cabecera es deliberadamente compacta. */
 .rb-head {
   background: var(--bg-2);
   position: relative;
   overflow: hidden;
+  padding: 128px 0 56px;
 }
 
 .rb-head-glow {

@@ -33,10 +33,15 @@ export function proxy(request: NextRequest) {
     "font-src 'self'",
     // Las imágenes del bucket llegan proxeadas por /_next/image, que es 'self'.
     // data: y blob: los usa next/image para los placeholders.
-    // OJO: un <img> apuntando DIRECTAMENTE a supabase.co se bloquea (verificado).
-    // Si algún día hace falta, hay que añadir aquí el host del bucket ,
-    // pero lo correcto es seguir usando next/image.
-    "img-src 'self' data: blob:",
+    // Excepción: el <video poster> de la sala de control (DemoPlayer) no puede
+    // pasar por next/image (no es un <img>), así que el poster referencia el
+    // bucket directo. Se permite solo esa ruta del bucket público, no todo
+    // supabase.co, igual que acota next.config.ts en `images.remotePatterns`.
+    "img-src 'self' data: blob: https://adnvzdcqcneqjemxneht.supabase.co/storage/v1/object/public/landing/",
+    // Los <video src> de las demos apuntan al mismo bucket público y no tienen
+    // equivalente a next/image para vídeo, así que se acotan aquí igual que el
+    // poster de arriba (mismo host + prefijo de ruta, nada más amplio).
+    "media-src 'self' https://adnvzdcqcneqjemxneht.supabase.co/storage/v1/object/public/landing/",
     "connect-src 'self' https://vitals.vercel-insights.com https://va.vercel-scripts.com",
     "frame-ancestors 'none'",
     "object-src 'none'",
