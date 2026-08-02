@@ -20,7 +20,7 @@
 import { createClient } from "@supabase/supabase-js";
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
-import { assertDatzonProject } from "../lib/supabase/project";
+import { assertDatzonProject } from "@/lib/supabase/project";
 
 // ── Cargar .env.local (Node 20.12+ nativo, mismo patrón que optimize-upload.ts) ──
 try {
