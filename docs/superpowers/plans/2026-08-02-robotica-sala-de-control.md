@@ -68,7 +68,7 @@ describe("robotica-demos", () => {
 
   it("reglas duras: sin raya larga, sin EN CICLO, sin modelos de robot", () => {
     const t = textos();
-    expect(t).not.toContain("—");
+    expect(t).not.toContain("\u2014"); // raya larga (escape para no escribirla)
     expect(t.toUpperCase()).not.toContain("EN CICLO");
     for (const prohibido of ["FR10", "FAIRINO", "seis articulaciones"]) {
       expect(t).not.toContain(prohibido);
@@ -736,7 +736,7 @@ Comparar con la maqueta v8 en 1280 px y en 375 px: cabecera con glow, conmutador
 
 - [ ] **Step 4: Reglas duras sobre el HTML servido**
 
-Run: `curl -s http://localhost:3000/robotica | grep -c "—\|EN CICLO\|FR10\|FAIRINO"`
+Run: `curl -s http://localhost:3000/robotica | grep -c "$(printf '\xe2\x80\x94')\|EN CICLO\|FR10\|FAIRINO"` (el printf produce la raya larga sin escribirla)
 Expected: `0`.
 
 - [ ] **Step 5: Accesibilidad de teclado**
