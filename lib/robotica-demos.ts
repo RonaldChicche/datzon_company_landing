@@ -3,6 +3,11 @@
 // codifican las reglas duras de Ronald y no deben relajarse.
 import { siteAssetUrl } from "@/lib/site-assets";
 
+// Chip final de cada lista de variantes: invita a preguntar por el proceso
+// propio del visitante. DemoStudio compara contra este mismo valor para
+// darle el estilo punteado (rb-chip--mas), así que vive acá y no se repite.
+export const VARIANTE_CONTACTO = "¿El tuyo?";
+
 export type Demo = {
   id: "paletizado" | "soldadura" | "servicio";
   nombre: string;
@@ -23,7 +28,7 @@ const demo = (
   id, nombre, aplicacion,
   etiqueta: `Demo 0${n} · ${nombre}`,
   gancho, parrafo, variantesTitulo,
-  variantes: [...variantes, "¿El tuyo?"],
+  variantes: [...variantes, VARIANTE_CONTACTO],
   video: siteAssetUrl(`robotica/${id}.mp4`),
   poster: siteAssetUrl(`robotica/${id}-poster.jpg`),
 });

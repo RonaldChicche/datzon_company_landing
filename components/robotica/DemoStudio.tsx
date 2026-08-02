@@ -3,7 +3,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { DEMOS } from "@/lib/robotica-demos";
+import { DEMOS, VARIANTE_CONTACTO } from "@/lib/robotica-demos";
 import DemoPlayer from "@/components/robotica/DemoPlayer";
 
 export default function DemoStudio() {
@@ -22,7 +22,7 @@ export default function DemoStudio() {
                 <p className="rb-variants-titulo">{d.variantesTitulo}</p>
                 <div className="rb-chips">
                   {d.variantes.map((v) => (
-                    <span key={v} className={`rb-chip${v === "¿El tuyo?" ? " rb-chip--mas" : ""}`}>{v}</span>
+                    <span key={v} className={`rb-chip${v === VARIANTE_CONTACTO ? " rb-chip--mas" : ""}`}>{v}</span>
                   ))}
                 </div>
               </div>
