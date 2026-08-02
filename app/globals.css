@@ -2450,7 +2450,8 @@ body.page-light .sim-note b {
 
 /* párrafo de la banda final de CTA */
 .rb-cta-p {
-  color: var(--muted);
+  color: var(--bg);
+  opacity: .8;
   max-width: 52ch;
   margin: 0 auto 30px;
 }
