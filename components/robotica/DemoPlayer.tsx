@@ -80,7 +80,12 @@ export default function DemoPlayer({ src, poster, etiqueta, activo }: Props) {
     buscar(e.clientX);
     const mover = (ev: PointerEvent) => buscar(ev.clientX);
     s.addEventListener("pointermove", mover);
-    s.addEventListener("pointerup", () => s.removeEventListener("pointermove", mover), { once: true });
+    // lostpointercapture es el único punto de limpieza: se dispara tanto tras
+    // pointerup como tras pointercancel (arrastre interrumpido por el SO, un
+    // gesto del sistema, etc.). Si solo escucháramos pointerup, un
+    // pointercancel dejaría "mover" vivo y el simple hover del cursor sobre
+    // la barra seguiría haciendo seek de forma fantasma.
+    s.addEventListener("lostpointercapture", () => s.removeEventListener("pointermove", mover), { once: true });
   };
 
   const onScrubKeyDown = (e: React.KeyboardEvent) => {
