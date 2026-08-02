@@ -12,12 +12,22 @@ export default function DemoPlayer({ src, poster, etiqueta, activo }: Props) {
   const [actual, setActual] = useState(0);
   const [duracion, setDuracion] = useState(0);
   const [visible, setVisible] = useState(false);
+  const [cargado, setCargado] = useState(false);
 
-  // visibilidad del reproductor (no reproducir fuera de pantalla)
+  // visibilidad del reproductor (no reproducir fuera de pantalla) y arranque
+  // diferido de la carga: src/poster no se piden hasta el primer hit del
+  // IntersectionObserver, para que el poster del vídeo no compita con el H1
+  // por el LCP (Largest Contentful Paint) en la carga inicial.
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
-    const io = new IntersectionObserver(([e]) => setVisible(e.isIntersecting), { threshold: 0.35 });
+    const io = new IntersectionObserver(
+      ([e]) => {
+        setVisible(e.isIntersecting);
+        if (e.isIntersecting) setCargado(true);
+      },
+      { threshold: 0.35 }
+    );
     io.observe(v);
     return () => io.disconnect();
   }, []);
@@ -70,12 +80,12 @@ export default function DemoPlayer({ src, poster, etiqueta, activo }: Props) {
     <div className="rb-player">
       <video
         ref={videoRef}
-        src={src}
-        poster={poster}
+        src={cargado ? src : undefined}
+        poster={cargado ? poster : undefined}
         muted
         loop
         playsInline
-        preload="metadata"
+        preload="none"
         aria-label={etiqueta}
         onClick={alternar}
         onPlay={() => setPausado(false)}
