@@ -184,7 +184,7 @@ Los subdirectorios bajo `site/` son libres (`site/equipo/`, …): la regla de es
 
 No crees prefijos nuevos de primer nivel sin actualizar esta tabla. No antepongas `landing/` dentro del bucket: sería redundante con su nombre. Si en el futuro este proyecto Supabase aloja otra aplicación, va en **otro bucket**, no en una carpeta de este. Si `scripts/images-to-upload/` recibe imágenes sueltas (sin subcarpeta) y no se indica un proyecto por argumento, `scripts/optimize-upload.ts` falla con error: ya no existe un destino de descarte tipo `raw/`.
 
-El bucket tiene un límite de **2 MB por archivo** (`file_size_limit`), más estricto que el del plan. Cualquier asset que lo supere tras optimizar será rechazado.
+El bucket tiene un límite de **30 MB por archivo** (`file_size_limit`, subido desde 2 MB el 2026-08-02 por la migración `20260802112606_bucket_landing_limite_30mb.sql` para admitir los MP4 de `site/robotica/`). La convención para imágenes no cambia: siguen debiendo optimizarse a menos de 2 MB antes de subirlas.
 
 El estado real de RLS del bucket está documentado en `scripts/supabase-storage-rls.sql`. Ese archivo **no se ejecuta**: describe la configuración vigente y por qué es correcta.
 
