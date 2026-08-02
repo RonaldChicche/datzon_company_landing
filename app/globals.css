@@ -2443,10 +2443,9 @@ body.page-light .sim-note b {
   aspect-ratio: 1;
   width: 190px;
   background-color: var(--paper);
-  background-size: cover;
-  background-position: center;
   border-radius: 6px;
   mix-blend-mode: multiply;
+  object-fit: cover;
 }
 
 /* párrafo de la banda final de CTA */
