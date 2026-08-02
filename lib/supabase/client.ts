@@ -3,7 +3,7 @@ import { assertDatzonProject } from "./project";
 
 /**
  * Cliente Supabase de la APLICACIÓN en runtime. Usa la clave publishable,
- * sujeta a RLS — la credencial secreta vive solo en scripts/ (CLAUDE.md).
+ * sujeta a RLS, la credencial secreta vive solo en scripts/ (CLAUDE.md).
  * Las tablas del proyecto están en el schema `landing`, no en `public`.
  *
  * La clave NO lleva prefijo NEXT_PUBLIC_ a propósito: solo se usa en el

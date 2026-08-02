@@ -6,7 +6,7 @@ import type { NextRequest } from "next/server";
  *
  * En Next 16 este archivo se llama `proxy.ts` (antes `middleware.ts`) y lo
  * invoca el framework por convención: NO lo importa nadie. Por eso una revisión
- * de "código muerto" lo marca como basura — de hecho se borró así en el commit
+ * de "código muerto" lo marca como basura, de hecho se borró así en el commit
  * 81e0ae9 y el sitio se quedó siete semanas sin CSP. Si lo ves sin referencias,
  * no lo borres: es intencional.
  *
@@ -34,7 +34,7 @@ export function proxy(request: NextRequest) {
     // Las imágenes del bucket llegan proxeadas por /_next/image, que es 'self'.
     // data: y blob: los usa next/image para los placeholders.
     // OJO: un <img> apuntando DIRECTAMENTE a supabase.co se bloquea (verificado).
-    // Si algún día hace falta, hay que añadir aquí el host del bucket —
+    // Si algún día hace falta, hay que añadir aquí el host del bucket ,
     // pero lo correcto es seguir usando next/image.
     "img-src 'self' data: blob:",
     "connect-src 'self' https://vitals.vercel-insights.com https://va.vercel-scripts.com",

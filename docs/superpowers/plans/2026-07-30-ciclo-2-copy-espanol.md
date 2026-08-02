@@ -1,4 +1,4 @@
-# Ciclo 2 — Copy profesional en español: Plan de implementación
+# Ciclo 2, Copy profesional en español: Plan de implementación
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -10,7 +10,7 @@
 
 ## Global Constraints
 
-- Spec: `docs/superpowers/specs/2026-07-30-ciclo-2-copy-espanol-design.md` — sus decisiones son ley.
+- Spec: `docs/superpowers/specs/2026-07-30-ciclo-2-copy-espanol-design.md`, sus decisiones son ley.
 - **El nombre comercial "Datzon Industrial Automation" NO se traduce nunca**: es nombre propio. Solo cambia el badge suelto del hero (`HomeContent.tsx:87`).
 - **NO se tocan**: el titular del hero, las seis descripciones de `SERVICES`, las marcas de `BRANDS`, los acrónimos técnicos (PLC, SCADA, CNC, IoT, ERP), `PalletizerSim.tsx`, ni las páginas `/robotica`, `/proyectos`, `/equipo`, `/politica-privacidad`, `/terminos-de-uso`.
 - **En `ContactModal.tsx` se conservan mayúsculas y guion bajo** de las etiquetas de campo (`NOMBRE COMPLETO_`): son lenguaje visual de `DESIGN.md`. Solo cambian las palabras.
@@ -25,7 +25,7 @@
 - Modify: `components/HomeContent.tsx` (líneas 87, 112, 166)
 - Modify: `components/Footer.tsx` (párrafo bajo el logo, ~línea 24)
 
-**Interfaces:** ninguna — solo texto.
+**Interfaces:** ninguna, solo texto.
 
 - [ ] **Step 1: Badge del hero**
 
@@ -101,7 +101,7 @@ Run: `pnpm exec tsc --noEmit`
 Expected: limpio.
 
 Run: `grep -rn "Industrial Automation" components/ app/ | grep -v node_modules`
-Expected: exactamente 5 líneas, todas del nombre comercial — `Header.tsx:41` (alt), `Footer.tsx:17` (alt), `Footer.tsx:42` (h4), `HomeContent.tsx:197` (bloque empresa), `app/layout.tsx:53` (legalName). Ninguna es el badge.
+Expected: exactamente 5 líneas, todas del nombre comercial, `Header.tsx:41` (alt), `Footer.tsx:17` (alt), `Footer.tsx:42` (h4), `HomeContent.tsx:197` (bloque empresa), `app/layout.tsx:53` (legalName). Ninguna es el badge.
 
 Run: `grep -rn "Scroll\|celda robótica al" components/`
 Expected: sin resultados.

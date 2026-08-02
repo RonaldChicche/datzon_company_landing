@@ -1,4 +1,4 @@
-# Ciclo 0 — Quick wins: pestaña, WhatsApp, CTA del modal y remates de auditoría
+# Ciclo 0, Quick wins: pestaña, WhatsApp, CTA del modal y remates de auditoría
 
 **Fecha:** 2026-07-26
 **Rama:** `feat/ciclo-0-quick-wins` (desde `main` en `5d900a9`, post-merge del rediseño)
@@ -13,22 +13,22 @@ Con el formulario entregando leads en producción (verificado: fila en `landing.
 
 | Decisión | Valor |
 |---|---|
-| Título de la pestaña | **"Datzon \| Ingeniería y Automatización Industrial"** — el default que `app/layout.tsx` ya define. Decisión final del usuario tras evaluar "DatzonCompany" a secas y su costo SEO. Subpáginas: `"%s \| Datzon"` (template existente) |
+| Título de la pestaña | **"Datzon \| Ingeniería y Automatización Industrial"**, el default que `app/layout.tsx` ya define. Decisión final del usuario tras evaluar "DatzonCompany" a secas y su costo SEO. Subpáginas: `"%s \| Datzon"` (template existente) |
 | Número de WhatsApp | **+51 956 956 778** (confirmado por el usuario) |
 | Mensaje pre-armado | **"Hola, quiero cotizar un proyecto con Datzon."** |
 | Ubicación del WhatsApp | **Ambos**: burbuja flotante global + enlace en el footer. La burbuja se muestra en captura de dev **antes** de commitear; si no convence, se ajusta |
 | CTA del modal | **"Cotizar" según página**: en `/` ancla a `/#cotizar` (formulario largo); en el resto de páginas abre el modal (`open-contact-modal`) |
-| Grants a `service_role` | **Solo lectura** (`usage` + `select`). Borrar leads sigue siendo del dashboard — YAGNI |
+| Grants a `service_role` | **Solo lectura** (`usage` + `select`). Borrar leads sigue siendo del dashboard, YAGNI |
 
 ## Cambios
 
-### 1. Título de pestaña — `app/page.tsx`
+### 1. Título de pestaña, `app/page.tsx`
 
 - `app/page.tsx`: eliminar el override `title: "Inicio"`. La home hereda el default de `app/layout.tsx`, que ya es exactamente el título elegido: `"Datzon | Ingeniería y Automatización Industrial"`.
 - `app/layout.tsx` **no se toca**: default, template, description y openGraph ya están correctos.
 - `app/equipo/page.tsx` conserva `title: "Equipo"` → pestaña "Equipo | Datzon".
 
-### 2. WhatsApp — constante única + dos consumidores
+### 2. WhatsApp, constante única + dos consumidores
 
 **`lib/contact-links.ts` (nuevo):**
 
@@ -48,7 +48,7 @@ export const WHATSAPP_URL =
 
 **Gate visual:** captura en dev de la burbuja (desktop y 375px) presentada al usuario antes del commit del componente; se itera si no convence.
 
-### 3. "Cotizar" según página — `components/Header.tsx`
+### 3. "Cotizar" según página, `components/Header.tsx`
 
 El header ya es Client Component (usa `usePathname`). El CTA:
 
@@ -57,11 +57,11 @@ El header ya es Client Component (usa `usePathname`). El CTA:
 
 El listener ya existe en `app/ClientLayout.tsx:17`; no se toca. Con esto `source='modal'` en `landing.leads` empieza a registrar conversiones reales.
 
-### 4. `fetchPriority="high"` — `components/HomeContent.tsx`
+### 4. `fetchPriority="high"`, `components/HomeContent.tsx`
 
 Añadir la prop al `<Image>` del hero (mantiene `priority`, `fill`, `sizes`). Respaldo: recomendación oficial de web.dev para imágenes LCP; la auditoría midió que hoy el navegador la pide con prioridad Low.
 
-### 5. Dimensiones intrínsecas del logo — `components/Header.tsx` y `components/Footer.tsx`
+### 5. Dimensiones intrínsecas del logo, `components/Header.tsx` y `components/Footer.tsx`
 
 `width`/`height` explícitos en los logos (proporción real de cada SVG, medida de los archivos al implementar). El CSS visible no cambia; solo se declara la proporción para que el navegador reserve el espacio (elimina el shift de 0.0028 medido en la auditoría).
 
@@ -79,7 +79,7 @@ grant select on landing.leads to service_role;
 
 - Aplicar con `supabase db push --linked` (el CLI tiene sesión desde el 2026-07-25).
 - Verificar: `has_table_privilege('service_role','landing.leads','select')` = true; `anon` sigue teniendo **solo** INSERT (mismas queries de verificación del ciclo D).
-- `CLAUDE.md`: quitar la frase "es una migración pendiente" — pasa a describir el estado real (dashboard **o** scripts con la secreta).
+- `CLAUDE.md`: quitar la frase "es una migración pendiente", pasa a describir el estado real (dashboard **o** scripts con la secreta).
 
 ## Verificación del ciclo
 

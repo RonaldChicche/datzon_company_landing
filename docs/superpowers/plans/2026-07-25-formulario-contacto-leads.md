@@ -1,4 +1,4 @@
-# Formulario de contacto: entrega real de leads — Plan de implementación
+# Formulario de contacto: entrega real de leads, Plan de implementación
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -31,11 +31,11 @@
 **Interfaces:**
 - Consumes: nada (solo `zod`).
 - Produces:
-  - `contactFieldsSchema` — ZodObject con `nombre` (min 2), `email`, `mensaje` (min 10) obligatorios; `empresa`, `telefono`, `industria`, `website` opcionales. `website` es el honeypot y **no** lleva `max(0)`: su contenido se evalúa en el servidor.
-  - `contactPayloadSchema` — `contactFieldsSchema.extend({ source: z.enum(["home", "modal"]) })`.
+  - `contactFieldsSchema`, ZodObject con `nombre` (min 2), `email`, `mensaje` (min 10) obligatorios; `empresa`, `telefono`, `industria`, `website` opcionales. `website` es el honeypot y **no** lleva `max(0)`: su contenido se evalúa en el servidor.
+  - `contactPayloadSchema`, `contactFieldsSchema.extend({ source: z.enum(["home", "modal"]) })`.
   - `type ContactFields = z.infer<typeof contactFieldsSchema>`
   - `type ContactPayload = z.infer<typeof contactPayloadSchema>`
-  - `INDUSTRIES: readonly string[]` — la lista que hoy vive en `ContactForm.tsx`.
+  - `INDUSTRIES: readonly string[]`, la lista que hoy vive en `ContactForm.tsx`.
 
 - [ ] **Step 1: Write the failing test**
 
@@ -118,7 +118,7 @@ describe("INDUSTRIES", () => {
 - [ ] **Step 2: Run test to verify it fails**
 
 Run: `pnpm exec vitest run lib/contact-schema.test.ts`
-Expected: FAIL — `Cannot find module './contact-schema'` (o equivalente).
+Expected: FAIL, `Cannot find module './contact-schema'` (o equivalente).
 
 - [ ] **Step 3: Write minimal implementation**
 
@@ -150,7 +150,7 @@ export const contactFieldsSchema = z.object({
   empresa: z.string().optional(),
   telefono: z.string().optional(),
   industria: z.string().optional(),
-  // Honeypot: invisible para humanos. Sin max(0) a propósito — si un bot lo
+  // Honeypot: invisible para humanos. Sin max(0) a propósito, si un bot lo
   // rellena debe PASAR la validación para llegar al descarte silencioso del
   // servidor (con max(0) el bot recibía 422 y el honeypot era código muerto).
   website: z.string().optional(),
@@ -188,8 +188,8 @@ git commit -m "feat: schema canónico del formulario de contacto en lib/contact-
 **Interfaces:**
 - Consumes: `assertDatzonProject(rawUrl: string | undefined): string` de `lib/supabase/project.ts` (lanza si la URL no es del proyecto Datzon).
 - Produces:
-  - `getSupabaseClient(): SupabaseClient` — singleton perezoso con la clave publishable, schema `landing`, sin sesión persistente.
-  - `_resetSupabaseClient(): void` — solo para tests.
+  - `getSupabaseClient(): SupabaseClient`, singleton perezoso con la clave publishable, schema `landing`, sin sesión persistente.
+  - `_resetSupabaseClient(): void`, solo para tests.
 
 - [ ] **Step 1: Mover la dependencia a producción**
 
@@ -248,7 +248,7 @@ describe("getSupabaseClient", () => {
 - [ ] **Step 3: Run test to verify it fails**
 
 Run: `pnpm exec vitest run lib/supabase/client.test.ts`
-Expected: FAIL — `Cannot find module './client'`.
+Expected: FAIL, `Cannot find module './client'`.
 
 - [ ] **Step 4: Write minimal implementation**
 
@@ -259,7 +259,7 @@ import { assertDatzonProject } from "./project";
 
 /**
  * Cliente Supabase de la APLICACIÓN en runtime. Usa la clave publishable,
- * sujeta a RLS — la credencial secreta vive solo en scripts/ (CLAUDE.md).
+ * sujeta a RLS, la credencial secreta vive solo en scripts/ (CLAUDE.md).
  * Las tablas del proyecto están en el schema `landing`, no en `public`.
  *
  * La clave NO lleva prefijo NEXT_PUBLIC_ a propósito: solo se usa en el
@@ -368,7 +368,7 @@ create policy leads_anon_insert on landing.leads
 
 Run: `supabase db push --linked`
 
-El proyecto ya está enlazado a `adnvzdcqcneqjemxneht` (verificado en `supabase/.temp/`). Si el comando pide la contraseña de la base y no está disponible de forma no interactiva: **PARAR y preguntar al usuario** — no aplicar el SQL por otra vía sin su OK. (Vía alternativa con su OK: la tool `apply_migration` del conector de Supabase de claude.ai, con el mismo SQL y nombre `leads`; el servidor MCP local del repo es read-only a propósito y no sirve para esto.)
+El proyecto ya está enlazado a `adnvzdcqcneqjemxneht` (verificado en `supabase/.temp/`). Si el comando pide la contraseña de la base y no está disponible de forma no interactiva: **PARAR y preguntar al usuario**, no aplicar el SQL por otra vía sin su OK. (Vía alternativa con su OK: la tool `apply_migration` del conector de Supabase de claude.ai, con el mismo SQL y nombre `leads`; el servidor MCP local del repo es read-only a propósito y no sirve para esto.)
 
 - [ ] **Step 3: Verificar el estado remoto**
 
@@ -404,7 +404,7 @@ git commit -m "feat: migración de landing.leads con RLS y modelo buzón de solo
 
 ---
 
-### Task 4: Route Handler — persistir y notificar
+### Task 4: Route Handler, persistir y notificar
 
 **Files:**
 - Create: `vitest.config.ts` (los tests de esta task importan el route, que usa el alias `@/`; vitest no lee los paths de tsconfig sin esto)
@@ -415,7 +415,7 @@ git commit -m "feat: migración de landing.leads con RLS y modelo buzón de solo
 **Interfaces:**
 - Consumes:
   - `contactPayloadSchema`, `type ContactPayload` de `@/lib/contact-schema` (Task 1).
-  - `getSupabaseClient()` de `@/lib/supabase/client` (Task 2) — en tests se mockea el módulo completo.
+  - `getSupabaseClient()` de `@/lib/supabase/client` (Task 2), en tests se mockea el módulo completo.
 - Produces: `POST /api/contact` con el contrato de respuestas del spec (tabla en el propio código).
 
 - [ ] **Step 1: Instalar Resend y crear vitest.config.ts**
@@ -584,7 +584,7 @@ describe("POST /api/contact", () => {
 - [ ] **Step 3: Run tests to verify they fail**
 
 Run: `pnpm exec vitest run app/api/contact/route.test.ts`
-Expected: FAIL — el route actual no inserta nada (`fromMock` sin llamadas), el honeypot devuelve 422, no existe `replyTo`, etc.
+Expected: FAIL, el route actual no inserta nada (`fromMock` sin llamadas), el honeypot devuelve 422, no existe `replyTo`, etc.
 
 - [ ] **Step 4: Reescribir el route**
 
@@ -599,7 +599,7 @@ import { getSupabaseClient } from "@/lib/supabase/client";
 // con ella; en Vercel cada invocación puede caer en una instancia distinta.
 // Frena ráfagas dentro de una instancia caliente y nada más. El rate limit
 // real (estado compartido: Vercel Firewall / Upstash) está fuera de alcance
-// — ver el spec 2026-07-25-formulario-contacto-leads-design.md.
+//, ver el spec 2026-07-25-formulario-contacto-leads-design.md.
 const rateMap = new Map<string, { count: number; reset: number }>();
 
 function isRateLimited(ip: string): boolean {
@@ -649,7 +649,7 @@ async function sendNotification(lead: ContactPayload): Promise<void> {
     from: "Datzon Landing <noreply@datzoncompany.com>",
     to,
     replyTo: lead.email,
-    subject: `Nuevo lead: ${lead.nombre}${lead.empresa ? ` — ${lead.empresa}` : ""}`,
+    subject: `Nuevo lead: ${lead.nombre}${lead.empresa ? `, ${lead.empresa}` : ""}`,
     text: lines.join("\n"),
   });
 }
@@ -772,7 +772,7 @@ git commit -m "refactor: ContactForm usa el schema compartido y envía source ho
 
 ---
 
-### Task 6: `ContactModal.tsx` — contrato unificado
+### Task 6: `ContactModal.tsx`, contrato unificado
 
 **Files:**
 - Modify: `components/ContactModal.tsx`
@@ -795,7 +795,7 @@ Cambio de producto ya decidido en el spec: el modal **pierde** `disponibilidad`,
 
 Eliminar por completo el bloque `{/* Availability */}` (el `div.group` con el icono `Clock` y `{...register("disponibilidad")}`).
 
-En su lugar —y manteniendo el grid de dos columnas donde están email/teléfono— añadir después de ese grid un segundo grid con empresa e industria:
+En su lugar (y manteniendo el grid de dos columnas donde están email/teléfono) añadir después de ese grid un segundo grid con empresa e industria:
 
 ```tsx
 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -851,7 +851,7 @@ Nota: los inputs existentes del modal no tienen `id`/`htmlFor` (sus labels no es
 
 - [ ] **Step 3: Teléfono deja de ser obligatorio**
 
-En el campo teléfono: cambiar el placeholder a `"+51 ... (OPCIONAL)"`. El mensaje de error `{errors.telefono && ...}` puede quedarse — con el schema compartido ya no se dispara por omisión.
+En el campo teléfono: cambiar el placeholder a `"+51 ... (OPCIONAL)"`. El mensaje de error `{errors.telefono && ...}` puede quedarse, con el schema compartido ya no se dispara por omisión.
 
 - [ ] **Step 4: Verificar**
 
@@ -889,7 +889,7 @@ git commit -m "refactor: ContactModal adopta el contrato unificado (fuera dispon
 Añadir al final del bloque de Supabase:
 
 ```bash
-# Publishable Key — cliente de la app en runtime (Route Handlers). Sujeta a
+# Publishable Key, cliente de la app en runtime (Route Handlers). Sujeta a
 # RLS. SIN prefijo NEXT_PUBLIC_: solo se usa en el servidor.
 # Dashboard → Settings → API Keys → "Publishable key"
 SUPABASE_PUBLISHABLE_KEY=sb_publishable_xxxxxxxxxxxx
@@ -942,7 +942,7 @@ grep -rn "console.log" app/api/ components/ lib/       # esperado: nada con dato
 
 - [ ] **Step 5: Prueba real de punta a punta (requiere el paso manual de Task 3)**
 
-Precondición: `landing` añadido a "Exposed schemas" en el dashboard. Si el usuario aún no lo hizo, pedírselo ahora — sin eso el insert desde la app devuelve `PGRST106` y esta prueba falla.
+Precondición: `landing` añadido a "Exposed schemas" en el dashboard. Si el usuario aún no lo hizo, pedírselo ahora, sin eso el insert desde la app devuelve `PGRST106` y esta prueba falla.
 
 1. `pnpm dev` y enviar el formulario de la home y el del modal con datos de prueba distinguibles (p. ej. nombre "PRUEBA HOME" / "PRUEBA MODAL").
 2. Verificar con la tool MCP `execute_sql`:
@@ -951,7 +951,7 @@ Precondición: `landing` añadido a "Exposed schemas" en el dashboard. Si el usu
    from landing.leads order by created_at desc limit 5;
    ```
    Expected: dos filas nuevas, `source` = `home` y `modal`.
-3. Confirmar el buzón — con la clave publishable un SELECT debe fallar:
+3. Confirmar el buzón, con la clave publishable un SELECT debe fallar:
    ```bash
    curl -s "https://adnvzdcqcneqjemxneht.supabase.co/rest/v1/leads?select=*" \
      -H "apikey: $SUPABASE_PUBLISHABLE_KEY" \

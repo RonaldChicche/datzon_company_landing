@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* ============================================================
-   DATZON — Deep Space Industrial v3
+   DATZON · Deep Space Industrial v3
    Michroma display · Geist body · JetBrains Mono data
    ============================================================ */
 
@@ -47,7 +47,7 @@
   --radius-md: 8px;
 }
 
-/* Short-alias CSS vars — used by utility classes below (mirrors prototype naming) */
+/* Short-alias CSS vars, used by utility classes below (mirrors prototype naming) */
 :root {
   --bg: #10141a;
   --bg-2: #0a0e14;
@@ -166,7 +166,7 @@ section {
   font-family: var(--font-mono);
 }
 
-/* chip — lima block badge for hero / kickers */
+/* chip, lima block badge for hero / kickers */
 .chip {
   display: inline-block;
   background: var(--lime);
@@ -182,7 +182,7 @@ section {
   max-width: 92vw;
 }
 
-/* kicker — section label with leading line */
+/* kicker, section label with leading line */
 .kicker {
   font-family: var(--font-mono);
   font-size: 12px;
@@ -539,7 +539,7 @@ header.nav.scrolled {
 }
 
 /* ============================================================
-   SECTIONS — DARK (default)
+   SECTIONS, DARK (default)
    ============================================================ */
 .section-dark {
   background: var(--bg);
@@ -555,7 +555,7 @@ header.nav.scrolled {
 }
 
 /* ============================================================
-   SECTIONS — LIGHT (paper / graph-paper)
+   SECTIONS, LIGHT (paper / graph-paper)
    ============================================================ */
 .section-light {
   background: var(--paper);
@@ -580,7 +580,7 @@ header.nav.scrolled {
   background-color: #eceee6;
 }
 
-/* watermark — "DAT" rotated 90° (letters tilt sideways, fill section height) */
+/* watermark, "DAT" rotated 90° (letters tilt sideways, fill section height) */
 .watermark {
   position: absolute; top: 50%; right: 4%;
   transform: translateY(-50%);
@@ -959,7 +959,7 @@ header.nav.scrolled {
   transform: scale(1.05);
 }
 
-/* bio slide panel — dark overlay that slides up from the bottom of .photo */
+/* bio slide panel, dark overlay that slides up from the bottom of .photo */
 .member .photo {
   overflow: hidden;
 }
@@ -1228,7 +1228,7 @@ footer.ft {
 }
 
 /* h2 y no h4: Lighthouse marcaba salto de jerarquía (no hay h3 antes).
-   El aspecto visual es idéntico — solo cambia el nivel semántico. */
+   El aspecto visual es idéntico, solo cambia el nivel semántico. */
 .ft-col h2 {
   font-family: var(--font-mono);
   font-size: 11px;
@@ -1267,7 +1267,7 @@ footer.ft {
 }
 
 /* ============================================================
-   PAGE HEAD (subpages — dark on scroll-in)
+   PAGE HEAD (subpages, dark on scroll-in)
    ============================================================ */
 .page-head {
   padding: 150px 0 64px;
@@ -1330,7 +1330,7 @@ footer.ft {
   color: var(--lime);
 }
 
-/* page-head — paper/light variant (no body class needed, avoids SSR flash) */
+/* page-head, paper/light variant (no body class needed, avoids SSR flash) */
 .page-head--light {
   background: var(--paper);
   border-bottom-color: var(--line-d);

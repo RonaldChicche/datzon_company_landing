@@ -48,7 +48,7 @@ export default function ContactForm() {
 
   return (
     <form className="form" onSubmit={handleSubmit(onSubmit)} noValidate>
-      {/* honeypot — invisible, should remain empty */}
+      {/* honeypot, invisible, should remain empty */}
       <input
         {...register("website")}
         type="text"

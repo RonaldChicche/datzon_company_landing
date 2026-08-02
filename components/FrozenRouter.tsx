@@ -11,7 +11,7 @@ export default function FrozenRouter({ children }: FrozenRouterProps) {
   const context = useContext(LayoutRouterContext);
   // useState en vez de useRef: el inicializador captura el primer contexto y no
   // vuelve a cambiar (que es justo lo que queremos congelar), y leerlo durante
-  // el render es legal — leer una ref en render no lo es.
+  // el render es legal, leer una ref en render no lo es.
   const [frozen] = useState(context);
 
   return (

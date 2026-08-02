@@ -76,7 +76,7 @@ export default function RoboticaPage() {
             </div>
             <p className="right">
               Seleccionamos, integramos y programamos robots industriales para
-              tareas repetitivas, peligrosas o de alta precisión — con
+              tareas repetitivas, peligrosas o de alta precisión, con
               seguridad y trazabilidad.
             </p>
           </div>

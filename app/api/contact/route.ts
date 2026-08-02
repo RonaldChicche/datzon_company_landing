@@ -7,7 +7,7 @@ import { getSupabaseClient } from "@/lib/supabase/client";
 // con ella; en Vercel cada invocación puede caer en una instancia distinta.
 // Frena ráfagas dentro de una instancia caliente y nada más. El rate limit
 // real (estado compartido: Vercel Firewall / Upstash) está fuera de alcance
-// — ver el spec 2026-07-25-formulario-contacto-leads-design.md.
+//, ver el spec 2026-07-25-formulario-contacto-leads-design.md.
 const rateMap = new Map<string, { count: number; reset: number }>();
 
 function isRateLimited(ip: string): boolean {
@@ -57,7 +57,7 @@ async function sendNotification(lead: ContactPayload): Promise<void> {
     from: "Datzon Landing <noreply@datzoncompany.com>",
     to,
     replyTo: lead.email,
-    subject: `Nuevo lead: ${lead.nombre}${lead.empresa ? ` — ${lead.empresa}` : ""}`,
+    subject: `Nuevo lead: ${lead.nombre}${lead.empresa ? `, ${lead.empresa}` : ""}`,
     text: lines.join("\n"),
   });
 }

@@ -12,7 +12,7 @@
  *
  * La primera imagen de `images` es la portada (cover) que se ve en la tarjeta.
  *
- * NOTA: el copy (title, tag, description) son borradores — editar libremente.
+ * NOTA: el copy (title, tag, description) son borradores, editar libremente.
  */
 
 import { STORAGE_PUBLIC_BASE } from "./site-assets";
@@ -78,7 +78,7 @@ export const PROJECTS: Project[] = [
   },
   {
     slug: "proyecto-de-investigacion-marina-y-sni-pathfinder-velero",
-    title: "Pathfinder — velero de investigación marina",
+    title: "Pathfinder, velero de investigación marina",
     tag: "I+D · Sistemas embebidos",
     description:
       "Plataforma náutica instrumentada para investigación marina (SNI), con sistemas embebidos de navegación y captura de datos.",

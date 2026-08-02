@@ -232,7 +232,7 @@ async function uploadSite(): Promise<void> {
   let totalOk = 0, totalFail = 0;
 
   // Archivos sueltos del staging → site/
-  // passthroughWebp: true — este staging viene pre-optimizado a mano.
+  // passthroughWebp: true, este staging viene pre-optimizado a mano.
   const { ok, fail } = await uploadImages(INPUT_DIR, "site", { passthroughWebp: true });
   totalOk += ok; totalFail += fail;
 

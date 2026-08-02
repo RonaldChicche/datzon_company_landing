@@ -26,8 +26,8 @@ export default function Header() {
   }, []);
 
   // Cerrar el menú móvil al navegar. Se ajusta durante el render comparando con
-  // el valor anterior — el patrón que React documenta para "resetear estado
-  // cuando cambia una prop" — en vez de setState dentro de un efecto, que
+  // el valor anterior, el patrón que React documenta para "resetear estado
+  // cuando cambia una prop", en vez de setState dentro de un efecto, que
   // renderiza dos veces en cascada.
   const [prevPathname, setPrevPathname] = useState(pathname);
   if (prevPathname !== pathname) {
@@ -42,7 +42,7 @@ export default function Header() {
     <header className={`nav${scrolled ? " scrolled" : ""}`} id="nav">
       <div className="nav-inner">
         {/* Logo */}
-        <Link href="/" className="nav-logo" aria-label="Datzon — inicio">
+        <Link href="/" className="nav-logo" aria-label="Datzon, inicio">
           <Image
             src={siteAssetUrl("logo_datzon.svg")}
             alt="Datzon Industrial Automation"

@@ -1,5 +1,5 @@
 -- ============================================================
--- Estado de RLS del bucket "landing" — proyecto Datzon
+-- Estado de RLS del bucket "landing", proyecto Datzon
 -- (adnvzdcqcneqjemxneht)
 --
 -- ESTE ARCHIVO NO SE EJECUTA. Documenta la configuración real,

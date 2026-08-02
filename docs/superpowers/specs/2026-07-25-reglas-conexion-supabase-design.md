@@ -2,7 +2,7 @@
 
 **Fecha:** 2026-07-25
 **Rama:** `feat/rediseno-deep-space`
-**Sub-proyecto:** A (de tres — ver "Fuera de alcance")
+**Sub-proyecto:** A (de tres, ver "Fuera de alcance")
 
 ---
 
@@ -61,9 +61,9 @@ Se crea en la raíz del repositorio y **se commitea**, para que cualquiera que c
 
 Qué hace cada parámetro:
 
-- `project_ref` — acota el servidor a un proyecto y **desactiva las herramientas de gestión de cuenta**. Con esto `list_projects` deja de existir: no hay forma de descubrir ni alcanzar otro proyecto.
-- `read_only=true` — todas las consultas corren como usuario de solo lectura. Es el default deliberado: hoy hay cero tablas y prácticamente todo el uso será inspección. El DDL es raro y debe pasar por un archivo de migración revisado, no por una llamada suelta.
-- `features=database,docs,storage` — reduce la superficie a lo que este proyecto usa. Quedan fuera `branching`, `edge functions` y `debugging`.
+- `project_ref`, acota el servidor a un proyecto y **desactiva las herramientas de gestión de cuenta**. Con esto `list_projects` deja de existir: no hay forma de descubrir ni alcanzar otro proyecto.
+- `read_only=true`, todas las consultas corren como usuario de solo lectura. Es el default deliberado: hoy hay cero tablas y prácticamente todo el uso será inspección. El DDL es raro y debe pasar por un archivo de migración revisado, no por una llamada suelta.
+- `features=database,docs,storage`, reduce la superficie a lo que este proyecto usa. Quedan fuera `branching`, `edge functions` y `debugging`.
 
 **Requisito para que esto sirva:** hay que desactivar el conector de Supabase de claude.ai. Si sigue activo, es una vía paralela sin acotar y las demás capas no lo tapan. Esta es una acción manual del usuario, fuera del repositorio.
 
@@ -152,8 +152,8 @@ Ilustración de a dónde lleva la regla, para una tabla futura de leads: `grant 
 Se adopta el flujo imperativo del CLI, versionado en git:
 
 1. Instalar el Supabase CLI (hoy no está instalado).
-2. `supabase init` — crea `supabase/config.toml` y su `.gitignore`.
-3. `supabase link --project-ref adnvzdcqcneqjemxneht` — requiere la contraseña de la base de datos, que es una acción manual del usuario.
+2. `supabase init`, crea `supabase/config.toml` y su `.gitignore`.
+3. `supabase link --project-ref adnvzdcqcneqjemxneht`, requiere la contraseña de la base de datos, que es una acción manual del usuario.
 4. Las migraciones se crean con `supabase migration new <nombre>` y se commitean.
 
 Así el schema es reproducible por quien clone el repositorio, y el DDL queda revisable en un diff en lugar de ejecutarse suelto.
@@ -190,7 +190,7 @@ drop function public.actualizar_saldo();
 
 Es una operación destructiva sobre un proyecto de producción, pero sobre código muerto: la tabla `cuentas` que manipula no existe en el proyecto. Requiere confirmación explícita del usuario en el momento de ejecutarla.
 
-Como `read_only=true` bloquea el DDL vía MCP, esto va como **la primera migración** del workflow que establece la sección 2.3, creada con `supabase migration new drop_orphan_actualizar_saldo` y commiteada. Eso deja el borrado reproducible y auditable en un diff, y de paso valida el workflow de migraciones de punta a punta con un cambio de riesgo bajo — que es la razón por la que 2.3 entra en A pese a que A no crea tablas.
+Como `read_only=true` bloquea el DDL vía MCP, esto va como **la primera migración** del workflow que establece la sección 2.3, creada con `supabase migration new drop_orphan_actualizar_saldo` y commiteada. Eso deja el borrado reproducible y auditable en un diff, y de paso valida el workflow de migraciones de punta a punta con un cambio de riesgo bajo, que es la razón por la que 2.3 entra en A pese a que A no crea tablas.
 
 #### 3.3 Añadir `graphify-out/` a `.gitignore`
 
@@ -214,12 +214,12 @@ Como `read_only=true` bloquea el DDL vía MCP, esto va como **la primera migraci
 
 Cada punto se comprueba, no se asume:
 
-1. **Guardia en código** — apuntar `SUPABASE_URL` a un ref falso en un `.env.local` temporal y confirmar que `pnpm optimize-images` aborta con el mensaje de proyecto incorrecto. Restaurar el valor real y confirmar que vuelve a funcionar.
-2. **`.mcp.json`** — tras recargar la sesión, confirmar que `list_projects` ya no está disponible y que las consultas de escritura son rechazadas por el modo de solo lectura.
-3. **Función borrada** — reejecutar el security advisor y confirmar que el WARN `function_search_path_mutable` desapareció y que no quedan hallazgos.
-4. **Bucket intacto** — reconsultar el conteo de objetos de `landing` y confirmar que siguen siendo 19 objetos y 2.06 MB, es decir que nada de A tocó los datos.
-5. **Build** — `pnpm build` y `pnpm lint` en verde.
-6. **`.gitignore`** — `git status --short` no debe listar `graphify-out/`.
+1. **Guardia en código**, apuntar `SUPABASE_URL` a un ref falso en un `.env.local` temporal y confirmar que `pnpm optimize-images` aborta con el mensaje de proyecto incorrecto. Restaurar el valor real y confirmar que vuelve a funcionar.
+2. **`.mcp.json`**, tras recargar la sesión, confirmar que `list_projects` ya no está disponible y que las consultas de escritura son rechazadas por el modo de solo lectura.
+3. **Función borrada**, reejecutar el security advisor y confirmar que el WARN `function_search_path_mutable` desapareció y que no quedan hallazgos.
+4. **Bucket intacto**, reconsultar el conteo de objetos de `landing` y confirmar que siguen siendo 19 objetos y 2.06 MB, es decir que nada de A tocó los datos.
+5. **Build**, `pnpm build` y `pnpm lint` en verde.
+6. **`.gitignore`**, `git status --short` no debe listar `graphify-out/`.
 
 ## Riesgos y decisiones registradas
 
@@ -231,8 +231,8 @@ Cada punto se comprueba, no se asume:
 
 ## Fuera de alcance
 
-**Sub-proyecto B — Migración de imágenes y limpieza de assets.** Subir todas las imágenes al bucket `landing` bajo prefijos por tipo; borrar `industrial-robot.jpg` (307 KB, contiene autos estacionados, sin referencias); reemplazar la imagen del hero buscando una alternativa con licencia comercial, porque `hero_v2.webp` se veía con mala calidad en móvil; recortar la marca de agua de IA del retrato de Danilo Luque a 540×540; normalizar y comprimir `Ronald_Chicche.jpg` (423 KB frente a 34–45 KB del resto, y 3:4 frente a 1:1); resolver el isotipo SVG duplicado en tres archivos; quitar `images.unsplash.com` de `remotePatterns`; activar `dangerouslyAllowSVG` si los logos terminan en el bucket.
+**Sub-proyecto B, Migración de imágenes y limpieza de assets.** Subir todas las imágenes al bucket `landing` bajo prefijos por tipo; borrar `industrial-robot.jpg` (307 KB, contiene autos estacionados, sin referencias); reemplazar la imagen del hero buscando una alternativa con licencia comercial, porque `hero_v2.webp` se veía con mala calidad en móvil; recortar la marca de agua de IA del retrato de Danilo Luque a 540×540; normalizar y comprimir `Ronald_Chicche.jpg` (423 KB frente a 34–45 KB del resto, y 3:4 frente a 1:1); resolver el isotipo SVG duplicado en tres archivos; quitar `images.unsplash.com` de `remotePatterns`; activar `dangerouslyAllowSVG` si los logos terminan en el bucket.
 
-**Sub-proyecto C — CSP.** `next.config.ts` afirma que `middleware.ts` maneja un CSP con nonce por request. Ese archivo no existe y no hay CSP.
+**Sub-proyecto C, CSP.** `next.config.ts` afirma que `middleware.ts` maneja un CSP con nonce por request. Ese archivo no existe y no hay CSP.
 
 **Tabla `contact_submissions`.** `app/api/contact/route.ts` hace `console.log` del lead y devuelve 200: los contactos se pierden y quedan datos personales en los logs de Vercel, contra la regla de seguridad de `CLAUDE.md`. Es más urgente que A, B y C, pero es un proyecto propio y arrastra la integración con Resend.
