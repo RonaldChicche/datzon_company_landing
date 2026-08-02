@@ -19,9 +19,11 @@ export default function DemoPlayer({ src, poster, etiqueta, activo }: Props) {
   const cargado = cargadoPorInterseccion || activo;
 
   // visibilidad del reproductor (no reproducir fuera de pantalla) y arranque
-  // diferido de la carga: src/poster no se piden hasta el primer hit del
-  // IntersectionObserver, para que el poster del vídeo no compita con el H1
-  // por el LCP (Largest Contentful Paint) en la carga inicial.
+  // diferido de la carga: la demo activa carga src/poster desde el primer
+  // render (ver `cargado` arriba), porque su poster es la candidata a LCP
+  // (Largest Contentful Paint) y no conviene retrasarla. Las demos inactivas
+  // sí difieren la carga hasta el primer hit del IntersectionObserver o
+  // hasta activarse.
   // Acoplado a que DemoStudio oculta las escenas inactivas con
   // `.rb-scene { display: none }`: solo la escena activa intersecta al
   // montar. Si eso cambiara a opacity/visibility, este observer dispararía
