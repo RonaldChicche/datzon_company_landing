@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { STORAGE_PUBLIC_BASE } from "@/lib/site-assets";
 
 /**
  * CSP con nonce por petición.
@@ -37,11 +38,11 @@ export function proxy(request: NextRequest) {
     // pasar por next/image (no es un <img>), así que el poster referencia el
     // bucket directo. Se permite solo esa ruta del bucket público, no todo
     // supabase.co, igual que acota next.config.ts en `images.remotePatterns`.
-    "img-src 'self' data: blob: https://adnvzdcqcneqjemxneht.supabase.co/storage/v1/object/public/landing/",
+    `img-src 'self' data: blob: ${STORAGE_PUBLIC_BASE}/`,
     // Los <video src> de las demos apuntan al mismo bucket público y no tienen
     // equivalente a next/image para vídeo, así que se acotan aquí igual que el
     // poster de arriba (mismo host + prefijo de ruta, nada más amplio).
-    "media-src 'self' https://adnvzdcqcneqjemxneht.supabase.co/storage/v1/object/public/landing/",
+    `media-src 'self' ${STORAGE_PUBLIC_BASE}/`,
     "connect-src 'self' https://vitals.vercel-insights.com https://va.vercel-scripts.com",
     "frame-ancestors 'none'",
     "object-src 'none'",
