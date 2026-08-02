@@ -2109,7 +2109,7 @@ body.page-light .sim-note b {
   border: 1px solid var(--line);
   border-radius: var(--r-md);
   overflow: hidden;
-  background: var(--surface);
+  background: var(--bg);
 }
 
 .rb-player video {
