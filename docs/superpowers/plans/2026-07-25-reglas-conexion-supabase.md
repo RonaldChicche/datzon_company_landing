@@ -1,4 +1,4 @@
-# Reglas y guardias de conexión a Supabase — Plan de implementación
+# Reglas y guardias de conexión a Supabase, Plan de implementación
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -103,7 +103,7 @@ git add .gitignore .mcp.json
 git commit -m "chore: acota el servidor MCP al proyecto Datzon e ignora graphify-out"
 ```
 
-- [ ] **Step 7: Acción manual del usuario — desactivar el conector de claude.ai**
+- [ ] **Step 7: Acción manual del usuario, desactivar el conector de claude.ai**
 
 Este paso no lo puede hacer un agente. El usuario debe ir a claude.ai → Configuración → Conectores y **desactivar el conector de Supabase**. Mientras siga activo, es una vía paralela sin acotar y el `.mcp.json` no protege de nada.
 
@@ -124,8 +124,8 @@ La única lógica real del sub-proyecto. Función pura, sin I/O, testeable de fo
 **Interfaces:**
 - Consumes: nada.
 - Produces:
-  - `export const EXPECTED_PROJECT_REF: string` — el literal `"adnvzdcqcneqjemxneht"`.
-  - `export function assertDatzonProject(rawUrl: string | undefined): string` — devuelve `rawUrl` sin modificar si el ref del hostname coincide con `EXPECTED_PROJECT_REF`; lanza `Error` en cualquier otro caso. La Tarea 3 la consume.
+  - `export const EXPECTED_PROJECT_REF: string`, el literal `"adnvzdcqcneqjemxneht"`.
+  - `export function assertDatzonProject(rawUrl: string | undefined): string`, devuelve `rawUrl` sin modificar si el ref del hostname coincide con `EXPECTED_PROJECT_REF`; lanza `Error` en cualquier otro caso. La Tarea 3 la consume.
 
 - [ ] **Step 1: Instalar vitest**
 
@@ -187,7 +187,7 @@ describe("assertDatzonProject", () => {
 - [ ] **Step 4: Correr los tests y confirmar que fallan**
 
 Run: `pnpm test`
-Expected: FALLA. El error es de resolución de módulo — `Failed to resolve import "./project"` — porque `lib/supabase/project.ts` todavía no existe.
+Expected: FALLA. El error es de resolución de módulo ( `Failed to resolve import "./project"` ) porque `lib/supabase/project.ts` todavía no existe.
 
 - [ ] **Step 5: Escribir la implementación mínima**
 
@@ -386,7 +386,7 @@ Reemplazar todo el contenido de `scripts/supabase-storage-rls.sql` por:
 
 ```sql
 -- ============================================================
--- Estado de RLS del bucket "landing" — proyecto Datzon
+-- Estado de RLS del bucket "landing", proyecto Datzon
 -- (adnvzdcqcneqjemxneht)
 --
 -- ESTE ARCHIVO NO SE EJECUTA. Documenta la configuración real,
@@ -483,7 +483,7 @@ y volver a verificar. Si tras ese intento sigue fallando, no insistir: instalar 
 Run: `pnpm exec supabase init`
 Expected: crea `supabase/config.toml` y `supabase/.gitignore`.
 
-- [ ] **Step 4: Enlazar al proyecto Datzon — requiere acción del usuario**
+- [ ] **Step 4: Enlazar al proyecto Datzon, requiere acción del usuario**
 
 Run: `pnpm exec supabase link --project-ref adnvzdcqcneqjemxneht`
 
@@ -567,7 +567,7 @@ from storage.objects
 where bucket_id = 'landing';
 ```
 
-Expected: 19 objetos, 2.06 MB — los mismos valores medidos el 2026-07-25.
+Expected: 19 objetos, 2.06 MB, los mismos valores medidos el 2026-07-25.
 
 - [ ] **Step 13: Commit**
 
@@ -674,7 +674,7 @@ git commit -m "docs: reglas de conexión, credenciales y schema de Supabase"
 Después de la Tarea 6, comprobar la lista de verificación del spec de punta a punta:
 
 - [ ] El guardia rechaza un ref ajeno y acepta el correcto (Tarea 3, pasos 4 y 5).
-- [ ] `list_projects` ya no está disponible y las escrituras vía MCP son rechazadas (Tarea 1, paso 7 — depende de que el usuario haya desactivado el conector de claude.ai).
+- [ ] `list_projects` ya no está disponible y las escrituras vía MCP son rechazadas (Tarea 1, paso 7, depende de que el usuario haya desactivado el conector de claude.ai).
 - [ ] El security advisor no reporta hallazgos (Tarea 5, paso 11).
 - [ ] El bucket `landing` conserva 19 objetos y 2.06 MB (Tarea 5, paso 12).
 - [ ] `pnpm build` y `pnpm lint` en verde.
@@ -684,5 +684,5 @@ Después de la Tarea 6, comprobar la lista de verificación del spec de punta a 
 
 - No crea el schema `landing` ni ninguna tabla. A no introduce tablas; la regla queda escrita para la primera que aparezca.
 - No mueve `@supabase/supabase-js` a `dependencies`. Sigue siendo correcto que esté en `devDependencies` porque solo lo consume el script. El movimiento corresponde a la tarea que introduzca el primer cliente de runtime.
-- No toca imágenes, assets ni `next.config.ts` — eso es el sub-proyecto B.
-- No implementa CSP — eso es el sub-proyecto C.
+- No toca imágenes, assets ni `next.config.ts`, eso es el sub-proyecto B.
+- No implementa CSP, eso es el sub-proyecto C.

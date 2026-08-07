@@ -10,12 +10,12 @@ export default function Footer() {
     <footer className="ft">
       <div className="wrap">
         <div className="ft-top">
-          {/* Col 1 — Logo + descripción */}
+          {/* Col 1, Logo + descripción */}
           <div className="ft-logo">
             <Image
               src={siteAssetUrl("logo_datzon.svg")}
               alt="Datzon Industrial Automation"
-              // Proporción intrínseca del SVG (viewBox 614×120) — ver Header.
+              // Proporción intrínseca del SVG (viewBox 614×120), ver Header.
               width={614}
               height={120}
               className="h-[26px] w-auto mb-[18px]"
@@ -26,7 +26,7 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Col 2 — Navegación */}
+          {/* Col 2, Navegación */}
           <div className="ft-col">
             <h2>Navegación</h2>
             <Link href="/">Inicio</Link>
@@ -37,7 +37,7 @@ export default function Footer() {
             <Link href="/#cotizar">Cotizar</Link>
           </div>
 
-          {/* Col 3 — Datos de empresa */}
+          {/* Col 3, Datos de empresa */}
           <div className="ft-col">
             <h2>Datzon Industrial Automation</h2>
             <span className="block text-muted text-sm py-[5px]">RUC 20615575624</span>

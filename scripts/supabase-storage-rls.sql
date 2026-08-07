@@ -1,5 +1,5 @@
 -- ============================================================
--- Estado de RLS del bucket "landing" — proyecto Datzon
+-- Estado de RLS del bucket "landing", proyecto Datzon
 -- (adnvzdcqcneqjemxneht)
 --
 -- ESTE ARCHIVO NO SE EJECUTA. Documenta la configuración real,
@@ -23,6 +23,11 @@
 --
 --   SCRIPTS   scripts/optimize-upload.ts sube con la service_role key, que
 --             tiene BYPASSRLS. Por eso funciona sin ninguna política.
+--
+--   file_size_limit: 30 MB desde 2026-08-02 (los MP4 de /robotica pesan
+--             varios MB; las imágenes siguen debiendo optimizarse a <2 MB
+--             por convención). Aplicado por la migración
+--             20260802112606_bucket_landing_limite_30mb.sql.
 
 -- ── Por qué NO hay una política de lectura pública ────────────────────────────
 --

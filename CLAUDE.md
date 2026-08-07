@@ -1,4 +1,4 @@
-# CLAUDE.md — Datzon Landing Page
+# CLAUDE.md · Datzon Landing Page
 
 > Constitución del proyecto. Claude Code debe respetar estas reglas en todas las tareas.
 > Lo que ya está en `package.json`, `tsconfig.json` y `next.config.ts` NO se repite aquí.
@@ -22,15 +22,15 @@ Landing page corporativa de **Datzon**, empresa peruana de ingeniería y automat
 
 ### Páginas actuales
 
-- `/` — landing principal (Hero, partners, soluciones, tecnologías, diagnóstico)
-- `/solutions` — soluciones mecánicas, analítica, robótica industrial
-- `/equipo` — 5 miembros del equipo, tarjetas animadas
+- `/`, landing principal (Hero, partners, soluciones, tecnologías, diagnóstico)
+- `/solutions`, soluciones mecánicas, analítica, robótica industrial
+- `/equipo`, 5 miembros del equipo, tarjetas animadas
 
 ---
 
 ## Identidad de la empresa
 
-- **Razón social:** DATZON S.A.C — **RUC:** 20615575624
+- **Razón social:** DATZON S.A.C, **RUC:** 20615575624
 - **Nombre Comercial:** DATZON INDUSTRIAL AUTOMATION
 - **Fundación:** marzo 2026 (startup en lanzamiento)
 - **Domicilio:** Cal. Mercator 484, Dpto. 101, San Borja, Lima, Perú
@@ -39,9 +39,9 @@ Landing page corporativa de **Datzon**, empresa peruana de ingeniería y automat
 
 ### Servicios core (en orden de prioridad)
 
-1. **Diseño, fabricación y robótica industrial** — sistemas automatizados, robots industriales, sistemas de control, impresión 3D y prototipado, maquinaria, dispositivos electrónicos a medida. **PRIORIDAD PRINCIPAL.**
-2. **Automatización industrial y control** — PLC, HMI, SCADA, telemetría, monitoreo remoto, integración de sistemas de control.
-3. **Desarrollo de software y sistemas embebidos** — apps web/móviles, backend/frontend, integración hardware-software, analítica, IA aplicada. **Capacidad menor por ahora.**
+1. **Diseño, fabricación y robótica industrial**, sistemas automatizados, robots industriales, sistemas de control, impresión 3D y prototipado, maquinaria, dispositivos electrónicos a medida. **PRIORIDAD PRINCIPAL.**
+2. **Automatización industrial y control**, PLC, HMI, SCADA, telemetría, monitoreo remoto, integración de sistemas de control.
+3. **Desarrollo de software y sistemas embebidos**, apps web/móviles, backend/frontend, integración hardware-software, analítica, IA aplicada. **Capacidad menor por ahora.**
 
 Complementarios (NO comunicar como core todavía): consultoría técnica, import/export de equipos, licitaciones.
 
@@ -161,7 +161,7 @@ La credencial secreta **nunca** aparece en código de la aplicación. Usarla en 
   grants de lectura a `anon`. Los leads se leen desde el dashboard de
   Supabase **o con la credencial secreta en scripts locales** (`service_role`
   tiene `usage` sobre el schema y `select` sobre la tabla por migración; sin
-  `update`/`delete` — editar o borrar sigue siendo del dashboard). El Route
+  `update`/`delete`, editar o borrar sigue siendo del dashboard). El Route
   Handler usa la clave publishable (`SUPABASE_PUBLISHABLE_KEY`, sin
   `NEXT_PUBLIC_`) vía `lib/supabase/client.ts`.
 - `SECURITY DEFINER` está prohibido salvo justificación escrita en el propio archivo SQL.
@@ -182,9 +182,9 @@ Todos los objetos van al bucket **`landing`**. Su contenido vive bajo estos pref
 
 Los subdirectorios bajo `site/` son libres (`site/equipo/`, …): la regla de esta tabla solo fija los prefijos de primer nivel.
 
-No crees prefijos nuevos de primer nivel sin actualizar esta tabla. No antepongas `landing/` dentro del bucket: sería redundante con su nombre. Si en el futuro este proyecto Supabase aloja otra aplicación, va en **otro bucket**, no en una carpeta de este. Si `scripts/images-to-upload/` recibe imágenes sueltas (sin subcarpeta) y no se indica un proyecto por argumento, `scripts/optimize-upload.ts` falla con error — ya no existe un destino de descarte tipo `raw/`.
+No crees prefijos nuevos de primer nivel sin actualizar esta tabla. No antepongas `landing/` dentro del bucket: sería redundante con su nombre. Si en el futuro este proyecto Supabase aloja otra aplicación, va en **otro bucket**, no en una carpeta de este. Si `scripts/images-to-upload/` recibe imágenes sueltas (sin subcarpeta) y no se indica un proyecto por argumento, `scripts/optimize-upload.ts` falla con error: ya no existe un destino de descarte tipo `raw/`.
 
-El bucket tiene un límite de **2 MB por archivo** (`file_size_limit`), más estricto que el del plan. Cualquier asset que lo supere tras optimizar será rechazado.
+El bucket tiene un límite de **30 MB por archivo** (`file_size_limit`, subido desde 2 MB el 2026-08-02 por la migración `20260802112606_bucket_landing_limite_30mb.sql` para admitir los MP4 de `site/robotica/`). La convención para imágenes no cambia: siguen debiendo optimizarse a menos de 2 MB antes de subirlas.
 
 El estado real de RLS del bucket está documentado en `scripts/supabase-storage-rls.sql`. Ese archivo **no se ejecuta**: describe la configuración vigente y por qué es correcta.
 

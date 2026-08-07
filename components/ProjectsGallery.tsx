@@ -96,7 +96,7 @@ export default function ProjectsGallery() {
             <div style={{ position: "relative", aspectRatio: "16/11", width: "100%" }}>
               <Image
                 src={projectImageUrl(proj.slug, proj.images[0])}
-                alt={`${proj.title} — portada`}
+                alt={`${proj.title}, portada`}
                 fill
                 priority
                 sizes="(max-width: 680px) 100vw, (max-width: 1000px) 50vw, 33vw"
@@ -170,7 +170,7 @@ export default function ProjectsGallery() {
                 </button>
               </div>
 
-              {/* Imagen principal — centrada y dimensionada a su contenido,
+              {/* Imagen principal, centrada y dimensionada a su contenido,
                   de modo que el área alrededor cierra al hacer clic. */}
               <div className="relative flex flex-1 select-none items-center justify-center overflow-hidden">
                 {/* Wrapper arrastrable: solo envuelve la imagen, así el área
@@ -198,7 +198,7 @@ export default function ProjectsGallery() {
                 >
                   <Image
                     src={projectImageUrl(project.slug, project.images[photo])}
-                    alt={`${project.title} — foto ${photo + 1} de ${total}`}
+                    alt={`${project.title}, foto ${photo + 1} de ${total}`}
                     width={0}
                     height={0}
                     sizes="100vw"

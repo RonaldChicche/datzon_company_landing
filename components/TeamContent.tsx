@@ -87,7 +87,7 @@ export default function TeamContent() {
                 {...rv(i * 0.1)}
                 className="member"
               >
-                {/* Photo — B/N → colour on hover via .member CSS class */}
+                {/* Photo, B/N → colour on hover via .member CSS class */}
                 <div className="photo" style={{ position: "relative" }}>
                   <Image
                     src={member.image}
@@ -99,7 +99,7 @@ export default function TeamContent() {
                     quality={90}
                     style={{ objectFit: "cover", objectPosition: member.objectPosition }}
                   />
-                  {/* Bio panel — slides up on hover via .bio-panel CSS */}
+                  {/* Bio panel, slides up on hover via .bio-panel CSS */}
                   <div className="bio-panel">
                     <p>{member.bio}</p>
                   </div>

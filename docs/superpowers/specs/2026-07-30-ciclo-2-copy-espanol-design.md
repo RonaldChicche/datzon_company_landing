@@ -1,4 +1,4 @@
-# Ciclo 2 — Copy profesional en español
+# Ciclo 2, Copy profesional en español
 
 **Fecha:** 2026-07-30
 **Rama:** `feat/ciclo-2-copy-espanol` (desde `main` en `37a0250`, post-merge del ciclo 1)
@@ -14,7 +14,7 @@ El usuario pidió eliminar anglicismos de la pantalla y revisar el discurso come
 - **Las descripciones de servicios ya son buenas**: específicas y técnicas. No se tocan.
 - **Las páginas `/robotica`, `/proyectos` y `/equipo` están limpias.**
 
-El problema real de profesionalismo está en otro sitio: **`ContactModal.tsx` está escrito en registro de ciencia ficción** ("PROTOCOLO DE CONTACTO", "IDENTIFICAR REMITENTE", "TRANSMITIR SOLICITUD"). Es español impecable, pero suena a videojuego en el formulario donde un jefe de planta pide una cotización — justo el punto donde la credibilidad importa más.
+El problema real de profesionalismo está en otro sitio: **`ContactModal.tsx` está escrito en registro de ciencia ficción** ("PROTOCOLO DE CONTACTO", "IDENTIFICAR REMITENTE", "TRANSMITIR SOLICITUD"). Es español impecable, pero suena a videojuego en el formulario donde un jefe de planta pide una cotización, justo el punto donde la credibilidad importa más.
 
 **Hallazgo que resuelve el diseño:** `ContactForm.tsx` (el formulario de la home) ya tiene la voz correcta. No hay que inventar un tono; hay que llevar el modal al que ya existe y funciona. Esto convierte el ejercicio de estilo en uno de consistencia.
 
@@ -22,7 +22,7 @@ El problema real de profesionalismo está en otro sitio: **`ContactModal.tsx` es
 
 | Decisión | Valor |
 |---|---|
-| Tagline en pantalla | **Traducir** el badge a "Automatización Industrial". El usuario aceptó tras advertírsele que, si el tagline está registrado en INDECOPI en inglés, traducirlo puede afectar la prueba de uso de marca — verificación pendiente por su parte, no bloqueante |
+| Tagline en pantalla | **Traducir** el badge a "Automatización Industrial". El usuario aceptó tras advertírsele que, si el tagline está registrado en INDECOPI en inglés, traducirlo puede afectar la prueba de uso de marca, verificación pendiente por su parte, no bloqueante |
 | Nombre comercial | **Se conserva intacto** ("Datzon Industrial Automation") donde funciona como nombre propio: `alt`, JSON-LD, bloques de datos de empresa |
 | Titular del hero | **No se toca** ("Revolucionando el futuro de las industrias"). El usuario prefirió no arriesgar consistencia con material ya publicado |
 | Voz del modal | **Adopta la de `ContactForm.tsx`** |
@@ -32,7 +32,7 @@ El problema real de profesionalismo está en otro sitio: **`ContactModal.tsx` es
 
 Descartado y por qué:
 
-- **Frases tipo "del sensor a la nube"**: el usuario las rechazó por genéricas. Correcto — son clichés del marketing de industria 4.0 que cualquier integrador podría firmar.
+- **Frases tipo "del sensor a la nube"**: el usuario las rechazó por genéricas. Correcto, son clichés del marketing de industria 4.0 que cualquier integrador podría firmar.
 - **Reemplazar la métrica de experiencia**: se propuso ("11 tecnologías integradas") y el usuario decidió conservar la actual.
 - **Traducir marcas y acrónimos**: restaría credibilidad técnica.
 
@@ -61,7 +61,7 @@ Ingeniería y automatización industrial de extremo a extremo.
 Diseñamos, fabricamos y automatizamos.
 ```
 
-Estructura deliberada: la primera oración es la afirmación de categoría, la segunda la hace concreta con tres verbos. Si al verlo en pantalla las dos resultan redundantes, la primera oración es la que sobra — decisión a tomar en la comprobación visual, no a ciegas.
+Estructura deliberada: la primera oración es la afirmación de categoría, la segunda la hace concreta con tres verbos. Si al verlo en pantalla las dos resultan redundantes, la primera oración es la que sobra, decisión a tomar en la comprobación visual, no a ciegas.
 
 `Footer.tsx:17` (alt) y `Footer.tsx:42` (`<h4>`) **no se tocan**: nombre comercial.
 
@@ -81,7 +81,7 @@ Sustituciones de texto, sin tocar estructura, clases ni lógica:
 | `TRANSMISIÓN RECIBIDA` | `¡Solicitud enviada!` |
 | `Nos pondremos en contacto contigo en breve.` | `Te contactamos en máximo 1 día hábil.` |
 
-### 3.b `components/ContactForm.tsx` — corregir una promesa excesiva
+### 3.b `components/ContactForm.tsx`, corregir una promesa excesiva
 
 El formulario de la home dice hoy, **en producción**:
 
@@ -100,7 +100,7 @@ Las etiquetas de campo (`NOMBRE COMPLETO_`, `DIRECCIÓN DE RETORNO_`, `TELÉFONO
 ## Fuera de alcance
 
 - El titular del hero y las seis descripciones de servicios.
-- El bloque de contacto del footer (`Respuesta en 1 día hábil`): coherente con el mensaje nuevo y no promete de más, así que se deja. Si se quisiera unificar la fórmula exacta, sería `Respuesta en máximo 1 día hábil` — decisión menor, fuera de este ciclo.
+- El bloque de contacto del footer (`Respuesta en 1 día hábil`): coherente con el mensaje nuevo y no promete de más, así que se deja. Si se quisiera unificar la fórmula exacta, sería `Respuesta en máximo 1 día hábil`, decisión menor, fuera de este ciclo.
 - Marcas y acrónimos técnicos.
 - `/robotica`, `/proyectos`, `/equipo`, `/politica-privacidad`, `/terminos-de-uso`.
 - Los textos de `PalletizerSim.tsx` (`SIM 01 · PALETIZADO · VISTA ISOMÉTRICA`): son etiquetas técnicas de una simulación y el registro es apropiado ahí.

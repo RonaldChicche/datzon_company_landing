@@ -1,4 +1,4 @@
-# Ciclo 0 — Quick wins: Plan de implementación
+# Ciclo 0, Quick wins: Plan de implementación
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -10,7 +10,7 @@
 
 ## Global Constraints
 
-- Spec: `docs/superpowers/specs/2026-07-26-ciclo-0-quick-wins-design.md` — sus decisiones son ley.
+- Spec: `docs/superpowers/specs/2026-07-26-ciclo-0-quick-wins-design.md`, sus decisiones son ley.
 - Número de WhatsApp: `+51 956 956 778` → `wa.me/51956956778`. Mensaje exacto: `"Hola, quiero cotizar un proyecto con Datzon."` (el test de la Task 2 lo fija byte a byte).
 - Links externos: `target="_blank"` siempre con `rel="noopener noreferrer"`.
 - TypeScript estricto; sin `any`. Estilos solo Tailwind (o las clases CSS globales ya existentes del sitio).
@@ -53,7 +53,7 @@ git commit -m "fix: la home hereda el título por defecto (Datzon | Ingeniería 
 
 ---
 
-### Task 2: WhatsApp — constante, burbuja y footer (con gate visual)
+### Task 2: WhatsApp, constante, burbuja y footer (con gate visual)
 
 **Files:**
 - Create: `lib/contact-links.ts`
@@ -87,7 +87,7 @@ describe("WHATSAPP_URL", () => {
 - [ ] **Step 2: Run test to verify it fails**
 
 Run: `pnpm exec vitest run lib/contact-links.test.ts`
-Expected: FAIL — `Cannot find module './contact-links'`.
+Expected: FAIL, `Cannot find module './contact-links'`.
 
 - [ ] **Step 3: Implementar la constante**
 
@@ -148,7 +148,7 @@ En `components/Footer.tsx`, dentro del bloque de contacto donde está el correo 
 
 con `import { WHATSAPP_URL } from "@/lib/contact-links";` arriba. Ajustar el markup exacto al patrón del bloque (respetar clases/etiquetas vecinas tipo `CORREO`/`OFICINA`).
 
-- [ ] **Step 8: GATE VISUAL — captura al usuario antes de commitear**
+- [ ] **Step 8: GATE VISUAL, captura al usuario antes de commitear**
 
 1. `pnpm dev` en background.
 2. Captura de la home con la burbuja en desktop (1280px) y móvil (375px), y del footer con el enlace.
@@ -199,7 +199,7 @@ por:
 )}
 ```
 
-usando la variable de pathname que el componente ya tiene (verificar su nombre real — es la que alimenta `isActive`).
+usando la variable de pathname que el componente ya tiene (verificar su nombre real, es la que alimenta `isActive`).
 
 - [ ] **Step 2: Verificar**
 
@@ -215,7 +215,7 @@ git commit -m "feat: Cotizar abre el modal de contacto fuera de la home"
 
 ---
 
-### Task 4: Remates de la auditoría — fetchPriority y proporción de los logos
+### Task 4: Remates de la auditoría, fetchPriority y proporción de los logos
 
 **Files:**
 - Modify: `components/HomeContent.tsx` (el `<Image>` del hero, junto a la prop `priority` existente)
@@ -233,14 +233,14 @@ fetchPriority="high"
 
 - [ ] **Step 2: Proporción real de los logos**
 
-`public/logo_datzon.svg` tiene `viewBox="0 0 614 120"` (proporción 5.12:1). Header y Footer declaran hoy `140×48` y `110×38` (~2.9:1) — proporción equivocada: el navegador reserva un ancho incorrecto y reajusta al cargar el SVG (el layout shift de 0.0028 de la auditoría). En **ambos** componentes, cambiar a la proporción intrínseca exacta:
+`public/logo_datzon.svg` tiene `viewBox="0 0 614 120"` (proporción 5.12:1). Header y Footer declaran hoy `140×48` y `110×38` (~2.9:1), proporción equivocada: el navegador reserva un ancho incorrecto y reajusta al cargar el SVG (el layout shift de 0.0028 de la auditoría). En **ambos** componentes, cambiar a la proporción intrínseca exacta:
 
 ```tsx
 width={614}
 height={120}
 ```
 
-Las clases CSS (`h-7 w-auto`, `h-[26px] w-auto mb-[18px]`) no se tocan — siguen mandando sobre el tamaño visible; los atributos solo declaran la proporción para la reserva de espacio.
+Las clases CSS (`h-7 w-auto`, `h-[26px] w-auto mb-[18px]`) no se tocan, siguen mandando sobre el tamaño visible; los atributos solo declaran la proporción para la reserva de espacio.
 
 - [ ] **Step 3: Verificar**
 
@@ -299,7 +299,7 @@ Expected: `sr_usage=t, sr_select=t, sr_delete=f, anon_insert=t, anon_select=f`. 
 
 - [ ] **Step 4: Actualizar CLAUDE.md**
 
-En el bullet de `landing.leads` (sección Base de datos), reemplazar la frase que dice que dar los grants a `service_role` "es una migración pendiente" por la descripción del estado real: los leads se leen desde el dashboard **o con la credencial secreta en scripts locales** (grants `usage`+`select` aplicados; sin `update`/`delete` — eso sigue siendo del dashboard).
+En el bullet de `landing.leads` (sección Base de datos), reemplazar la frase que dice que dar los grants a `service_role` "es una migración pendiente" por la descripción del estado real: los leads se leen desde el dashboard **o con la credencial secreta en scripts locales** (grants `usage`+`select` aplicados; sin `update`/`delete`, eso sigue siendo del dashboard).
 
 - [ ] **Step 5: Commit**
 
@@ -312,7 +312,7 @@ git commit -m "feat: service_role puede leer landing.leads (usage + select)"
 
 ### Verificación final del ciclo
 
-- [ ] `pnpm exec tsc --noEmit && pnpm test && pnpm build` — todo verde (38 tests: 36 + 2 nuevos).
+- [ ] `pnpm exec tsc --noEmit && pnpm test && pnpm build`, todo verde (38 tests: 36 + 2 nuevos).
 - [ ] Dev: pestaña "Datzon | Ingeniería y Automatización Industrial"; burbuja aprobada por el usuario; modal desde `/solutions`; wa.me con el texto correcto.
 - [ ] Queries de privilegios de la Task 5 en verde.
 

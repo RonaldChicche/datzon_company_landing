@@ -10,7 +10,7 @@ export const STORAGE_PUBLIC_BASE =
  * URL pública de un asset del sitio (prefijo site/ del bucket).
  *
  * Hero: foto de Pexels nº 34207359 (robot industrial de seis ejes amarillo
- * en nave industrial) — https://www.pexels.com/photo/34207359/
+ * en nave industrial), https://www.pexels.com/photo/34207359/
  * Licencia Pexels: uso comercial libre, sin atribución requerida.
  */
 // A diferencia de `projectImageUrl`, esta función NO aplica encodeURIComponent:

@@ -30,7 +30,7 @@ export const contactFieldsSchema = z.object({
   empresa: z.string().max(160, "Empresa demasiado larga (máx. 160 caracteres)").optional(),
   telefono: z.string().max(40, "Teléfono demasiado largo (máx. 40 caracteres)").optional(),
   industria: z.string().max(60, "Industria demasiado larga (máx. 60 caracteres)").optional(),
-  // Honeypot: invisible para humanos. Sin max() a propósito — si un bot lo
+  // Honeypot: invisible para humanos. Sin max() a propósito, si un bot lo
   // rellena debe PASAR la validación para llegar al descarte silencioso del
   // servidor (con un max, un bot que llene el campo con basura larga recibía
   // 422 y el honeypot era código muerto). El tamaño del body ya lo acota

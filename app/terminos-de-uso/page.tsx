@@ -36,7 +36,7 @@ export default function TermsOfUsePage() {
               2. Propiedad Intelectual
             </h2>
             <p>
-              Todo el contenido del Sitio —incluyendo textos, gráficos, logotipos, íconos, imágenes, código fuente y diseño— es
+              Todo el contenido del Sitio (incluyendo textos, gráficos, logotipos, íconos, imágenes, código fuente y diseño) es
               propiedad exclusiva de <strong>DATZON S.A.C</strong> y está protegido por las leyes de propiedad intelectual
               aplicables. Queda prohibida su reproducción total o parcial sin autorización expresa y por escrito de Datzon.
             </p>

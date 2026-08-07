@@ -1,5 +1,5 @@
 ---
-name: Datzon — Deep Space Industrial v3
+name: Datzon · Deep Space Industrial v3
 colors:
   surface: '#10141a'
   surface-dim: '#0a0e14'
@@ -96,7 +96,7 @@ motion:
 ---
 
 ## Brand & Style
-Datzon is an industrial automation engineering firm. The system speaks the language of the machines it integrates: **deep-space dark surfaces, one kinetic lime accent, and monospace data labels** — every element should feel like a machined component of a control system.
+Datzon is an industrial automation engineering firm. The system speaks the language of the machines it integrates: **deep-space dark surfaces, one kinetic lime accent, and monospace data labels**, every element should feel like a machined component of a control system.
 
 The voice is authoritative and precise, never decorative. The signature move is restraint: lime (`#aad900`) appears only on primary actions, status LEDs, accent words inside headlines, and live data. Everything else is tonal grays on near-black.
 
@@ -104,16 +104,16 @@ The voice is authoritative and precise, never decorative. The signature move is 
 Two worlds alternate down every page:
 
 1. **Dark sections (default).** Background `#10141a` (or dimmer `#0a0e14` for hero/contact), tonal containers `#181c22 → #262a31`, hairlines at `rgba(255,255,255,.08)`. Text is `#dfe2eb` with muted tiers `#9aa1ac` and `#646b76`.
-2. **Paper sections (light counterpoint).** Warm off-white `#f4f5f1` with a 42px **graph-paper grid** (`rgba(16,24,8,.05)` 1px lines) — the engineering-notebook texture. Ink `#14171c`, white `#ffffff` cards, and the accent shifts to the darker `#5f7d00` so lime never sits on light backgrounds.
+2. **Paper sections (light counterpoint).** Warm off-white `#f4f5f1` with a 42px **graph-paper grid** (`rgba(16,24,8,.05)` 1px lines), the engineering-notebook texture. Ink `#14171c`, white `#ffffff` cards, and the accent shifts to the darker `#5f7d00` so lime never sits on light backgrounds.
 
 `::selection` is lime on dark. Use `primary-bright #c5f632` only for hover states of lime elements; `primary-dim` (lime at 14%) for focus rings and glows.
 
 ## Typography
 Three voices, strictly cast:
 
-- **Michroma** — display voice for `h1`/`h2` and big stat numerals only. Always uppercase, weight 400, tight 1.12–1.18 line-height. It echoes the techno-geometric logo; never use it for paragraphs or UI labels.
-- **Geist** — everything readable: body (16.5px/1.65), leads, `h3`/`h4` at weight 600.
-- **JetBrains Mono** — the "machine readout" voice: buttons, chips, kickers, breadcrumbs, nav links, form labels, table/stat metadata. Small sizes (11–13px), uppercase, generous letter-spacing (.05em buttons, .2em chips/kickers).
+- **Michroma**, display voice for `h1`/`h2` and big stat numerals only. Always uppercase, weight 400, tight 1.12–1.18 line-height. It echoes the techno-geometric logo; never use it for paragraphs or UI labels.
+- **Geist**, everything readable: body (16.5px/1.65), leads, `h3`/`h4` at weight 600.
+- **JetBrains Mono**, the "machine readout" voice: buttons, chips, kickers, breadcrumbs, nav links, form labels, table/stat metadata. Small sizes (11–13px), uppercase, generous letter-spacing (.05em buttons, .2em chips/kickers).
 
 Accent words inside headlines get a `<span>` in lime (dark sections) or deep green (paper sections).
 

@@ -2,7 +2,7 @@
 
 **Fecha:** 2026-07-25
 **Rama:** `feat/rediseno-deep-space`
-**Sub-proyecto:** D — anterior en prioridad a B (imágenes) y C (CSP)
+**Sub-proyecto:** D, anterior en prioridad a B (imágenes) y C (CSP)
 
 ---
 
@@ -96,8 +96,8 @@ Flujo: `validar (Zod) → honeypot → insertar → notificar → responder`.
 
 | Situación | Respuesta | Razón |
 |---|---|---|
-| Body inválido | 400 | — |
-| Datos que no pasan el schema | 422 | — |
+| Body inválido | 400 |, |
+| Datos que no pasan el schema | 422 |, |
 | Honeypot relleno | 200, sin guardar | Descarte silencioso: el bot no debe distinguirlo del éxito |
 | **Falla el insert** | **500**, con mensaje al usuario de escribir a `contacto@datzoncompany.com` | Es la red de seguridad; falla ruidosamente |
 | **Falla el email** | **200** | El lead ya está guardado. No hay nada que el visitante pueda hacer |
@@ -111,20 +111,20 @@ El correo de notificación lleva **`reply_to` con el email del lead**, para que 
 
 ### Nuevos
 
-- **`lib/contact-schema.ts`** — única definición del contrato. Exporta dos schemas para no obligar a los formularios a declarar un campo que no es suyo:
-  - `contactFieldsSchema` — los seis campos visibles más el honeypot. Lo usan los dos formularios con `zodResolver`.
-  - `contactPayloadSchema` — `contactFieldsSchema.extend({ source: z.enum(["home", "modal"]) })`. Lo usa el Route Handler.
-- **`lib/supabase/client.ts`** — cliente de runtime con la clave publishable, que llama a `assertDatzonProject` antes de conectarse (regla de `CLAUDE.md`).
-- **`supabase/migrations/<timestamp>_leads.sql`** — la migración de arriba.
+- **`lib/contact-schema.ts`**, única definición del contrato. Exporta dos schemas para no obligar a los formularios a declarar un campo que no es suyo:
+  - `contactFieldsSchema`, los seis campos visibles más el honeypot. Lo usan los dos formularios con `zodResolver`.
+  - `contactPayloadSchema`, `contactFieldsSchema.extend({ source: z.enum(["home", "modal"]) })`. Lo usa el Route Handler.
+- **`lib/supabase/client.ts`**, cliente de runtime con la clave publishable, que llama a `assertDatzonProject` antes de conectarse (regla de `CLAUDE.md`).
+- **`supabase/migrations/<timestamp>_leads.sql`**, la migración de arriba.
 
 ### Modificados
 
-- **`app/api/contact/route.ts`** — importa el schema compartido, inserta en Supabase, notifica por Resend, aplica la tabla de respuestas de arriba. Se elimina el `console.log` del contacto.
-- **`components/ContactModal.tsx`** — usa el schema compartido. Pierde el campo `disponibilidad`; gana `empresa` y el select de `industria`; `telefono` deja de ser obligatorio. Envía `source: 'modal'`. Es el componente más estilizado del sitio: los campos nuevos deben seguir sus clases y patrón de iconos existentes.
-- **`components/ContactForm.tsx`** — usa el schema compartido (sus campos no cambian). Envía `source: 'home'`.
-- **`package.json`** — `@supabase/supabase-js` pasa de `devDependencies` a `dependencies` (hoy solo lo usan scripts; el build de producción de Vercel poda devDeps y fallaría). Se añade `resend`.
-- **`.env.example`** — se añaden `SUPABASE_PUBLISHABLE_KEY` y `LEAD_IP_SALT`.
-- **`CLAUDE.md`** — se documenta la tabla `landing.leads` y su modelo de buzón de solo escritura.
+- **`app/api/contact/route.ts`**, importa el schema compartido, inserta en Supabase, notifica por Resend, aplica la tabla de respuestas de arriba. Se elimina el `console.log` del contacto.
+- **`components/ContactModal.tsx`**, usa el schema compartido. Pierde el campo `disponibilidad`; gana `empresa` y el select de `industria`; `telefono` deja de ser obligatorio. Envía `source: 'modal'`. Es el componente más estilizado del sitio: los campos nuevos deben seguir sus clases y patrón de iconos existentes.
+- **`components/ContactForm.tsx`**, usa el schema compartido (sus campos no cambian). Envía `source: 'home'`.
+- **`package.json`**, `@supabase/supabase-js` pasa de `devDependencies` a `dependencies` (hoy solo lo usan scripts; el build de producción de Vercel poda devDeps y fallaría). Se añade `resend`.
+- **`.env.example`**, se añaden `SUPABASE_PUBLISHABLE_KEY` y `LEAD_IP_SALT`.
+- **`CLAUDE.md`**, se documenta la tabla `landing.leads` y su modelo de buzón de solo escritura.
 
 ## Pruebas
 
@@ -142,7 +142,7 @@ Vitest ya está configurado (`lib/supabase/project.test.ts` es el precedente). S
 1. `pnpm exec tsc --noEmit` y `pnpm test` en verde.
 2. `pnpm build` en verde con las env vars presentes.
 3. Envío real desde `pnpm dev` por **ambos** formularios: aparecen dos filas en `landing.leads` con `source` distinto.
-4. Con la clave publishable, un `select` directo sobre `landing.leads` **debe fallar** — confirma el buzón.
+4. Con la clave publishable, un `select` directo sobre `landing.leads` **debe fallar**, confirma el buzón.
 5. Búsqueda de `disponibilidad` en `components/` no devuelve nada.
 6. Ningún `console.log` de datos de contacto en el repo.
 

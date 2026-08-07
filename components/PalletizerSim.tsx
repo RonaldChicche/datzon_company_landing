@@ -30,7 +30,7 @@ export default function PalletizerSim({ className = "" }: PalletizerSimProps) {
   const prefersReduced = useReducedMotion() ?? false;
 
   /* ------------------------------------------------------------------ */
-  /* Simulation engine — mirrors palletizer.js geometry exactly          */
+  /* Simulation engine, mirrors palletizer.js geometry exactly          */
   /* ------------------------------------------------------------------ */
   const initSim = useCallback(
     (canvas: HTMLCanvasElement) => {
@@ -601,6 +601,6 @@ export default function PalletizerSim({ className = "" }: PalletizerSimProps) {
   );
 }
 
-/* Type alias used by the ref — avoids exporting internal shape */
+/* Type alias used by the ref, avoids exporting internal shape */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type SimState = any;

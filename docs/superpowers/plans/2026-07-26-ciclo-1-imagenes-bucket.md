@@ -1,4 +1,4 @@
-# Ciclo 1 — Imágenes al bucket y limpieza de assets: Plan de implementación
+# Ciclo 1, Imágenes al bucket y limpieza de assets: Plan de implementación
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -10,20 +10,20 @@
 
 ## Global Constraints
 
-- Spec: `docs/superpowers/specs/2026-07-25-migracion-imagenes-bucket-design.md` — decisiones cerradas con el usuario, incluida la sección de delegación y el parche de Danilo (600×600, NO recorte).
+- Spec: `docs/superpowers/specs/2026-07-25-migracion-imagenes-bucket-design.md`, decisiones cerradas con el usuario, incluida la sección de delegación y el parche de Danilo (600×600, NO recorte).
 - Bucket `landing`, prefijo `site/` para todo lo de este ciclo; **jamás** subir a `raw/` ni crear prefijos nuevos de primer nivel. Límite duro: 2 MB por archivo.
 - Nombres en el bucket: kebab-case (`danilo-luque.webp`).
 - Pesos objetivo: hero ≤ 350 KB (2400 px, q≈80) · planta ≤ 150 KB (1600 px) · retratos ~40–100 KB · SVGs tal cual.
 - La subida real al bucket NO se delega a agentes externos y usa `SUPABASE_SERVICE_ROLE_KEY` solo vía el script (regla CLAUDE.md).
 - `app/icon.svg` y `app/favicon.ico` NO se tocan (convención de Next).
-- El hero se muestra en B/N por la clase `grayscale` existente — se conserva, igual que `fill`, `priority`, `fetchPriority="high"` y `sizes="100vw"` del ciclo 0.
+- El hero se muestra en B/N por la clase `grayscale` existente, se conserva, igual que `fill`, `priority`, `fetchPriority="high"` y `sizes="100vw"` del ciclo 0.
 - `objectPosition` por miembro en TeamContent se conserva (Ronald: `center 15%`).
 - Los `width={614} height={120}` de los logos (ciclo 0) se conservan.
 - TypeScript estricto; comentarios en español.
 
 ---
 
-### Task 1: `lib/site-assets.ts` — helper y base compartida
+### Task 1: `lib/site-assets.ts`, helper y base compartida
 
 **Files:**
 - Create: `lib/site-assets.ts`
@@ -73,7 +73,7 @@ describe("base compartida", () => {
 - [ ] **Step 2: Run test to verify it fails**
 
 Run: `pnpm exec vitest run lib/site-assets.test.ts`
-Expected: FAIL — `Cannot find module './site-assets'`.
+Expected: FAIL, `Cannot find module './site-assets'`.
 
 - [ ] **Step 3: Implementar**
 
@@ -91,7 +91,7 @@ export const STORAGE_PUBLIC_BASE =
  * URL pública de un asset del sitio (prefijo site/ del bucket).
  *
  * Hero: foto de Pexels nº 34207359 (robot industrial de seis ejes amarillo
- * en nave industrial) — https://www.pexels.com/photo/34207359/
+ * en nave industrial), https://www.pexels.com/photo/34207359/
  * Licencia Pexels: uso comercial libre, sin atribución requerida.
  */
 export function siteAssetUrl(file: string): string {
@@ -115,7 +115,7 @@ git commit -m "feat: helper siteAssetUrl con la base pública del bucket compart
 
 ---
 
-### Task 2: Refactor de `scripts/optimize-upload.ts` — modo site, --dry-run, SVG, sin raw/
+### Task 2: Refactor de `scripts/optimize-upload.ts`, modo site, --dry-run, SVG, sin raw/
 
 **Files:**
 - Modify: `scripts/optimize-upload.ts` (los cambios abarcan cabecera, config, `uploadImages` y `main`)
@@ -125,7 +125,7 @@ git commit -m "feat: helper siteAssetUrl con la base pública del bucket compart
 
 - [ ] **Step 1: Flag --dry-run y soporte SVG en la subida**
 
-1. Tras la línea de `const projectArg = process.argv[2];` no — la lectura de argv se hace así al inicio de `main()`:
+1. Tras la línea de `const projectArg = process.argv[2];` no, la lectura de argv se hace así al inicio de `main()`:
 
 ```ts
 const args = process.argv.slice(2);
@@ -269,10 +269,10 @@ Expected: **19**. Solo entonces:
 ```bash
 git rm -r -q "scripts/images-to-upload/ELEVADORES HIDRAULICOS " "scripts/images-to-upload/PLATAFORMA GIRATORIA" "scripts/images-to-upload/Proyecto de Investigacion Marina y SNI - Pathfinder velero" "scripts/images-to-upload/SOLDADURA CON ROBOT"
 ls scripts/images-to-upload/   # debe quedar solo .gitkeep
-git commit -m "chore: purga del staging — los originales de las galerías ya viven en el bucket"
+git commit -m "chore: purga del staging, los originales de las galerías ya viven en el bucket"
 ```
 
-(OJO: la primera carpeta tiene un espacio final en el nombre — citar exactamente.)
+(OJO: la primera carpeta tiene un espacio final en el nombre, citar exactamente.)
 
 - [ ] **Step 2: Descargar el hero original de Pexels**
 
@@ -338,9 +338,9 @@ async function main() {
 main().catch((e) => { console.error(e); process.exit(1); });
 ```
 
-- [ ] **Step 4: Verificación visual de Danilo — BLOQUEANTE**
+- [ ] **Step 4: Verificación visual de Danilo, BLOQUEANTE**
 
-Abrir/leer `scripts/images-to-upload/equipo/danilo-luque.webp` como imagen y comprobar: sin glifo en la esquina inferior derecha, 600×600, y la cara intacta (la fuente aprobada ya lo garantiza; esto verifica que la conversión a webp no rompió nada). Si la fuente `danilo-aprobado.png` no existiera (workspace del plan borrado), PARAR y avisar al orquestador — no improvisar un parche.
+Abrir/leer `scripts/images-to-upload/equipo/danilo-luque.webp` como imagen y comprobar: sin glifo en la esquina inferior derecha, 600×600, y la cara intacta (la fuente aprobada ya lo garantiza; esto verifica que la conversión a webp no rompió nada). Si la fuente `danilo-aprobado.png` no existiera (workspace del plan borrado), PARAR y avisar al orquestador, no improvisar un parche.
 
 - [ ] **Step 5: Verificar pesos y dimensiones**
 
@@ -371,7 +371,7 @@ Expected: lista exactamente los 9 archivos con los destinos de arriba (webp se r
 - [ ] **Step 2: Subida real**
 
 Run: `pnpm optimize-images site`
-Expected: `9 subida(s) | 0 falla(s)`. Nota: los webp del staging se recomprimen una vez más por el pipeline del script (webp→webp q80); es una pérdida marginal aceptada — verificar en el Step 3 que los pesos finales siguen dentro de objetivo.
+Expected: `9 subida(s) | 0 falla(s)`. Nota: los webp del staging se recomprimen una vez más por el pipeline del script (webp→webp q80); es una pérdida marginal aceptada, verificar en el Step 3 que los pesos finales siguen dentro de objetivo.
 
 - [ ] **Step 3: Verificar el bucket**
 
@@ -413,20 +413,20 @@ git status --short                 # limpio (los generados nunca se trackearon)
 **Interfaces:**
 - Consumes: `siteAssetUrl` de `@/lib/site-assets` (Task 1) y las rutas exactas de la Task 4.
 
-- [ ] **Step 1: HomeContent — hero nuevo**
+- [ ] **Step 1: HomeContent, hero nuevo**
 
 En el `<Image>` del hero: `src={siteAssetUrl("hero.webp")}` (import arriba), y el `alt` pasa a describir la foto nueva: `"Robot industrial de seis ejes operando en una nave de producción"`. Se conservan `fill`, `priority`, `fetchPriority="high"`, `sizes="100vw"` y `className="object-cover grayscale"`.
 
-- [ ] **Step 2: TeamContent — retratos**
+- [ ] **Step 2: TeamContent, retratos**
 
 Los cinco campos `image` pasan de `"/equipo/<Nombre>.jpg"` a `siteAssetUrl("equipo/<nombre-kebab>.webp")`:
 `danilo-luque.webp`, `jeffry-huanca.webp`, `jose-zamora.webp`, `john-ojeda.webp`, `ronald-chicche.webp` (mapeo 1:1 con el miembro actual del array). Cada `objectPosition` se conserva tal cual.
 
-- [ ] **Step 3: Header y Footer — logo**
+- [ ] **Step 3: Header y Footer, logo**
 
 `src="/logo_datzon.svg"` → `src={siteAssetUrl("logo_datzon.svg")}` en ambos (import de `siteAssetUrl`). `width={614} height={120}` y clases se conservan.
 
-- [ ] **Step 4: layout — preconnect y JSON-LD**
+- [ ] **Step 4: layout, preconnect y JSON-LD**
 
 1. En el `<head>` de `app/layout.tsx`, junto al script de JSON-LD:
 
@@ -434,11 +434,11 @@ Los cinco campos `image` pasan de `"/equipo/<Nombre>.jpg"` a `siteAssetUrl("equi
 <link rel="preconnect" href="https://adnvzdcqcneqjemxneht.supabase.co" />
 ```
 
-(mitiga el costo de servir la imagen LCP desde origen externo — decisión registrada en el spec).
+(mitiga el costo de servir la imagen LCP desde origen externo, decisión registrada en el spec).
 
 2. En `organizationJsonLd`, el campo `logo` pasa de la URL local a la del bucket: importar `siteAssetUrl` y usar `logo: siteAssetUrl("logo_datzon.svg")`.
 
-- [ ] **Step 5: next.config.ts — SVG remoto y limpieza**
+- [ ] **Step 5: next.config.ts, SVG remoto y limpieza**
 
 En `images`: eliminar el remotePattern de `images.unsplash.com` (config muerta) y añadir la configuración del spec:
 
@@ -494,14 +494,14 @@ Expected: `public/` vacío (el directorio puede quedar sin contenido o desaparec
 
 - [ ] **Step 2: Verificar que nada se rompió**
 
-Run: `pnpm build && pnpm dev` (breve comprobación visual de home y /equipo — todo carga desde el bucket).
+Run: `pnpm build && pnpm dev` (breve comprobación visual de home y /equipo, todo carga desde el bucket).
 Expected: build verde; sin 404 de imágenes en la consola del navegador.
 
 - [ ] **Step 3: Commit**
 
 ```bash
 git add -A public/
-git commit -m "chore: public/ queda vacío — todo el contenido editorial vive en el bucket"
+git commit -m "chore: public/ queda vacío, todo el contenido editorial vive en el bucket"
 ```
 
 ---
@@ -514,12 +514,12 @@ git commit -m "chore: public/ queda vacío — todo el contenido editorial vive 
 
 - [ ] **Step 1: CLAUDE.md**
 
-En la tabla de prefijos del bucket (sección Storage): eliminar la fila `raw/` completa. En la fila `site/` (o como nota bajo la tabla), añadir: los subdirectorios bajo `site/` son libres (`site/equipo/`, …); la regla solo fija los prefijos de primer nivel. Revisar que ninguna otra frase de la sección mencione `raw/` (el párrafo posterior a la tabla lo hace — actualizarlo: el script ya no tiene ese destino).
+En la tabla de prefijos del bucket (sección Storage): eliminar la fila `raw/` completa. En la fila `site/` (o como nota bajo la tabla), añadir: los subdirectorios bajo `site/` son libres (`site/equipo/`, …); la regla solo fija los prefijos de primer nivel. Revisar que ninguna otra frase de la sección mencione `raw/` (el párrafo posterior a la tabla lo hace, actualizarlo: el script ya no tiene ese destino).
 
 - [ ] **Step 2: DESIGN.md**
 
 Añadir dos notas donde encajen con la estructura del documento:
-1. El isotipo vive en 3 archivos — `app/icon.svg` + `site/logo_datzon.svg` + `site/logo_datzon_full.svg` (bucket) — y un cambio de marca debe tocar los tres.
+1. El isotipo vive en 3 archivos ( `app/icon.svg` + `site/logo_datzon.svg` + `site/logo_datzon_full.svg` (bucket) ) y un cambio de marca debe tocar los tres.
 2. Hero de la home: Pexels nº 34207359, licencia Pexels (uso comercial libre, sin atribución), servido desde el bucket como `site/hero.webp` (2400 px, B/N por la clase `grayscale`).
 
 - [ ] **Step 3: Verificación final del ciclo (la lista del spec)**
@@ -544,6 +544,6 @@ git commit -m "docs: reglas de Storage sin raw/ y procedencia del hero; isotipo 
 ## Self-review (hecho al escribir)
 
 - **Cobertura del spec:** helper + base compartida (T1) · refactor del script con los 4 cambios (T2) · procesado con pesos objetivo y parche de Danilo 600×600 (T3) · subida y verificación 9+19 (T4) · componentes, preconnect, JSON-LD, next.config con SVG (T5) · public/ vacío y muertas fuera (T6) · CLAUDE.md/DESIGN.md (T7). El estado final de assets del spec queda cubierto fila por fila.
-- **Riesgo señalado:** el modo site recomprime webp→webp (pérdida marginal); anotado en T4 con verificación de pesos posterior. Alternativa (subir webp tal cual) descartada por YAGNI — tocaría más el script.
-- **Placeholders:** las coordenadas del parche de Danilo son estimadas a propósito con iteración visual BLOQUEANTE (T3 Step 4) — es verificación, no hueco.
+- **Riesgo señalado:** el modo site recomprime webp→webp (pérdida marginal); anotado en T4 con verificación de pesos posterior. Alternativa (subir webp tal cual) descartada por YAGNI, tocaría más el script.
+- **Placeholders:** las coordenadas del parche de Danilo son estimadas a propósito con iteración visual BLOQUEANTE (T3 Step 4), es verificación, no hueco.
 - **Consistencia:** `siteAssetUrl`/`STORAGE_PUBLIC_BASE` idénticos en T1 y T5; las 9 rutas de T4 coinciden 1:1 con los `siteAssetUrl(...)` de T5.
