@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { WHATSAPP_URL } from "@/lib/contact-links";
+import { WHATSAPP_HREF } from "@/lib/contact-links";
 import { siteAssetUrl } from "@/lib/site-assets";
 
 export default function Footer() {
@@ -50,9 +50,9 @@ export default function Footer() {
               contacto@datzoncompany.com
             </a>
             <a
-              href={WHATSAPP_URL}
+              href={WHATSAPP_HREF}
               target="_blank"
-              rel="noopener noreferrer"
+              rel="noopener noreferrer nofollow"
               className="block text-muted text-sm py-[5px] hover:text-lime transition-colors"
             >
               Escríbenos por WhatsApp

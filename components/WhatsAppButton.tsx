@@ -1,4 +1,4 @@
-import { WHATSAPP_URL } from "@/lib/contact-links";
+import { WHATSAPP_HREF } from "@/lib/contact-links";
 
 /**
  * Burbuja flotante de WhatsApp, visible en todas las páginas.
@@ -8,9 +8,9 @@ import { WHATSAPP_URL } from "@/lib/contact-links";
 export default function WhatsAppButton() {
   return (
     <a
-      href={WHATSAPP_URL}
+      href={WHATSAPP_HREF}
       target="_blank"
-      rel="noopener noreferrer"
+      rel="noopener noreferrer nofollow"
       aria-label="Escríbenos por WhatsApp"
       className="fixed bottom-5 right-5 z-[150] flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg shadow-black/30 transition-transform hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
     >
