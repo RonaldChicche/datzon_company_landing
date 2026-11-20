@@ -6,6 +6,7 @@ import ClientLayout from "./ClientLayout";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import { Analytics } from "@vercel/analytics/next";
 import { siteAssetUrl } from "@/lib/site-assets";
+import { pageMetadata, SITE_URL } from "@/lib/seo";
 
 const michroma = Michroma({
   variable: "--font-michroma",
@@ -27,22 +28,16 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.datzoncompany.com"),
+  metadataBase: new URL(SITE_URL),
   title: {
     template: "%s | Datzon",
     default: "Datzon | Ingeniería y Automatización Industrial",
   },
-  description:
-    "Datzon diseña y despliega sistemas de ingeniería industrial avanzada: automatización mecánica, robótica, edge computing y analítica de datos en tiempo real.",
-  openGraph: {
-    type: "website",
-    locale: "es_ES",
-    url: "https://www.datzoncompany.com",
-    siteName: "Datzon",
-    title: "Datzon | Ingeniería y Automatización Industrial",
+  ...pageMetadata({
     description:
-      "Datzon diseña y despliega sistemas de ingeniería industrial avanzada: automatización mecánica, robótica, edge computing y analítica de datos en tiempo real.",
-  },
+      "Datzon, Ingeniería y automatización industrial en Lima, Perú. Robótica, PLC, SCADA, visión artificial y sistemas automatizados para optimizar la producción de tu planta.",
+    path: "/",
+  }),
   robots: { index: true, follow: true },
 };
 

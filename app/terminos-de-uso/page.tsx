@@ -1,10 +1,11 @@
-import type { Metadata } from "next";
 import Link from "next/link";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Términos de Uso",
   description: "Términos y condiciones de uso del sitio web de Datzon.",
-};
+  path: "/terminos-de-uso",
+});
 
 export default function TermsOfUsePage() {
   return (

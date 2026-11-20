@@ -1,14 +1,15 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import DemoStudio from "@/components/robotica/DemoStudio";
 import { APLICACIONES } from "@/lib/robotica-demos";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Robótica",
   description:
     "Un robot para cada proceso: demos de paletizado, soldadura y manipulación delicada calculadas con cinemática real. Robótica industrial por Datzon.",
-};
+  path: "/robotica",
+});
 
 export default function RoboticaPage() {
   return (
