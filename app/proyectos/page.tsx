@@ -1,12 +1,13 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import ProjectsGallery from "@/components/ProjectsGallery";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Proyectos",
   description:
     "Proyectos reales de automatización industrial, robótica, fabricación y sistemas embebidos ejecutados por Datzon.",
-};
+  path: "/proyectos",
+});
 
 export default function ProyectosPage() {
   return (

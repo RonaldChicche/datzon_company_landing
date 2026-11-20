@@ -1,10 +1,12 @@
-import type { Metadata } from "next";
 import Link from "next/link";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
   title: "Política de Privacidad",
-  description: "Política de privacidad de Datzon. Conoce cómo protegemos tus datos personales conforme a la Ley 29733 de Perú.",
-};
+  description:
+    "Política de privacidad de Datzon. Conoce cómo protegemos tus datos personales conforme a la Ley 29733 de Perú.",
+  path: "/politica-privacidad",
+});
 
 export default function PrivacyPolicyPage() {
   return (
