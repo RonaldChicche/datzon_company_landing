@@ -5,8 +5,13 @@ export const SITE_NAME = "Datzon";
 export const SITE_LOCALE = "es_PE";
 export const DEFAULT_TITLE = "Datzon | Ingeniería y Automatización Industrial";
 
+// Imagen estática en app/opengraph-image.png. Antes se generaba en el servidor
+// con app/opengraph-image.tsx (sharp + fetch), pero Next carga ese módulo al
+// resolver la metadata de CADA página, y en Vercel su carga fallaba y tumbaba
+// todo el sitio (error 500 del 2026-11-20). Si hay que rediseñarla, el código
+// original está en el commit 7c057ba: genérala en local y reemplaza el PNG.
 const OG_IMAGE = {
-  url: "/opengraph-image",
+  url: "/opengraph-image.png",
   width: 1200,
   height: 630,
   alt: DEFAULT_TITLE,
@@ -25,9 +30,9 @@ interface PageMetadataOptions {
  * Genera el bloque `Metadata` completo (canonical, Open Graph y Twitter Card)
  * en un solo lugar. Cuando una página hija define `openGraph`, Next.js 16
  * reemplaza todo el objeto `openGraph` del layout padre (incluido el
- * `opengraph-image.tsx` de la raíz), por lo que para páginas internas
+ * `opengraph-image.png` de la raíz), por lo que para páginas internas
  * adjuntamos explícitamente `images: [OG_IMAGE]`. En la raíz (`path === "/"`),
- * Next.js inyecta automáticamente `app/opengraph-image.tsx` con su hash de caché.
+ * Next.js inyecta automáticamente `app/opengraph-image.png` con su hash de caché.
  */
 export function pageMetadata({
   title,

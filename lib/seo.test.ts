@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { pageMetadata } from "./seo";
 
 describe("pageMetadata", () => {
-  it("genera metadata completa para la home dejando que app/opengraph-image.tsx inyecte la imagen con su hash", () => {
+  it("genera metadata completa para la home dejando que app/opengraph-image.png inyecte la imagen con su hash", () => {
     const meta = pageMetadata({
       description: "Descripción de inicio",
       path: "/",
@@ -44,7 +44,7 @@ describe("pageMetadata", () => {
       description: "Demos de robótica industrial",
       images: [
         {
-          url: "/opengraph-image",
+          url: "/opengraph-image.png",
           width: 1200,
           height: 630,
           alt: "Datzon | Ingeniería y Automatización Industrial",
@@ -58,7 +58,7 @@ describe("pageMetadata", () => {
       description: "Demos de robótica industrial",
       images: [
         {
-          url: "/opengraph-image",
+          url: "/opengraph-image.png",
           width: 1200,
           height: 630,
           alt: "Datzon | Ingeniería y Automatización Industrial",
