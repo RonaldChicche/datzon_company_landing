@@ -14,7 +14,8 @@ const OG_IMAGE = {
   url: "/opengraph-image.png",
   width: 1200,
   height: 630,
-  alt: DEFAULT_TITLE,
+  // Debe coincidir con app/opengraph-image.alt.txt (el alt de la home).
+  alt: "Datzon Automatización Industrial",
   type: "image/png",
 };
 
