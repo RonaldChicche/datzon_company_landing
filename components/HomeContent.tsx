@@ -62,12 +62,8 @@ const SERVICES: {
 export default function HomeContent() {
   const reduced = useReducedMotion() ?? false;
 
-  // Hero: animate on mount
-  const fd = (delay: number) => ({
-    initial: { opacity: reduced ? 1 : 0, y: reduced ? 0 : 10 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: reduced ? 0 : 0.5, ease: EASE, delay: reduced ? 0 : delay },
-  });
+  // Hero: la entrada del texto es CSS (.hero-in en globals.css), no Framer Motion.
+  // El H1 es el elemento LCP y con Framer quedaba invisible hasta la hidratación.
 
   // Sections: animate on scroll-into-view
   const rv = (delay = 0) => ({
@@ -85,29 +81,29 @@ export default function HomeContent() {
         <div className="hero-overlay" />
 
         <div className="hero-content">
-          <motion.span {...fd(0)} className="chip" style={{ display: "inline-block" }}>
+          <span className="chip hero-in" style={{ display: "inline-block" }}>
             Automatización Industrial
-          </motion.span>
+          </span>
 
-          <motion.h1 {...fd(0.1)}>
+          <h1 className="hero-in d1">
             Revolucionando<br />
             <span className="accent">el futuro</span><br />
             de las industrias
-          </motion.h1>
+          </h1>
 
-          <motion.p {...fd(0.2)} className="lead">
+          <p className="lead hero-in d2">
             Diseño, fabricación e integración de sistemas industriales automatizados.
             Robótica, PLC, SCADA, visión artificial y datos para optimizar la producción de tu planta.
-          </motion.p>
+          </p>
 
-          <motion.div {...fd(0.3)} className="hero-cta">
+          <div className="hero-cta hero-in d3">
             <Link href="#soluciones" className="btn btn-primary">
               Explorar soluciones <span className="arr">→</span>
             </Link>
             <Link href="/robotica" className="btn btn-ghost">
               Ver la robótica en vivo
             </Link>
-          </motion.div>
+          </div>
         </div>
 
         <div className="hero-scroll" aria-hidden="true">
