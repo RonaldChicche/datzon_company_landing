@@ -1,9 +1,15 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
 import ContactForm from "@/components/ContactForm";
 import HeroMedia from "@/components/HeroMedia";
+import type { SceneId } from "@/components/services/iso-scenes";
+
+// Animaciones de las tarjetas: código aparte, sin SSR y fuera del bundle inicial
+// (la sección está debajo del hero). El contenedor .svc-viz reserva el espacio.
+const ServiceScene = dynamic(() => import("@/components/services/ServiceScene"), { ssr: false });
 
 const EASE = [0.2, 0.7, 0.2, 1] as [number, number, number, number];
 
@@ -12,34 +18,42 @@ const BRANDS = [
   "Festo", "Schneider Electric", "Raspberry Pi", "FAIRINO"
 ];
 
-const SERVICES = [
+const SERVICES: {
+  num: string; title: string; desc: string; tags: string[]; scene: SceneId; sceneLabel: string;
+}[] = [
   {
     num: "01", title: "Automatización de procesos",
+    scene: "auto", sceneLabel: "Animación: cajas que avanzan por una cinta y se apilan en un pallet",
     desc: "Líneas automatizadas de paletizado, clasificación de objetos, pintura y soldadura, diseñadas a la medida de tu producción.",
     tags: ["Paletizado", "Clasificación", "Pintura", "Soldadura"],
   },
   {
     num: "02", title: "Robótica industrial",
+    scene: "robot", sceneLabel: "Animación: un brazo robótico suelda una unión entre dos placas",
     desc: "Celdas robóticas de paletizado y soldadura: selección, integración, programación y puesta en marcha de robots industriales.",
     tags: ["Celdas robóticas", "Integración", "Programación"],
   },
   {
     num: "03", title: "Control & tableros eléctricos",
+    scene: "ctrl", sceneLabel: "Animación: un sensor envía la temperatura a un tablero eléctrico",
     desc: "Diseño y fabricación de tableros eléctricos, integración y programación de PLC, y arquitecturas de control confiables.",
     tags: ["Tableros", "Integración PLC", "SCADA"],
   },
   {
     num: "04", title: "Visión artificial & analítica",
+    scene: "vision", sceneLabel: "Animación: una cámara detecta a la persona que no lleva chaleco de seguridad",
     desc: "Inspección por visión, control de calidad automatizado y analítica de procesos para detectar desvíos antes de que cuesten.",
     tags: ["Visión artificial", "Calidad", "Analítica"],
   },
   {
     num: "05", title: "Manufactura digital",
+    scene: "print", sceneLabel: "Animación: un engranaje se imprime en 3D capa a capa",
     desc: "Modelado e impresión 3D, fabricación CNC y prototipado rápido para piezas, utillajes y repuestos a demanda.",
     tags: ["Impresión 3D", "CNC", "Prototipado"],
   },
   {
     num: "06", title: "Datos, IoT & nube",
+    scene: "data", sceneLabel: "Animación: los datos de un documento se convierten en un gráfico",
     desc: "Integración con ERP/SAP, IoT industrial, Azure · AWS · GCP, Power BI, Databricks y agentes de IA aplicados a la operación.",
     tags: ["ERP/SAP", "Power BI", "Databricks", "Agentes IA"],
   },
@@ -134,6 +148,9 @@ export default function HomeContent() {
             {SERVICES.map((svc, i) => (
               <motion.div key={svc.num} {...rv(i * 0.07)} className="svc">
                 <div className="bar" />
+                <div className="svc-viz" role="img" aria-label={svc.sceneLabel}>
+                  <ServiceScene scene={svc.scene} />
+                </div>
                 <div className="num">{svc.num}</div>
                 <h3>{svc.title}</h3>
                 <p>{svc.desc}</p>
