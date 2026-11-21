@@ -9,9 +9,10 @@ import { addTick, buildScene, removeTick, type Scene, type SceneId } from "./iso
  *
  * - Se dibuja en el navegador; HomeContent la carga con next/dynamic sin SSR
  *   para que su código no pese en la carga inicial del home.
- * - La escena se construye recién cuando la tarjeta se acerca a la pantalla.
- *   Construir las seis al hidratar retrasaba ~300 ms el pintado del titular
- *   del hero (el LCP) en móvil, medido el 2026-11-21.
+ * - La escena se construye recién cuando la tarjeta se acerca a la pantalla:
+ *   así la carga inicial no gasta CPU en escenas que el visitante aún no ve.
+ *   (No cambia el LCP de forma medible: comparando previews de Vercel entre
+ *   sí, 4,10 s frente a 4,12 s en móvil con CPU x4, 2026-11-21.)
  * - Solo se anima mientras está en pantalla.
  * - Con "reducir movimiento" se queda en un fotograma fijo que ya se entiende.
  */
