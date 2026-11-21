@@ -1,10 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
 import ContactForm from "@/components/ContactForm";
-import { siteAssetUrl } from "@/lib/site-assets";
+import HeroMedia from "@/components/HeroMedia";
 
 const EASE = [0.2, 0.7, 0.2, 1] as [number, number, number, number];
 
@@ -68,18 +67,7 @@ export default function HomeContent() {
     <>
       {/* ============ HERO ============ */}
       <section className="hero-full">
-        {/* Full-bleed B/N photo */}
-        <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
-          <Image
-            src={siteAssetUrl("hero.webp")}
-            alt="Robot industrial de seis ejes operando en una nave de producción"
-            fill
-            priority
-            fetchPriority="high"
-            sizes="100vw"
-            className="object-cover grayscale"
-          />
-        </div>
+        <HeroMedia />
         <div className="hero-overlay" />
 
         <div className="hero-content">

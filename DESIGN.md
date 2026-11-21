@@ -124,8 +124,8 @@ The isotipo lives in 3 files that must stay in sync: `app/icon.svg` (favicon), a
 - Sections breathe: ~96px vertical on desktop, 64px mobile.
 - 4px base unit for all padding/margins.
 - Stats and data rows are separated by 1px hairlines, not boxes.
-- Fixed top nav (76px) over a hero that fills the viewport (`min-height:100vh`) with a full-bleed grayscale photo, dark gradient overlay, and centered content.
-- **Hero photo provenance:** Pexels photo #34207359, Pexels license (free for commercial use, no attribution required). Served from the bucket as `site/hero.webp` at 2400px; the B/W look is applied in CSS via the `grayscale` class, not baked into the asset.
+- Fixed top nav (76px) over a hero that fills the viewport (`min-height:100svh`, also on mobile) with a full-bleed looping video, a dark overlay between 45 % and 55 % opacity, and centered content.
+- **Hero media:** real footage of robotic welding (own workshop plus two shots from other users), 13.9 s loop, no audio, in color. Produced in `datzon_company_brochure/05_finales/video/hero/` (see its HANDOFF.md) and served from `site/hero/v8/`. The poster (first frame) is the LCP; the video loads after `load` and fades in, and is skipped with reduced motion or data saver. Portrait screens get the 9:16 cut. No watermark or logo over it. URLs live in `lib/hero-media.ts`.
 
 ## Elevation & Depth
 No drop shadows. Depth = **tonal layers + 1px outlines**:
