@@ -750,6 +750,81 @@ header.nav.scrolled {
   width: 100%;
 }
 
+.svc .bar {
+  z-index: 1;
+}
+
+/* Lámina isométrica animada de cada servicio (components/services/).
+   Margen negativo = padding de .svc, para que llegue a los bordes de la tarjeta.
+   aspect-ratio reserva el alto antes de que cargue el SVG: sin saltos (CLS). */
+.svc-viz {
+  margin: -34px -30px 24px;
+  aspect-ratio: 16 / 9;
+  background-color: #f3f5ee;
+  background-image:
+    linear-gradient(rgba(16, 24, 8, .06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(16, 24, 8, .06) 1px, transparent 1px);
+  background-size: 14px 14px;
+  border-bottom: 1px solid var(--line-d);
+}
+
+.svc-viz svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.svc-viz polygon,
+.svc-viz .iso-edge { stroke: var(--ink-d); stroke-width: 1; stroke-linejoin: round; }
+.iso-n-t { fill: #ffffff; }
+.iso-n-l { fill: #e7eadf; }
+.iso-n-r { fill: #d3d9c9; }
+.iso-g-t { fill: #d4f562; }
+.iso-g-l { fill: var(--lime); }
+.iso-g-r { fill: #8cb400; }
+.svc-viz .iso-floor { fill: #ffffff; fill-opacity: .6; stroke-opacity: .22; }
+.iso-thin { stroke: var(--ink-d); stroke-opacity: .3; stroke-width: 1; }
+.iso-ink { fill: none; stroke: var(--ink-d); stroke-width: 1.6; stroke-linecap: round; }
+.iso-arm { stroke: #2b313a; stroke-width: 7; stroke-linecap: round; }
+.iso-torch { stroke: #2b313a; stroke-width: 6; stroke-linecap: round; }
+.iso-neck { fill: none; stroke: #2b313a; stroke-width: 3.6; stroke-linecap: round; }
+.iso-nozzle-o { stroke: var(--ink-d); stroke-width: 6.4; stroke-linecap: butt; }
+.iso-nozzle { stroke: #b5bcc6; stroke-width: 4.2; stroke-linecap: butt; }
+.iso-hose { fill: none; stroke: #2b313a; stroke-width: 2; stroke-linecap: round; opacity: .75; }
+.svc-viz .iso-screen-face { fill: var(--ink-d); }
+.iso-joint { fill: var(--lime); stroke: var(--ink-d); stroke-width: 1.4; }
+.iso-bead { stroke: #3b434e; stroke-width: 3.2; stroke-linecap: round; }
+.iso-hot { stroke: var(--lime); stroke-width: 2.6; stroke-linecap: round; }
+.iso-halo { fill: var(--lime); }
+.iso-core { fill: #ffffff; stroke: var(--lime); stroke-width: 1; }
+.iso-spark { stroke: #8cb400; stroke-width: 1.3; stroke-linecap: round; }
+.iso-ring { fill: none; stroke: var(--green-deep); stroke-width: 1.2; }
+.iso-cable { fill: none; stroke: var(--green-deep); stroke-width: 1.6; stroke-dasharray: 4 4; stroke-linecap: round; }
+.iso-dash { fill: none; stroke: var(--green-deep); stroke-width: 1.1; stroke-dasharray: 3 3; }
+.iso-scan { stroke: var(--lime); stroke-width: 2.6; stroke-linecap: round; }
+.svc-viz .iso-foot { fill: rgba(170, 217, 0, .38); stroke: var(--green-deep); }
+.iso-cone { stroke: var(--green-deep); stroke-opacity: .45; stroke-width: .8; }
+.iso-bad { fill: none; stroke: #e5483a; stroke-width: 2; }
+.iso-okring { fill: none; stroke: var(--green-deep); stroke-width: 2; }
+.iso-badring { fill: none; stroke: #e5483a; stroke-width: 2; }
+.iso-tagbg { fill: #e5483a; }
+.iso-tag { font-family: var(--font-mono); font-size: 7.5px; font-weight: 700; fill: #ffffff; letter-spacing: .08em; }
+.iso-limb { fill: none; stroke: #2b313a; stroke-linecap: round; }
+.iso-body { fill: #2b313a; }
+.iso-vest { fill: var(--lime); }
+.iso-reflect { stroke: #ffffff; stroke-width: 2.2; }
+.iso-door { fill: none; stroke: var(--ink-d); stroke-width: .8; }
+.iso-screen { fill: var(--ink-d); }
+.iso-read { font-family: var(--font-mono); font-size: 6.4px; fill: var(--lime); text-anchor: middle; }
+.iso-led { fill: #d3d9c9; stroke: var(--ink-d); stroke-width: .7; }
+.iso-led.on { fill: var(--lime); }
+.iso-detail { stroke: var(--ink-d); stroke-width: 1; stroke-linecap: round; }
+/* El contorno de cada capa es lo que dibuja las líneas de impresión del costado. */
+.svc-viz .iso-layer { fill: #ffffff; stroke: var(--ink-d); stroke-width: .7; stroke-linejoin: round; }
+.svc-viz .iso-layer.on { fill: #d4f562; }
+.svc-viz .iso-line { fill: #c9ced6; stroke: none; }
+.svc-viz .iso-line.on { fill: var(--lime); }
+
 /* ============================================================
    STATS
    ============================================================ */
