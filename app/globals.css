@@ -458,6 +458,28 @@ header.nav.scrolled {
   margin-bottom: 30px;
 }
 
+/* Entrada del texto del hero en CSS puro: arranca en el primer pintado, sin
+   esperar a que React hidrate. En móvil con red lenta el elemento LCP medido
+   era el H1 (no el póster), y con Framer Motion nacía con opacity 0 hasta la
+   hidratación: LCP de ~4 s (2026-11-21). Usa `translate` y no `transform`
+   para no chocar con otras transformaciones. */
+@keyframes hero-in {
+  from { opacity: 0; translate: 0 10px; }
+  to { opacity: 1; translate: 0 0; }
+}
+
+.hero-in {
+  animation: hero-in .5s var(--ease) both;
+}
+
+.hero-in.d1 { animation-delay: .08s; }
+.hero-in.d2 { animation-delay: .18s; }
+.hero-in.d3 { animation-delay: .28s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-in { animation: none; }
+}
+
 .hero-full h1 {
   font-size: clamp(26px, 4.6vw, 58px);
   line-height: 1.16;
