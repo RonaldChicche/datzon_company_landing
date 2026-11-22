@@ -147,12 +147,15 @@ export default function Lightbox({ project, index, onIndex, onClose }: LightboxP
               </button>
             </div>
 
-            {/* Imagen principal, centrada y dimensionada a su contenido,
-                de modo que el área alrededor cierra al hacer clic. */}
+            {/* Imagen principal: ocupa toda el área y se ajusta con
+                object-contain. No se usa el tamaño intrínseco: next/image
+                anuncia anchos de hasta 3840w pero el optimizador nunca amplía
+                el original (1600 px), así que en pantallas de 2x el navegador
+                la dibujaba a menos de la mitad. */}
             <div className="relative flex flex-1 select-none items-center justify-center overflow-hidden">
-              {/* Wrapper arrastrable: solo envuelve la imagen, así el área
-                  oscura alrededor sigue cerrando al tocar. Drag horizontal
-                  (dedo o mouse) → cambia de foto al superar el umbral. */}
+              {/* Wrapper arrastrable. Drag horizontal (dedo o mouse) cambia de
+                  foto al superar el umbral. Se cierra con la X, Esc o el
+                  fondo fuera de esta área. */}
               <motion.div
                 key={index}
                 drag={total > 1 ? "x" : false}
@@ -169,19 +172,17 @@ export default function Lightbox({ project, index, onIndex, onClose }: LightboxP
                 initial={reduce ? false : { opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: reduce ? 0 : 0.2, ease: EASE }}
-                className={`pointer-events-auto flex max-h-full max-w-full items-center justify-center ${
+                className={`pointer-events-auto relative h-full w-full ${
                   total > 1 ? "cursor-grab active:cursor-grabbing" : ""
                 }`}
               >
                 <Image
                   src={projectImageUrl(project.slug, project.images[index].file)}
                   alt={imageAlt(project, index)}
-                  width={0}
-                  height={0}
+                  fill
                   sizes="100vw"
                   draggable={false}
-                  className="h-auto max-h-full w-auto max-w-full object-contain"
-                  style={{ width: "auto", height: "auto" }}
+                  className="object-contain"
                 />
               </motion.div>
 
