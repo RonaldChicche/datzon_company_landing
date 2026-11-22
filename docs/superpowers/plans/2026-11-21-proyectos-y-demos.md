@@ -54,7 +54,7 @@
 
 ---
 
-### Tarea 1: Funciones puras del tratamiento de fotos
+### Task 1: Funciones puras del tratamiento de fotos
 
 **Archivos:**
 - Crear: `scripts/photos/geometry.ts`, `scripts/photos/hlg.ts`, `scripts/photos/grade.ts`
@@ -172,7 +172,7 @@ git commit -m "feat(fotos): recorte, HLG a SDR y gradación común como funcione
 
 ---
 
-### Tarea 2: CLI `prepare.ts` y fotos de la demo de soldadura
+### Task 2: CLI `prepare.ts` y fotos de la demo de soldadura
 
 **Archivos:**
 - Crear: `scripts/photos/prepare.ts`, `scripts/photos/manifests/soldadura-robotizada.json`
@@ -252,7 +252,7 @@ git commit -m "feat(fotos): CLI que prepara fotos desde un manifiesto y manifies
 
 ---
 
-### Tarea 3: Fotos de los otros tres proyectos
+### Task 3: Fotos de los otros tres proyectos
 
 **Archivos:**
 - Crear: `scripts/photos/manifests/elevadores-hidraulicos.json`, `plataforma-giratoria.json`, `proyecto-de-investigacion-marina-y-sni-pathfinder-velero.json`
@@ -285,7 +285,7 @@ git commit -m "feat(fotos): manifiestos de elevadores, plataforma y Pathfinder"
 
 ---
 
-### Tarea 4: Pase con IA, revisión de Ronald y subida
+### Task 4: Pase con IA, revisión de Ronald y subida
 
 Esta tarea no es de código. La ejecuta el agente principal, nunca un subagente.
 
@@ -320,7 +320,7 @@ Comprobar que la copia del tubo sigue en el brochure (Tarea 2). No hay commit en
 
 ---
 
-### Tarea 5: Datos y URLs de YouTube
+### Task 5: Datos y URLs de YouTube
 
 **Archivos:**
 - Crear: `lib/youtube.ts`, `lib/youtube.test.ts`, `lib/projects.test.ts`
@@ -452,7 +452,7 @@ git commit -m "feat(proyectos): datos de la demo destacada y fotos con formato u
 
 ---
 
-### Tarea 6: CSP que permite el reproductor de YouTube
+### Task 6: CSP que permite el reproductor de YouTube
 
 **Archivos:**
 - Crear: `lib/csp.ts`, `lib/csp.test.ts`
@@ -495,7 +495,7 @@ git commit -m "feat(csp): permite el reproductor de YouTube sin cookies"
 
 ---
 
-### Tarea 7: Componentes de la página
+### Task 7: Componentes de la página
 
 **Archivos:**
 - Crear: `components/projects/Lightbox.tsx`, `components/projects/YouTubeFacade.tsx`, `components/projects/FeaturedDemo.tsx`
@@ -540,7 +540,7 @@ git commit -m "feat(proyectos): demo destacada con vídeo bajo demanda y tarjeta
 
 ---
 
-### Tarea 8: Página, menú y metadatos
+### Task 8: Página, menú y metadatos
 
 **Archivos:**
 - Modificar: `app/proyectos/page.tsx`, `components/Header.tsx:9-14`
@@ -565,7 +565,7 @@ git commit -m "feat(proyectos): título Proyectos y demos y menú con Proyectos 
 
 ---
 
-### Tarea 9: Verificación completa
+### Task 9: Verificación completa
 
 - [ ] **Paso 1:** `npx vitest run && npx eslint . && npx next build`. Esperado: todo verde y `/proyectos` como página estática.
 - [ ] **Paso 2:** Parar el `next start` viejo del puerto 3000 (`TaskStop`) y levantar el build nuevo. Con Playwright en `/proyectos`, comprobar que el HTML no contiene `data-dgst` y que no hay respuestas 4xx ni 5xx de `/_next/image`.
