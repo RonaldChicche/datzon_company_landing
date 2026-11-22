@@ -43,6 +43,12 @@ export type FeaturedDemo = Project & {
   tags: string[];
 };
 
+/** Etiqueta visible por tipo de proyecto. */
+export const KIND_LABEL: Record<Project["kind"], string> = {
+  proyecto: "Proyecto",
+  demo: "Demo",
+};
+
 /** Arma la URL pública de una imagen de proyecto. */
 export function projectImageUrl(slug: string, file: string): string {
   return `${STORAGE_PUBLIC_BASE}/project/${slug}/${encodeURIComponent(file)}`;

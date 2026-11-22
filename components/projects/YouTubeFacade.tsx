@@ -17,9 +17,11 @@ type YouTubeFacadeProps = {
   poster: string;
   /** Título accesible del iframe. */
   title: string;
+  /** Etiqueta accesible del botón de reproducir. */
+  playLabel: string;
 };
 
-export default function YouTubeFacade({ videoId, poster, title }: YouTubeFacadeProps) {
+export default function YouTubeFacade({ videoId, poster, title, playLabel }: YouTubeFacadeProps) {
   const [playing, setPlaying] = useState(false);
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
@@ -44,14 +46,14 @@ export default function YouTubeFacade({ videoId, poster, title }: YouTubeFacadeP
         <button
           type="button"
           className="yt-btn"
-          aria-label="Reproducir el vídeo de la demo de soldadura"
+          aria-label={playLabel}
           onClick={() => setPlaying(true)}
         >
           <Image
             src={poster}
             alt=""
             fill
-            priority
+            preload
             sizes="(max-width: 900px) 100vw, 60vw"
           />
           <span className="yt-play" aria-hidden="true">

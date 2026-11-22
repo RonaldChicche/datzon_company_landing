@@ -17,14 +17,9 @@ import { createPortal } from "react-dom";
 import Image from "next/image";
 import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
-import { imageAlt, projectImageUrl, type Project } from "@/lib/projects";
+import { imageAlt, KIND_LABEL, projectImageUrl, type Project } from "@/lib/projects";
 
 const EASE = [0.2, 0.7, 0.2, 1] as [number, number, number, number];
-
-const KIND_LABEL: Record<Project["kind"], string> = {
-  proyecto: "Proyecto",
-  demo: "Demo",
-};
 
 type LightboxProps = {
   /** Proyecto abierto, o null si el lightbox está cerrado. */
@@ -69,8 +64,20 @@ export default function Lightbox({ project, index, onIndex, onClose }: LightboxP
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
+    // Trampa de foco: el resto de la página queda inerte (sin foco ni
+    // lectores de pantalla) mientras el diálogo está abierto. Solo se tocan
+    // los hijos de <body> que no son capas del lightbox.
+    const inerted: Element[] = [];
+    for (const child of Array.from(document.body.children)) {
+      if (child.hasAttribute("data-lightbox-layer") || child.hasAttribute("inert")) continue;
+      child.setAttribute("inert", "");
+      inerted.push(child);
+    }
+
     return () => {
       document.body.style.overflow = prevOverflow;
+      // Primero se quita inert: un elemento inerte no puede recibir el foco.
+      for (const child of inerted) child.removeAttribute("inert");
       const el = returnFocusRef.current;
       returnFocusRef.current = null;
       if (el && el.isConnected) el.focus();
@@ -103,6 +110,7 @@ export default function Lightbox({ project, index, onIndex, onClose }: LightboxP
             exit={{ opacity: 0 }}
             transition={{ duration: reduce ? 0 : 0.25 }}
             onClick={onClose}
+            data-lightbox-layer=""
             className="fixed inset-0 z-[200] bg-bg-2/95 backdrop-blur-sm"
           />
 
@@ -113,6 +121,7 @@ export default function Lightbox({ project, index, onIndex, onClose }: LightboxP
             role="dialog"
             aria-modal="true"
             aria-label={`Galería: ${project.title}`}
+            data-lightbox-layer=""
             initial={{ opacity: 0, scale: reduce ? 1 : 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: reduce ? 1 : 0.98 }}
@@ -170,7 +179,6 @@ export default function Lightbox({ project, index, onIndex, onClose }: LightboxP
                   width={0}
                   height={0}
                   sizes="100vw"
-                  priority
                   draggable={false}
                   className="h-auto max-h-full w-auto max-w-full object-contain"
                   style={{ width: "auto", height: "auto" }}
@@ -201,7 +209,7 @@ export default function Lightbox({ project, index, onIndex, onClose }: LightboxP
 
             {/* Contador + miniaturas */}
             <div className="pt-4">
-              <p className="mb-3 text-center font-mono text-[11px] uppercase tracking-wider text-muted">
+              <p aria-live="polite" className="mb-3 text-center font-mono text-[11px] uppercase tracking-wider text-muted">
                 {index + 1} / {total}
               </p>
               {total > 1 && (

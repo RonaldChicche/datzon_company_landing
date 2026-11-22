@@ -13,7 +13,7 @@ import { useCallback, useState } from "react";
 import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
 import { Images } from "lucide-react";
-import { FEATURED, PROJECTS, projectImageUrl, type Project } from "@/lib/projects";
+import { FEATURED, KIND_LABEL, PROJECTS, projectImageUrl, type Project } from "@/lib/projects";
 import FeaturedDemo from "@/components/projects/FeaturedDemo";
 import Lightbox from "@/components/projects/Lightbox";
 
@@ -80,7 +80,9 @@ export default function ProjectsGallery() {
               </span>
             </div>
             <div className="pbody">
-              <span className="pill proj">Proyecto</span>
+              <span className={proj.kind === "demo" ? "pill demo" : "pill proj"}>
+                {KIND_LABEL[proj.kind]}
+              </span>
               <h3>{proj.title}</h3>
               <p>{proj.description}</p>
             </div>

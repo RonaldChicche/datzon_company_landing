@@ -39,6 +39,7 @@ export default function FeaturedDemo({ demo, onOpen }: FeaturedDemoProps) {
           videoId={demo.youtubeId}
           poster={projectImageUrl(demo.slug, demo.poster)}
           title={`${demo.title}, vídeo de la demo`}
+          playLabel="Reproducir el vídeo de la demo de soldadura"
         />
         <div className="feat-side">
           <p>{demo.description}</p>
