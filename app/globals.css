@@ -159,6 +159,13 @@ section {
   z-index: 1;
 }
 
+/* Sección que sigue a una cabecera de página: el borde de la cabecera ya
+   separa, así que el contenido arranca más cerca. Dos clases para ganar a
+   los .sec de los media queries. */
+.sec.sec--top-tight {
+  padding-top: clamp(36px, 5vw, 56px);
+}
+
 /* ============================================================
    TYPE VOICES
    ============================================================ */
@@ -1694,6 +1701,12 @@ footer.ft {
 
 .page-head .accent {
   color: var(--lime);
+}
+
+/* Cabecera oscura con el mismo tono que la de /robotica (.rb-head), un paso
+   más oscura que --bg. Sin rejilla: la rejilla va en la sección clara. */
+.page-head--deep {
+  background: var(--bg-2);
 }
 
 /* page-head, paper/light variant (no body class needed, avoids SSR flash) */

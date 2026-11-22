@@ -13,8 +13,7 @@ export default function ProyectosPage() {
   return (
     <>
       {/* ============ PAGE HEAD ============ */}
-      <section className="page-head page-head--light">
-        <div className="grid-bg" />
+      <section className="page-head page-head--deep">
         <div className="watermark" aria-hidden="true">DAT</div>
         <div className="wrap">
           <div className="breadcrumb">
@@ -27,8 +26,8 @@ export default function ProyectosPage() {
       </section>
 
       {/* ============ PROJECT GRID ============ */}
-      <section className="section-light solid">
-        <div className="wrap sec">
+      <section className="section-light">
+        <div className="wrap sec sec--top-tight">
           <ProjectsGallery />
 
           {/* ====== CTA INLINE ====== */}
