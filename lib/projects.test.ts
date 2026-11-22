@@ -16,7 +16,7 @@ describe("datos de proyectos", () => {
   });
   it("la demo destacada usa el vídeo y las 6 fotos", () => {
     expect(FEATURED.slug).toBe("soldadura-robotizada");
-    expect(FEATURED.youtubeId).toBe("zvhX8jre5Nk");
+    expect(FEATURED.youtubeId).toBe("UPYfgO93IdQ");
     expect(FEATURED.images.map((i) => i.file)).toEqual([
       "01-taller.webp", "02-operario.webp", "03-guiado.webp", "04-tableta.webp", "05-cordon.webp", "06-tubo-ia.webp",
     ]);

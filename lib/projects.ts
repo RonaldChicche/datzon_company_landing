@@ -65,7 +65,7 @@ export const FEATURED: FeaturedDemo = {
   title: "Soldadura robotizada",
   description:
     "Un brazo robótico colaborativo suelda perfiles y tuberías en nuestro taller. Se programa guiándolo con la mano o desde la tableta, y repite el mismo cordón turno tras turno.",
-  youtubeId: "zvhX8jre5Nk",
+  youtubeId: "UPYfgO93IdQ",
   poster: "poster.webp",
   tags: ["Robótica", "Soldadura MIG", "Programación por guiado"],
   images: [
