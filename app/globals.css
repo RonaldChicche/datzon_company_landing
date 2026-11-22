@@ -892,6 +892,25 @@ header.nav.scrolled {
 /* ============================================================
    PROJECTS GRID
    ============================================================ */
+
+/* pastilla de tipo: "Demo" / "Proyecto" */
+.pill {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  line-height: 1.4;
+  border-radius: 3px;
+  padding: 3px 8px;
+}
+
+/* variante para el lightbox (fondo oscuro) */
+.pill.on-dark {
+  color: var(--lime);
+  border: 1px solid rgba(170, 217, 0, .45);
+}
+
 .proj-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
