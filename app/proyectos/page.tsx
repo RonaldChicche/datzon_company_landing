@@ -3,9 +3,9 @@ import ProjectsGallery from "@/components/ProjectsGallery";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "Proyectos",
+  title: "Proyectos y demos",
   description:
-    "Proyectos reales de automatización industrial, robótica, fabricación y sistemas embebidos ejecutados por Datzon.",
+    "Demo de soldadura robotizada y proyectos de Datzon: elevadores hidráulicos, plataforma giratoria y el velero de investigación Pathfinder.",
   path: "/proyectos",
 });
 
@@ -13,28 +13,21 @@ export default function ProyectosPage() {
   return (
     <>
       {/* ============ PAGE HEAD ============ */}
-      <section className="page-head page-head--light">
-        <div className="grid-bg" />
+      <section className="page-head page-head--deep">
         <div className="watermark" aria-hidden="true">DAT</div>
         <div className="wrap">
           <div className="breadcrumb">
             <Link href="/">Inicio</Link> / Proyectos
           </div>
           <h1>
-            Proyectos<br />
-            <span className="accent">en planta</span>
+            Proyectos <span className="accent">y demos</span>
           </h1>
-          <p className="lead">
-            Una selección de trabajos de automatización, robótica, fabricación y
-            sistemas embebidos que hemos ejecutado. Haz clic en una tarjeta para
-            ver la galería completa.
-          </p>
         </div>
       </section>
 
       {/* ============ PROJECT GRID ============ */}
-      <section className="section-light solid">
-        <div className="wrap sec">
+      <section className="section-light">
+        <div className="wrap sec sec--top-tight">
           <ProjectsGallery />
 
           {/* ====== CTA INLINE ====== */}

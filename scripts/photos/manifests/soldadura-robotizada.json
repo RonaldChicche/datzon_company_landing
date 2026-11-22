@@ -1,0 +1,9 @@
+[
+  { "out": "01-taller", "src": "video/fr10-soldadura/GX010471.MP4", "frameAt": 20 },
+  { "out": "02-operario", "src": "fotos/fr10-soldadura/PXL_20261107_200614253.jpg", "focus": [0.5, 0.6] },
+  { "out": "03-guiado", "src": "video/fr10-soldadura/PRUEBA 2/IMG_0953.MOV", "frameAt": 5, "hlg": true, "focus": [0.6, 0.5] },
+  { "out": "04-tableta", "src": "video/fr10-soldadura/GX010486.MP4", "frameAt": 5.4, "focus": [0.4, 0.5] },
+  { "out": "05-cordon", "src": "fotos/fr10-soldadura/PXL_20261107_201120128.jpg" },
+  { "out": "06-tubo-ia", "src": "fotos/ia-retocadas/tubo-soldado.png" },
+  { "out": "poster", "src": "video/fr10-soldadura/GX010466.MP4", "frameAt": 30, "format": "16:9" }
+]

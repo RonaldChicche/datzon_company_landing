@@ -159,6 +159,13 @@ section {
   z-index: 1;
 }
 
+/* Sección que sigue a una cabecera de página: el borde de la cabecera ya
+   separa, así que el contenido arranca más cerca. Dos clases para ganar a
+   los .sec de los media queries. */
+.sec.sec--top-tight {
+  padding-top: clamp(36px, 5vw, 56px);
+}
+
 /* ============================================================
    TYPE VOICES
    ============================================================ */
@@ -892,82 +899,323 @@ header.nav.scrolled {
 /* ============================================================
    PROJECTS GRID
    ============================================================ */
-.proj-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 22px;
+
+/* pastilla de tipo: "Demo" / "Proyecto" */
+.pill {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  line-height: 1.4;
+  border-radius: 3px;
+  padding: 3px 8px;
 }
 
-.proj {
+/* variante para el lightbox (fondo oscuro) */
+.pill.on-dark {
+  color: var(--lime);
+  border: 1px solid rgba(170, 217, 0, .45);
+}
+
+.pill.demo {
+  background: var(--ink-d);
+  color: var(--lime);
+}
+
+.pill.proj {
+  background: transparent;
+  color: var(--muted-d);
+  border: 1px solid var(--line-d);
+}
+
+/* ---------- demo destacada ---------- */
+.feat {
+  background: var(--card);
+  border: 1px solid var(--line-d);
+  border-radius: 10px;
+  padding: 28px;
+  display: grid;
+  gap: 28px;
+}
+
+.feat h2 {
+  font-size: clamp(22px, 3vw, 34px);
+  line-height: 1.15;
+  margin: 12px 0 0;
+}
+
+.feat-body {
+  display: grid;
+  grid-template-columns: 1.7fr 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+.feat-side {
+  display: grid;
+  gap: 18px;
+  align-content: start;
+}
+
+.feat-side p {
+  color: var(--muted-d);
+  font-size: 15.5px;
+  margin: 0;
+}
+
+.feat-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.feat-tags li {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--muted-d);
+  border: 1px solid var(--line-d);
+  border-radius: 4px;
+  padding: 3px 9px;
+}
+
+.yt-link {
+  justify-self: start;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--green-deep);
+  text-decoration: none;
+}
+
+.yt-link:hover {
+  text-decoration: underline;
+}
+
+/* facade de YouTube: la caja mantiene 16:9 antes y después del clic */
+.yt-facade {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+}
+
+.yt-btn,
+.yt-facade iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 6px;
+}
+
+.yt-btn {
+  padding: 0;
+  overflow: hidden;
+  background: var(--bg-2);
+  cursor: pointer;
+}
+
+.yt-btn img {
+  object-fit: cover;
+  filter: brightness(.82);
+  transition: filter .3s var(--ease), scale .5s var(--ease);
+}
+
+.yt-btn:hover img {
+  filter: brightness(.95);
+  scale: 1.02;
+}
+
+.yt-play {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.yt-play > span {
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  background: var(--lime);
+  display: grid;
+  place-items: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, .35);
+  transition: scale .25s var(--ease);
+}
+
+.yt-btn:hover .yt-play > span {
+  scale: 1.08;
+}
+
+.yt-play svg {
+  width: 26px;
+  height: 26px;
+  margin-left: 4px;
+  fill: var(--ink-d);
+}
+
+.yt-label {
+  position: absolute;
+  left: 14px;
+  bottom: 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: #fff;
+  background: rgba(10, 14, 20, .7);
+  padding: 4px 8px;
+  border-radius: 3px;
+}
+
+.feat-thumbs {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.feat-thumb {
+  position: relative;
+  aspect-ratio: 1;
+  border: 0;
+  border-radius: 5px;
+  padding: 0;
+  overflow: hidden;
+  background: var(--line-d);
+  cursor: zoom-in;
+}
+
+.feat-thumb img {
+  object-fit: cover;
+  transition: scale .4s var(--ease);
+}
+
+.feat-thumb:hover img {
+  scale: 1.05;
+}
+
+/* ---------- rejilla de proyectos ---------- */
+.proj-heading {
+  font-size: 22px;
+  margin: 56px 0 24px;
+}
+
+.proj-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+/* ".proj-grid > .proj" y no ".proj" a secas: la pastilla ".pill.proj"
+   también lleva la clase "proj" y no debe heredar el estilo de tarjeta. */
+.proj-grid > .proj {
   border: 1px solid var(--line-d);
   border-radius: var(--r-md);
   background: var(--card);
-  transition: .3s var(--ease);
+  transition: translate .3s var(--ease), box-shadow .3s var(--ease);
   overflow: hidden;
   display: flex;
   flex-direction: column;
 }
 
-.proj:hover {
+.proj-grid > .proj:hover {
   translate: 0 -5px;
   box-shadow: 0 24px 54px -30px rgba(16, 24, 8, .45);
 }
 
 .proj .pimg {
-  width: 100% !important;
-  height: auto !important;
-  aspect-ratio: 16/11;
-  display: block;
+  position: relative;
+  aspect-ratio: 1;
+  width: 100%;
+  overflow: hidden;
   border-bottom: 1px solid var(--line-d);
 }
 
-.proj .pbody {
-  padding: 24px 26px 28px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+.proj .pimg img {
+  object-fit: cover;
+  transition: scale .5s var(--ease);
 }
 
-.proj .ptag {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--green-deep);
+.proj-grid > .proj:hover .pimg img {
+  scale: 1.04;
+}
+
+.proj .pbody {
+  padding: 18px 20px 22px;
+  flex: 1;
+  display: grid;
+  gap: 8px;
+  align-content: start;
+}
+
+.proj .pbody .pill {
+  justify-self: start;
 }
 
 .proj h3 {
-  font-size: 20px;
-  margin: 12px 0 10px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: 15px;
+  line-height: 1.3;
+  letter-spacing: 0;
+  margin: 0;
 }
 
 .proj p {
   color: var(--muted-d);
-  font-size: 14.5px;
-  flex: 1;
+  font-size: 14px;
+  margin: 0;
 }
 
-.proj .pmetric {
-  margin-top: 18px;
-  padding-top: 16px;
-  border-top: 1px solid var(--line-d);
-  display: flex;
-  gap: 26px;
+/* foco visible en todo lo que se puede activar */
+.yt-btn:focus-visible,
+.feat-thumb:focus-visible,
+.yt-link:focus-visible,
+.proj-grid > .proj:focus-visible {
+  outline: 3px solid var(--green-deep);
+  outline-offset: 3px;
 }
 
-.proj .pmetric .v {
-  font-family: var(--font-display);
-  font-size: 17px;
-  color: var(--green-deep);
+@media (max-width: 900px) {
+  .feat-body {
+    grid-template-columns: 1fr;
+  }
+
+  .feat-thumbs {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .proj-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
-.proj .pmetric .k {
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  color: var(--muted-d2);
-  margin-top: 4px;
+@media (max-width: 600px) {
+  .feat {
+    padding: 18px;
+  }
+
+  .proj-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* sin zoom ni desplazamiento al pasar el mouse si se pide menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+  .yt-btn:hover img,
+  .yt-btn:hover .yt-play > span,
+  .feat-thumb:hover img,
+  .proj-grid > .proj:hover,
+  .proj-grid > .proj:hover .pimg img {
+    scale: none;
+    translate: none;
+  }
 }
 
 /* ============================================================
@@ -1453,6 +1701,12 @@ footer.ft {
 
 .page-head .accent {
   color: var(--lime);
+}
+
+/* Cabecera oscura con el mismo tono que la de /robotica (.rb-head), un paso
+   más oscura que --bg. Sin rejilla: la rejilla va en la sección clara. */
+.page-head--deep {
+  background: var(--bg-2);
 }
 
 /* page-head, paper/light variant (no body class needed, avoids SSR flash) */
@@ -2004,8 +2258,7 @@ body.page-light .sim-note b {
 
 @media (max-width: 1000px) {
 
-  .svc-grid,
-  .proj-grid {
+  .svc-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
@@ -2116,7 +2369,6 @@ body.page-light .sim-note b {
   }
 
   .svc-grid,
-  .proj-grid,
   .stats-grid {
     grid-template-columns: 1fr;
   }

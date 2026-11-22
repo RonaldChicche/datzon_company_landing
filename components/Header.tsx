@@ -8,8 +8,8 @@ import { siteAssetUrl } from "@/lib/site-assets";
 
 const NAV_LINKS = [
   { href: "/", label: "Inicio" },
-  { href: "/robotica", label: "Robótica" },
   { href: "/proyectos", label: "Proyectos" },
+  { href: "/robotica", label: "Robótica" },
   { href: "/equipo", label: "Equipo" },
 ] as const;
 

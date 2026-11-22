@@ -31,8 +31,8 @@ export default function Footer() {
             <h2>Navegación</h2>
             <Link href="/">Inicio</Link>
             <Link href="/#soluciones">Soluciones</Link>
-            <Link href="/robotica">Robótica</Link>
             <Link href="/proyectos">Proyectos</Link>
+            <Link href="/robotica">Robótica</Link>
             <Link href="/equipo">Equipo</Link>
             <Link href="/#cotizar">Cotizar</Link>
           </div>
