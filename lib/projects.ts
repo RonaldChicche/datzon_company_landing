@@ -74,7 +74,7 @@ export const FEATURED: FeaturedDemo = {
     { file: "03-guiado.webp", alt: "Programación guiando el brazo con la mano", focus: "55% 50%" },
     { file: "04-tableta.webp", alt: "Operario programando desde la tableta", focus: "45% 50%" },
     { file: "05-cordon.webp", alt: "Primer plano del cordón" },
-    { file: "06-tubo.webp", alt: "Unión de un tubo con su cordón" },
+    { file: "06-tubo-ia.webp", alt: "Unión de un tubo con su cordón" },
   ],
 };
 
@@ -86,9 +86,10 @@ export const PROJECTS: Project[] = [
     description:
       "Diseño, fabricación e instalación de sistemas de elevación hidráulica para mover carga y plataformas dentro de planta.",
     images: [
-      { file: "img-20240716-wa0003-v2.webp" },
-      { file: "img-20230523-wa0009-v2.webp" },
-      { file: "img-20230523-wa0020-v2.webp" },
+      { file: "elev-portada-ia3.webp", alt: "Elevador hidráulico de tijera con su unidad de potencia" },
+      { file: "img-20240716-wa0003-ia2.webp" },
+      { file: "img-20230523-wa0009-ia.webp", alt: "Dos personas sobre la plataforma de un elevador extendido" },
+      { file: "img-20230523-wa0020-ia.webp", alt: "Tablero eléctrico de mando del elevador" },
     ],
   },
   {
@@ -98,11 +99,11 @@ export const PROJECTS: Project[] = [
     description:
       "Plataforma giratoria motorizada para posicionar y rotar carga de forma controlada en planta.",
     images: [
-      { file: "img-20250929-wa0066-v2.webp" },
+      { file: "img-20251003-wa0021-ia.webp", alt: "Plataforma giratoria instalada bajo el escenario, con sus ruedas a la vista", focus: "50% 80%" },
+      { file: "img-20251003-wa0054-ia.webp" },
+      { file: "img-20250929-wa0066-ia.webp" },
       { file: "img-20251002-wa0020-v2.webp" },
-      { file: "img-20251002-wa0196-v2.webp" },
-      { file: "img-20251003-wa0021-v2.webp" },
-      { file: "img-20251003-wa0054-v2.webp" },
+      { file: "img-20251002-wa0196-ia.webp" },
     ],
   },
   {
@@ -112,8 +113,8 @@ export const PROJECTS: Project[] = [
     description:
       "Plataforma náutica instrumentada con sistemas embebidos de navegación y captura de datos.",
     images: [
+      { file: "img-20230808-wa0024-ia.webp" },
       { file: "img-20230725-wa0017-v2.webp" },
-      { file: "img-20230808-wa0024-v2.webp" },
       { file: "img-20230425-wa0024-v2.webp" },
       { file: "img-20230823-wa0037-v2.webp" },
     ],

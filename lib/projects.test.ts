@@ -18,7 +18,7 @@ describe("datos de proyectos", () => {
     expect(FEATURED.slug).toBe("soldadura-robotizada");
     expect(FEATURED.youtubeId).toBe("zvhX8jre5Nk");
     expect(FEATURED.images.map((i) => i.file)).toEqual([
-      "01-taller.webp", "02-operario.webp", "03-guiado.webp", "04-tableta.webp", "05-cordon.webp", "06-tubo.webp",
+      "01-taller.webp", "02-operario.webp", "03-guiado.webp", "04-tableta.webp", "05-cordon.webp", "06-tubo-ia.webp",
     ]);
     expect(FEATURED.poster).toBe("poster.webp");
   });
@@ -38,7 +38,9 @@ describe("datos de proyectos", () => {
     expect(text).not.toContain(String.fromCharCode(0x2014)); // raya larga, escrita sin el carácter literal
     expect(text).not.toMatch(/fairino|fr\s?-?\s?10|fr-hmi/i);
   });
-  it("alt por defecto numerado", () => {
-    expect(imageAlt(PROJECTS[0], 0)).toBe(`${PROJECTS[0].title}, foto 1 de ${PROJECTS[0].images.length}`);
+  it("alt por defecto numerado, y el alt propio manda", () => {
+    const p = { ...PROJECTS[0], images: [{ file: "a.webp" }, { file: "b.webp", alt: "Detalle" }] };
+    expect(imageAlt(p, 0)).toBe(`${p.title}, foto 1 de 2`);
+    expect(imageAlt(p, 1)).toBe("Detalle");
   });
 });

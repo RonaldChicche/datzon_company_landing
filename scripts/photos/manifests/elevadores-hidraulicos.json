@@ -1,14 +1,6 @@
 [
-  {
-    "out": "img-20240716-wa0003-v2",
-    "src": "IMG-20240716-WA0003.webp"
-  },
-  {
-    "out": "img-20230523-wa0009-v2",
-    "src": "IMG-20230523-WA0009.webp"
-  },
-  {
-    "out": "img-20230523-wa0020-v2",
-    "src": "IMG-20230523-WA0020.webp"
-  }
+  { "out": "elev-portada-ia3", "src": "fotos/ia-retocadas/elevadores/portada-opcion-a.png" },
+  { "out": "img-20240716-wa0003-ia2", "src": "fotos/ia-retocadas/elevadores/vista-amplia.png" },
+  { "out": "img-20230523-wa0009-ia", "src": "fotos/ia-retocadas/elevadores/personas-arriba.png" },
+  { "out": "img-20230523-wa0020-ia", "src": "fotos/ia-retocadas/elevadores/tablero.png" }
 ]
