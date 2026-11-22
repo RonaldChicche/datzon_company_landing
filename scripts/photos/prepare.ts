@@ -267,7 +267,8 @@ async function straighten(raw: Raw, deg: number): Promise<Raw> {
 
 function shapeOf(entry: Entry, raw: Raw): Shape {
   if (entry.format === "16:9") return "16:9";
-  return raw.width >= raw.height ? "3:2" : "1:1";
+  // Solo las fotos más anchas que altas van a 3:2; cuadradas y verticales, a 1:1.
+  return raw.width > raw.height ? "3:2" : "1:1";
 }
 
 async function grade(raw: Raw): Promise<Raw> {
