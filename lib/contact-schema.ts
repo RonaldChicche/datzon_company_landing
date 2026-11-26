@@ -7,6 +7,8 @@ import { z } from "zod";
  * servidor descartaba en silencio).
  */
 
+// Los topes de este archivo y este catálogo también los impone la base
+// (CHECK en landing.leads). Si cambian aquí, hace falta una migración.
 export const INDUSTRIES = [
   "Minería",
   "Energía & utilities",

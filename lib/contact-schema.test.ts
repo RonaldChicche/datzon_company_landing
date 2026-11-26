@@ -1,4 +1,6 @@
 import { describe, it, expect } from "vitest";
+import { readdirSync, readFileSync } from "node:fs";
+import { join } from "node:path";
 import {
   contactFieldsSchema,
   contactPayloadSchema,
@@ -129,5 +131,41 @@ describe("INDUSTRIES", () => {
     expect(INDUSTRIES).toHaveLength(7);
     expect(INDUSTRIES).toContain("Minería");
     expect(INDUSTRIES).toContain("Otra");
+  });
+});
+
+// La base repite estos topes y el catálogo como CHECK en landing.leads. Si
+// divergen, Zod acepta algo que el insert rechaza y el visitante ve un 500.
+// Se lee la migración más reciente que define cada restricción.
+describe("coherencia con los CHECK de landing.leads", () => {
+  const dir = join(process.cwd(), "supabase", "migrations");
+  const sqls = readdirSync(dir)
+    .filter((f) => f.endsWith(".sql"))
+    .sort()
+    .map((f) => readFileSync(join(dir, f), "utf8"));
+  const ultimaQueDefine = (nombre: string) => {
+    const sql = sqls.filter((s) => s.includes(nombre)).at(-1);
+    if (!sql) throw new Error(`Ninguna migración define ${nombre}`);
+    return sql.slice(sql.indexOf(`add constraint ${nombre}`));
+  };
+
+  it("el catálogo de industrias coincide (más '' de «Selecciona»)", () => {
+    const sql = ultimaQueDefine("leads_industria_check");
+    const lista = sql.slice(sql.indexOf("industria in ("), sql.indexOf(")", sql.indexOf("industria in (")));
+    const valores = [...lista.matchAll(/'([^']*)'/g)].map((m) => m[1]);
+    expect(valores.sort()).toEqual(["", ...INDUSTRIES].sort());
+  });
+
+  it.each([
+    ["nombre", "leads_nombre_check", /between 1 and (\d+)/],
+    ["mensaje", "leads_mensaje_check", /between 1 and (\d+)/],
+    ["empresa", "leads_empresa_check", /<= (\d+)/],
+    ["telefono", "leads_telefono_check", /<= (\d+)/],
+  ] as const)("el tope de %s coincide con el de la base", (campo, restriccion, patron) => {
+    const tope = Number(ultimaQueDefine(restriccion).match(patron)?.[1]);
+    expect(tope).toBeGreaterThan(0);
+    const base = { ...minimoValido, mensaje: "x".repeat(10) };
+    expect(contactFieldsSchema.safeParse({ ...base, [campo]: "x".repeat(tope) }).success).toBe(true);
+    expect(contactFieldsSchema.safeParse({ ...base, [campo]: "x".repeat(tope + 1) }).success).toBe(false);
   });
 });
