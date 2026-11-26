@@ -73,6 +73,25 @@ describe("contactFieldsSchema", () => {
     }
   );
 
+  // Caracteres invisibles o de formato: no inyectan cabeceras, pero U+202E
+  // invierte el texto y U+2028/U+2029 rompen la línea en algunos clientes de
+  // correo, así que pueden falsear lo que el operador lee en el asunto.
+  it.each(["nombre", "empresa"])("rechaza caracteres de formato y separadores Unicode en %s", (campo) => {
+    for (const malo of ["Ana‮txe", "Ana​Torres", "Ana Torres", "Ana Torres", "﻿Ana"]) {
+      const r = contactFieldsSchema.safeParse({ ...minimoValido, [campo]: malo });
+      expect(r.success, `${campo}=${JSON.stringify(malo)}`).toBe(false);
+    }
+  });
+
+  it("industria solo acepta las del catálogo, o vacío cuando no se elige", () => {
+    for (const ok of [...INDUSTRIES, "", undefined]) {
+      expect(contactFieldsSchema.safeParse({ ...minimoValido, industria: ok }).success, String(ok)).toBe(true);
+    }
+    for (const malo of ["Aeroespacial", "minería", "Minería "]) {
+      expect(contactFieldsSchema.safeParse({ ...minimoValido, industria: malo }).success, malo).toBe(false);
+    }
+  });
+
   it("el mensaje sí admite saltos de línea (va al cuerpo, no a una cabecera)", () => {
     const r = contactFieldsSchema.safeParse({ ...minimoValido, mensaje: "Línea uno\nLínea dos larga" });
     expect(r.success).toBe(true);
