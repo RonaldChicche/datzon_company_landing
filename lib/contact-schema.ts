@@ -17,9 +17,18 @@ export const INDUSTRIES = [
   "Otra",
 ] as const;
 
+/**
+ * Campo de una sola línea: sin saltos de línea ni otros caracteres de
+ * control (\p{Cc}: CR, LF, tab, NUL...). Nombre y empresa terminan en el
+ * asunto del email, que es una cabecera: un CR/LF ahí permitiría colar
+ * cabeceras nuevas como "Bcc:". El mensaje NO usa esto: va al cuerpo y
+ * los saltos de línea son legítimos.
+ */
+const SIN_CONTROL = /^\P{Cc}*$/u;
+const unaLinea = () => z.string().regex(SIN_CONTROL, "Usa una sola línea, sin saltos de línea");
+
 export const contactFieldsSchema = z.object({
-  nombre: z
-    .string()
+  nombre: unaLinea()
     .min(2, "Nombre requerido (mín. 2 caracteres)")
     .max(120, "Nombre demasiado largo (máx. 120 caracteres)"),
   email: z.email("Correo electrónico inválido"),
@@ -27,9 +36,9 @@ export const contactFieldsSchema = z.object({
     .string()
     .min(10, "Describe brevemente tu necesidad (mín. 10 caracteres)")
     .max(5000, "Mensaje demasiado largo (máx. 5000 caracteres)"),
-  empresa: z.string().max(160, "Empresa demasiado larga (máx. 160 caracteres)").optional(),
-  telefono: z.string().max(40, "Teléfono demasiado largo (máx. 40 caracteres)").optional(),
-  industria: z.string().max(60, "Industria demasiado larga (máx. 60 caracteres)").optional(),
+  empresa: unaLinea().max(160, "Empresa demasiado larga (máx. 160 caracteres)").optional(),
+  telefono: unaLinea().max(40, "Teléfono demasiado largo (máx. 40 caracteres)").optional(),
+  industria: unaLinea().max(60, "Industria demasiado larga (máx. 60 caracteres)").optional(),
   // Honeypot: invisible para humanos. Sin max() a propósito, si un bot lo
   // rellena debe PASAR la validación para llegar al descarte silencioso del
   // servidor (con un max, un bot que llene el campo con basura larga recibía
