@@ -20,33 +20,42 @@
     "@vercel/analytics": "^2.0.1",
     "lucide-react": "^1.8.0",
     "motion": "^12.38.0",
-    "next": "16.2.6",
+    "next": "16.4.6",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-hook-form": "^7.77.0",
     "resend": "^6.18.0",
-    "zod": "^4.4.3"
+    "zod": "^4.6.7"
   },
   "pnpm": {
     "overrides": {
-      "brace-expansion@>=3": ">=5.0.8",
-      "postcss": ">=8.5.10"
+      "@babel/core": "^7.29.6",
+      "baseline-browser-mapping": "^2.11.0",
+      "brace-expansion@<2": "^1.1.20",
+      "brace-expansion@>=3": "^5.0.11",
+      "browserslist": "^4.28.7",
+      "js-yaml@>=4": "^4.3.2",
+      "minimatch@>=7": "^11.0.1",
+      "nanoid@<4": "^3.3.18",
+      "postcss": "^8.5.18",
+      "source-map-js": "^1.2.2"
     }
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "^16.2.7",
+    "@next/bundle-analyzer": "^16.4.6",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "cross-env": "^10.1.0",
     "eslint": "^9",
-    "eslint-config-next": "16.2.6",
-    "sharp": "^0.35.1",
+    "eslint-config-next": "16.4.6",
+    "sharp": "^0.35.5",
     "supabase": "^2.109.1",
     "tailwindcss": "^4",
     "tsx": "^4.22.4",
     "typescript": "^5",
-    "vitest": "^4.1.10"
+    "vite": "^8.3.8",
+    "vitest": "^4.1.12"
   }
 }
