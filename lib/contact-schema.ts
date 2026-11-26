@@ -7,6 +7,8 @@ import { z } from "zod";
  * servidor descartaba en silencio).
  */
 
+// Los topes de este archivo y este catálogo también los impone la base
+// (CHECK en landing.leads). Si cambian aquí, hace falta una migración.
 export const INDUSTRIES = [
   "Minería",
   "Energía & utilities",
@@ -18,13 +20,16 @@ export const INDUSTRIES = [
 ] as const;
 
 /**
- * Campo de una sola línea: sin saltos de línea ni otros caracteres de
- * control (\p{Cc}: CR, LF, tab, NUL...). Nombre y empresa terminan en el
- * asunto del email, que es una cabecera: un CR/LF ahí permitiría colar
- * cabeceras nuevas como "Bcc:". El mensaje NO usa esto: va al cuerpo y
- * los saltos de línea son legítimos.
+ * Campo de una sola línea. Rechaza:
+ * - \p{Cc} (CR, LF, tab, NUL...): nombre y empresa terminan en el asunto del
+ *   email, que es una cabecera; un CR/LF ahí permitiría colar cabeceras
+ *   nuevas como "Bcc:".
+ * - \p{Cf}, \p{Zl}, \p{Zp} (U+202E, U+200B, U+2028, U+2029, BOM...): no
+ *   inyectan cabeceras, pero invierten u ocultan texto o parten la línea en
+ *   algunos clientes de correo, y falsean lo que el operador lee.
+ * El mensaje NO usa esto: va al cuerpo y los saltos de línea son legítimos.
  */
-const SIN_CONTROL = /^\P{Cc}*$/u;
+const SIN_CONTROL = /^[^\p{Cc}\p{Cf}\p{Zl}\p{Zp}]*$/u;
 const unaLinea = () => z.string().regex(SIN_CONTROL, "Usa una sola línea, sin saltos de línea");
 
 export const contactFieldsSchema = z.object({
@@ -38,7 +43,8 @@ export const contactFieldsSchema = z.object({
     .max(5000, "Mensaje demasiado largo (máx. 5000 caracteres)"),
   empresa: unaLinea().max(160, "Empresa demasiado larga (máx. 160 caracteres)").optional(),
   telefono: unaLinea().max(40, "Teléfono demasiado largo (máx. 40 caracteres)").optional(),
-  industria: unaLinea().max(60, "Industria demasiado larga (máx. 60 caracteres)").optional(),
+  // Solo el catálogo del desplegable. "" es la opción "Selecciona" (sin elegir).
+  industria: z.union([z.enum(INDUSTRIES), z.literal("")]).optional(),
   // Honeypot: invisible para humanos. Sin max() a propósito, si un bot lo
   // rellena debe PASAR la validación para llegar al descarte silencioso del
   // servidor (con un max, un bot que llene el campo con basura larga recibía

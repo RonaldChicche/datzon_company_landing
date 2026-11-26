@@ -17,11 +17,12 @@
 import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync } from "node:fs";
 import path from "node:path";
-import sharp from "sharp";
+import sharp, { type Sharp } from "sharp";
 import { z } from "zod";
 import { cropBox, inscribedSize } from "./geometry";
 import { GRADE, wbGains } from "./grade";
 import { hlgToSdr } from "./hlg";
+import { resolveInside } from "../lib/staging";
 
 // ── Manifiesto ────────────────────────────────────────────────────────────────
 
@@ -217,7 +218,7 @@ function hlgFrame(src: string, frameAt: number, probe: VideoProbe): Raw {
 // ── Etapas ────────────────────────────────────────────────────────────────────
 
 /** Materializa un pipeline de sharp como RGB de 8 bits. */
-async function toRaw(img: sharp.Sharp): Promise<Raw> {
+async function toRaw(img: Sharp): Promise<Raw> {
   const { data, info } = await img
     .removeAlpha()
     .toColourspace("srgb")
@@ -232,7 +233,7 @@ async function toRaw(img: sharp.Sharp): Promise<Raw> {
  * ordena internamente sus operaciones con independencia del orden de la
  * cadena; separarlas garantiza el orden que fija el diseño.
  */
-function fromRaw(raw: Raw): sharp.Sharp {
+function fromRaw(raw: Raw): Sharp {
   return sharp(raw.data, { raw: { width: raw.width, height: raw.height, channels: 3 } });
 }
 
@@ -291,7 +292,9 @@ async function grade(raw: Raw): Promise<Raw> {
 }
 
 async function prepare(entry: Entry, args: Args): Promise<string> {
-  const src = path.resolve(args.root, entry.src);
+  // resolveInside: un src con "../" o absoluto ya no puede traer al staging
+  // de subida archivos de fuera de --root (auditoría run-2).
+  const src = resolveInside(args.root, entry.src);
   if (!existsSync(src)) throw new Error(`no existe la fuente ${entry.src}`);
 
   let raw = await loadPixels(entry, src);

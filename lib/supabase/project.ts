@@ -15,17 +15,23 @@ export function assertDatzonProject(rawUrl: string | undefined): string {
     );
   }
 
-  let hostname: string;
+  let url: URL;
   try {
-    hostname = new URL(rawUrl).hostname;
+    url = new URL(rawUrl);
   } catch {
     throw new Error(`SUPABASE_URL no es una URL válida: ${rawUrl}`);
   }
 
-  const ref = hostname.split(".")[0];
-  if (ref !== EXPECTED_PROJECT_REF) {
+  if (url.protocol !== "https:") {
+    throw new Error(`SUPABASE_URL debe usar https: ${rawUrl}`);
+  }
+
+  // Host exacto, no solo el primer subdominio: antes
+  // "https://<ref>.dominio-ajeno.com" pasaba el control.
+  const expectedHost = `${EXPECTED_PROJECT_REF}.supabase.co`;
+  if (url.hostname !== expectedHost) {
     throw new Error(
-      `Proyecto Supabase incorrecto: se esperaba "${EXPECTED_PROJECT_REF}" y se recibió "${ref}". ` +
+      `Proyecto Supabase incorrecto: se esperaba "${expectedHost}" y se recibió "${url.hostname}". ` +
         "Este repositorio solo puede conectarse al proyecto Datzon."
     );
   }

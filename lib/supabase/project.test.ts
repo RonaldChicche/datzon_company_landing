@@ -30,6 +30,22 @@ describe("assertDatzonProject", () => {
     expect(() => assertDatzonProject(otroProyecto)).toThrow("thwotgoldsncfsgndlii");
   });
 
+  // Antes solo se miraba el primer subdominio: un dominio ajeno que empezara
+  // con el ref pasaba el control (auditoría run-2).
+  it("rechaza un dominio ajeno que empieza con el ref de Datzon", () => {
+    expect(() => assertDatzonProject(`https://${EXPECTED_PROJECT_REF}.ejemplo-ajeno.com`)).toThrow();
+    expect(() => assertDatzonProject(`https://${EXPECTED_PROJECT_REF}.supabase.co.ejemplo-ajeno.com`)).toThrow();
+  });
+
+  it("rechaza http sin cifrar", () => {
+    expect(() => assertDatzonProject(`http://${EXPECTED_PROJECT_REF}.supabase.co`)).toThrow("https");
+  });
+
+  it("acepta el host en mayúsculas (los hosts no distinguen mayúsculas)", () => {
+    const mayus = `https://${EXPECTED_PROJECT_REF.toUpperCase()}.SUPABASE.CO`;
+    expect(assertDatzonProject(mayus)).toBe(mayus);
+  });
+
   it("el mensaje de error nombra el ref esperado y el recibido", () => {
     const ajeno = "https://proyectoajeno.supabase.co";
     expect(() => assertDatzonProject(ajeno)).toThrow(EXPECTED_PROJECT_REF);

@@ -34,11 +34,12 @@
 
 import sharp from "sharp";
 import { createClient } from "@supabase/supabase-js";
-import { readdir, stat, unlink, readFile } from "fs/promises";
+import { readdir, lstat, readFile, mkdtemp, rm } from "fs/promises";
 import { execFileSync } from "child_process";
 import { tmpdir } from "os";
 import path from "path";
 import { assertDatzonProject } from "@/lib/supabase/project";
+import { assertPrivateDir, listStagedFiles } from "./lib/staging";
 
 // ── Config ────────────────────────────────────────────────────────────────────
 const BUCKET = "landing";
@@ -112,7 +113,7 @@ async function optimizeToWebp(
   filePath: string
 ): Promise<{ buffer: Buffer; originalKB: number; optimizedKB: number }> {
   let workPath = filePath;
-  let tmpFile: string | null = null;
+  let tmpDir: string | null = null;
 
   try {
     const image = sharp(filePath, { failOn: "none" });
@@ -128,7 +129,10 @@ async function optimizeToWebp(
     };
   } catch {
     // Fallback: re-encodear con sips (macOS nativo) para sanear JPEGs inválidos
-    tmpFile = path.join(tmpdir(), `datzon_fix_${Date.now()}.jpg`);
+    // Carpeta temporal privada (mkdtemp, 0700) en vez de un nombre
+    // predecible en el tmp compartido.
+    tmpDir = await mkdtemp(path.join(tmpdir(), "datzon-fix-"));
+    const tmpFile = path.join(tmpDir, "fix.jpg");
     // Argumentos en array, sin shell: un nombre de archivo como
     // `x$(comando).jpg` llega a sips como texto literal y nunca se ejecuta.
     // (Antes era execSync con la ruta interpolada en una cadena de shell.)
@@ -148,7 +152,7 @@ async function optimizeToWebp(
       optimizedKB: Math.round(buffer.length / 1024),
     };
   } finally {
-    if (tmpFile) unlink(tmpFile).catch(() => {});
+    if (tmpDir) rm(tmpDir, { recursive: true, force: true }).catch(() => {});
   }
 }
 
@@ -157,8 +161,10 @@ async function uploadImages(
   storagePath: string,
   opts: { passthroughWebp?: boolean } = {}
 ): Promise<{ ok: number; fail: number }> {
-  const entries = await readdir(sourceDir);
-  const imageFiles = entries.filter((f) => isImage(f) || isSvg(f));
+  // Carpeta propia y sin escritura para otros; solo archivos regulares
+  // (lstat): un enlace simbólico nunca se sigue ni se publica.
+  assertPrivateDir(sourceDir);
+  const imageFiles = listStagedFiles(sourceDir, [...SUPPORTED_EXTS, ".svg"]);
 
   if (imageFiles.length === 0) {
     console.log(`  ⚠️  Sin imágenes en ${sourceDir}`);
@@ -181,7 +187,7 @@ async function uploadImages(
     // --dry-run: se imprime la línea completa y se sale ANTES de tocar
     // Supabase Storage. Ninguna llamada de red de subida ocurre aquí.
     if (DRY_RUN) {
-      const kb = Math.round((await stat(filePath)).size / 1024);
+      const kb = Math.round((await lstat(filePath)).size / 1024);
       const nota = svg
         ? ", svg tal cual"
         : webpPassthrough
@@ -243,7 +249,8 @@ async function uploadSite(): Promise<void> {
   for (const entry of entries) {
     if (entry === ".gitkeep") continue;
     const fullPath = path.join(INPUT_DIR, entry);
-    if ((await stat(fullPath)).isDirectory()) {
+    // lstat: un enlace a otra carpeta no cuenta como subcarpeta.
+    if ((await lstat(fullPath)).isDirectory()) {
       console.log(`  📂  "${entry}"  →  ${BUCKET}/site/${entry}/`);
       const r = await uploadImages(fullPath, `site/${entry}`, { passthroughWebp: true });
       totalOk += r.ok; totalFail += r.fail;
@@ -270,6 +277,12 @@ async function main() {
 
   // Modo explícito: pnpm optimize-images <nombre>
   if (modeArg) {
+    // Mismo formato que los slugs del modo auto: evita prefijos inesperados
+    // en el bucket por un typo como "../site" o "Mi Proyecto".
+    if (!/^[a-z0-9][a-z0-9-]*$/.test(modeArg)) {
+      console.error(`\n❌  Nombre de proyecto inválido: "${modeArg}". Usa kebab-case (ej. plataforma-giratoria).\n`);
+      process.exit(1);
+    }
     console.log(`\n🔧  Subiendo imágenes sueltas → project/${modeArg}/\n`);
     const { ok, fail } = await uploadImages(INPUT_DIR, `project/${modeArg}`);
     console.log(`\n${"─".repeat(60)}\n✅  ${ok} subida(s)  |  ❌  ${fail} falla(s)\n`);
@@ -292,7 +305,7 @@ async function main() {
   for (const entry of entries) {
     if (entry === ".gitkeep") continue;
     const fullPath = path.join(INPUT_DIR, entry);
-    const info = await stat(fullPath);
+    const info = await lstat(fullPath);
     if (info.isDirectory()) {
       subdirs.push(entry);
     } else if (isImage(entry) || isSvg(entry)) {

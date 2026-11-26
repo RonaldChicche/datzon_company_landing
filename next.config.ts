@@ -32,9 +32,16 @@ const nextConfig: NextConfig = {
     ];
   },
   images: {
-    dangerouslyAllowSVG: true,
+    // Sin SVG en el optimizador: el logo (único SVG) se sirve con
+    // `unoptimized` en Header y Footer. Las cabeceras de abajo quedan como
+    // defensa por si algún día se reactiva.
+    dangerouslyAllowSVG: false,
     contentDispositionType: "attachment",
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    // Tope de lo que el optimizador descarga del origen. Por convención las
+    // imágenes pesan < 2 MB; el default de Next (50 MB) permitía bajar vídeos
+    // enteros del bucket antes de rechazarlos (auditoría run-2).
+    maximumResponseBody: 5 * 1024 * 1024,
     // Next 16 exige declarar aquí toda calidad que se use en un <Image quality={...}>.
     // 90 es para los retratos del equipo: a 75 la recompresión era visible
     // (medido: RMSE 2.54 a q75 frente a 1.60 a q90).
@@ -43,9 +50,12 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "adnvzdcqcneqjemxneht.supabase.co",
-        // Acotado al bucket público: sin pathname, cualquier objeto del
-        // proyecto Supabase sería proxeable a través de /_next/image.
-        pathname: "/storage/v1/object/public/landing/**",
+        // Acotado al bucket público y solo a extensiones de imagen: sin
+        // esto, /_next/image también aceptaba los vídeos del bucket.
+        pathname: "/storage/v1/object/public/landing/**/*.{webp,jpg,jpeg,png}",
+        // Sin query: cada ?n=... distinto era una entrada de caché nueva y
+        // una descarga nueva del origen. Nuestras URLs nunca llevan query.
+        search: "",
       },
     ],
   },

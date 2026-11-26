@@ -149,6 +149,18 @@ describe("POST /api/contact", () => {
     expect(sendMock).not.toHaveBeenCalled();
   });
 
+  // Un visitante podría escribir en el mensaje líneas como "Email: otro@x.com"
+  // que se confunden con los datos del lead. El delimitador deja claro dónde
+  // empieza el texto libre.
+  it("el mensaje va después de un delimitador explícito en el cuerpo del email", async () => {
+    await POST(requestWith({ ...leadValido, mensaje: "Email: impostor@ejemplo.com\nQuiero cotizar." }));
+    const text: string = sendMock.mock.calls[0][0].text;
+    const delim = text.indexOf("--- Mensaje del visitante ---");
+    expect(delim).toBeGreaterThan(-1);
+    expect(text.indexOf("Email: ana@acme.com")).toBeLessThan(delim);
+    expect(text.indexOf("Email: impostor@ejemplo.com")).toBeGreaterThan(delim);
+  });
+
   it("el asunto del email nunca contiene CR ni LF", async () => {
     await POST(requestWith({ ...leadValido }));
     expect(sendMock.mock.calls[0][0].subject).not.toMatch(/[\r\n]/);

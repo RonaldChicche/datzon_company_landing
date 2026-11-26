@@ -72,9 +72,12 @@ function isSameOrigin(request: NextRequest): boolean {
   }
 }
 
-/** Segunda capa tras el schema: una cabecera de email nunca lleva caracteres de control. */
+/**
+ * Segunda capa tras el schema: una cabecera de email nunca lleva caracteres
+ * de control, de formato ni separadores de línea Unicode.
+ */
 function headerSafe(value: string): string {
-  return value.replace(/\p{Cc}+/gu, " ").trim();
+  return value.replace(/[\p{Cc}\p{Cf}\p{Zl}\p{Zp}]+/gu, " ").trim();
 }
 
 /** SHA-256 con sal de la IP; nunca la IP en claro. Sin sal no se guarda nada. */
@@ -105,6 +108,9 @@ async function sendNotification(lead: ContactPayload): Promise<void> {
     lead.industria ? `Industria: ${lead.industria}` : null,
     `Origen: ${lead.source === "home" ? "formulario de la home" : "modal de contacto"}`,
     "",
+    // Delimitador: todo lo que sigue es texto libre del visitante y puede
+    // imitar las líneas de arriba. Para responder, usa "Responder" (replyTo).
+    "--- Mensaje del visitante ---",
     lead.mensaje,
   ].filter((l): l is string => l !== null);
 

@@ -164,6 +164,12 @@ La credencial secreta **nunca** aparece en código de la aplicación. Usarla en 
   `update`/`delete`, editar o borrar sigue siendo del dashboard). El Route
   Handler usa la clave publishable (`SUPABASE_PUBLISHABLE_KEY`, sin
   `NEXT_PUBLIC_`) vía `lib/supabase/client.ts`.
+- Ese INSERT es **por columna** (sin `id` ni `created_at`) y la tabla lleva
+  CHECK con los mismos topes y el mismo catálogo de industrias que
+  `lib/contact-schema.ts` (migración `20261126065605_leads_grant_por_columna_y_checks.sql`).
+  **Si cambias un tope, el catálogo `INDUSTRIES` o añades un campo al
+  formulario, cambia también la base con otra migración**: si no, el insert
+  falla con 500 aunque Zod haya aceptado los datos.
 - `SECURITY DEFINER` está prohibido salvo justificación escrita en el propio archivo SQL.
 - Los cambios de schema van por migraciones del CLI en `supabase/migrations/`, versionadas. No se aplica DDL suelto: `.mcp.json` usa `read_only=true` justamente para impedirlo.
 - El CLI de Supabase está instalado, inicializado y **enlazado** al proyecto.
