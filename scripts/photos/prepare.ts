@@ -22,6 +22,7 @@ import { z } from "zod";
 import { cropBox, inscribedSize } from "./geometry";
 import { GRADE, wbGains } from "./grade";
 import { hlgToSdr } from "./hlg";
+import { resolveInside } from "../lib/staging";
 
 // ── Manifiesto ────────────────────────────────────────────────────────────────
 
@@ -291,7 +292,9 @@ async function grade(raw: Raw): Promise<Raw> {
 }
 
 async function prepare(entry: Entry, args: Args): Promise<string> {
-  const src = path.resolve(args.root, entry.src);
+  // resolveInside: un src con "../" o absoluto ya no puede traer al staging
+  // de subida archivos de fuera de --root (auditoría run-2).
+  const src = resolveInside(args.root, entry.src);
   if (!existsSync(src)) throw new Error(`no existe la fuente ${entry.src}`);
 
   let raw = await loadPixels(entry, src);

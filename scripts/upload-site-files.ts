@@ -9,6 +9,9 @@
  *
  * Solo sube vídeo (.mp4, .webm) e imagen (.webp, .jpg, .png); ignora el resto
  * (HANDOFF.md, manifest.json…). NO sobrescribe: si el objeto ya existe, falla.
+ * La carpeta debe ser tuya y sin escritura para otros, y los enlaces
+ * simbólicos se ignoran: antes un enlace "clip.mp4 -> .env.local" se leía y
+ * se publicaba en el bucket público (auditoría run-2, scripts/lib/staging.ts).
  * Para publicar una versión nueva, usa un prefijo nuevo (hero/v9), así la
  * caché larga de los navegadores nunca sirve un archivo viejo.
  *
@@ -20,9 +23,10 @@
  */
 
 import { createClient } from "@supabase/supabase-js";
-import { readdirSync, readFileSync, statSync } from "node:fs";
+import { readFileSync, statSync } from "node:fs";
 import { extname, join } from "node:path";
 import { assertDatzonProject } from "@/lib/supabase/project";
+import { assertPrivateDir, listStagedFiles } from "./lib/staging";
 
 try {
   process.loadEnvFile(".env.local");
@@ -74,9 +78,9 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
 });
 
 async function main(): Promise<void> {
-  const archivos = readdirSync(carpeta).filter(
-    (f) => TIPOS[extname(f).toLowerCase()] && statSync(join(carpeta, f)).isFile()
-  );
+  assertPrivateDir(carpeta);
+  // Solo archivos regulares (lstat): un enlace simbólico nunca se sigue.
+  const archivos = listStagedFiles(carpeta, Object.keys(TIPOS));
   if (archivos.length === 0) throw new Error(`No hay medios que subir en ${carpeta}`);
 
   for (const f of archivos) {

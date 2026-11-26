@@ -3,7 +3,7 @@ import { chmodSync, mkdirSync, mkdtempSync, rmSync, symlinkSync, writeFileSync }
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { assertPrivateDir, listStagedFiles } from "./staging";
+import { assertPrivateDir, listStagedFiles, resolveInside } from "./staging";
 
 let dir: string;
 
@@ -58,5 +58,36 @@ describe("assertPrivateDir", () => {
 
   it("rechaza una ruta que no existe con un mensaje claro", () => {
     expect(() => assertPrivateDir(join(dir, "no-existe"))).toThrow(/no existe/);
+  });
+
+  // Si una carpeta superior la puede escribir cualquiera y no tiene el bit
+  // sticky, otra cuenta puede renombrar nuestra carpeta y poner otra en su
+  // lugar entre la comprobación y la lectura (auditoría run-2).
+  it("rechaza una carpeta cuyo padre puede escribir cualquiera sin bit sticky", () => {
+    const padre = join(dir, "padre");
+    const hija = join(padre, "staging");
+    mkdirSync(hija, { recursive: true });
+    chmodSync(hija, 0o700);
+    chmodSync(padre, 0o777);
+    expect(() => assertPrivateDir(hija)).toThrow(/carpeta superior/);
+  });
+
+  it("acepta un padre escribible por todos si tiene el bit sticky (como /tmp)", () => {
+    const padre = join(dir, "padre");
+    const hija = join(padre, "staging");
+    mkdirSync(hija, { recursive: true });
+    chmodSync(hija, 0o700);
+    chmodSync(padre, 0o1777);
+    expect(() => assertPrivateDir(hija)).not.toThrow();
+  });
+});
+
+describe("resolveInside", () => {
+  it("resuelve rutas relativas dentro de la raíz", () => {
+    expect(resolveInside("/raiz", "fotos/a.jpg")).toBe("/raiz/fotos/a.jpg");
+  });
+
+  it.each(["../fuera.jpg", "fotos/../../fuera.jpg", "/etc/passwd", ".."])("rechaza %s, que sale de la raíz", (rel) => {
+    expect(() => resolveInside("/raiz", rel)).toThrow(/fuera de/);
   });
 });
