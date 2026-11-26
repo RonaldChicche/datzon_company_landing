@@ -35,7 +35,7 @@
 import sharp from "sharp";
 import { createClient } from "@supabase/supabase-js";
 import { readdir, stat, unlink, readFile } from "fs/promises";
-import { execSync } from "child_process";
+import { execFileSync } from "child_process";
 import { tmpdir } from "os";
 import path from "path";
 import { assertDatzonProject } from "@/lib/supabase/project";
@@ -129,7 +129,10 @@ async function optimizeToWebp(
   } catch {
     // Fallback: re-encodear con sips (macOS nativo) para sanear JPEGs inválidos
     tmpFile = path.join(tmpdir(), `datzon_fix_${Date.now()}.jpg`);
-    execSync(`sips -s format jpeg "${filePath}" --out "${tmpFile}"`, { stdio: "pipe" });
+    // Argumentos en array, sin shell: un nombre de archivo como
+    // `x$(comando).jpg` llega a sips como texto literal y nunca se ejecuta.
+    // (Antes era execSync con la ruta interpolada en una cadena de shell.)
+    execFileSync("sips", ["-s", "format", "jpeg", filePath, "--out", tmpFile], { stdio: "pipe" });
     workPath = tmpFile;
 
     const image = sharp(workPath, { failOn: "none" });

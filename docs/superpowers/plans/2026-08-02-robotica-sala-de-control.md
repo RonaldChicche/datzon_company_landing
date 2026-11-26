@@ -253,6 +253,8 @@ En `scripts/supabase-storage-rls.sql` añadir al bloque descriptivo: `-- file_si
 
 - [ ] **Step 3: Preparar el staging local**
 
+> **Obsoleto desde 2026-11-26 (auditoría de seguridad run-1):** el staging ya no vive en `/tmp/robotica-assets`, que cualquier cuenta de la máquina podía crear primero y llenar de enlaces simbólicos. Ahora es `scripts/robotica-assets/` (ignorada por git) y el script rechaza enlaces y carpetas que otros puedan escribir. Al repetir estos pasos, cambia `/tmp/robotica-assets` por `scripts/robotica-assets`.
+
 ```bash
 mkdir -p /tmp/robotica-assets/apps
 cp ~/Documents/DatzonCompany/robot_blender/salidas/web/paletizado_1080.mp4 /tmp/robotica-assets/paletizado.mp4

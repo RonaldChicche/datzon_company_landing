@@ -61,6 +61,33 @@ describe("contactFieldsSchema", () => {
     expect(r.success).toBe(true);
   });
 
+  // Nombre y empresa van al asunto del email: un salto de línea ahí podría
+  // colar cabeceras nuevas (p. ej. "Bcc:"). Ver auditoría run-1.
+  it.each(["nombre", "empresa", "telefono", "industria"])(
+    "rechaza saltos de línea y caracteres de control en %s",
+    (campo) => {
+      for (const malo of ["Ana\r\nBcc: x@ejemplo.com", "Ana\nTorres", "Ana\rTorres", "Ana\u0000"]) {
+        const r = contactFieldsSchema.safeParse({ ...minimoValido, [campo]: malo });
+        expect(r.success, `${campo}=${JSON.stringify(malo)}`).toBe(false);
+      }
+    }
+  );
+
+  it("el mensaje sí admite saltos de línea (va al cuerpo, no a una cabecera)", () => {
+    const r = contactFieldsSchema.safeParse({ ...minimoValido, mensaje: "Línea uno\nLínea dos larga" });
+    expect(r.success).toBe(true);
+  });
+
+  it("acepta acentos, eñes y signos habituales en campos de una línea", () => {
+    const r = contactFieldsSchema.safeParse({
+      ...minimoValido,
+      nombre: "María Núñez-O'Brien",
+      empresa: "Peñoles & Cía. S.A.C.",
+      telefono: "+51 (1) 999-888-777",
+    });
+    expect(r.success).toBe(true);
+  });
+
   it("no conoce el campo disponibilidad (contrato unificado)", () => {
     expect("disponibilidad" in contactFieldsSchema.shape).toBe(false);
   });

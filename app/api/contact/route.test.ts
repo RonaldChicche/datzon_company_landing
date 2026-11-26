@@ -69,10 +69,89 @@ describe("POST /api/contact", () => {
   it("body no-JSON → 400", async () => {
     const req = new NextRequest("http://localhost/api/contact", {
       method: "POST",
-      headers: { "x-forwarded-for": "10.9.9.9" },
+      headers: { "content-type": "application/json", "x-forwarded-for": "10.9.9.9" },
       body: "esto no es json",
     });
     expect((await POST(req)).status).toBe(400);
+  });
+
+  // Un text/plain es una petición "simple": el navegador la manda desde
+  // cualquier web sin preflight CORS. Exigir JSON obliga al preflight, que
+  // falla porque esta ruta no responde con cabeceras CORS.
+  it("Content-Type distinto de JSON → 415 y cero inserts", async () => {
+    const req = new NextRequest("http://localhost/api/contact", {
+      method: "POST",
+      headers: { "content-type": "text/plain", "x-forwarded-for": "10.9.9.10" },
+      body: JSON.stringify(leadValido),
+    });
+    expect((await POST(req)).status).toBe(415);
+    expect(insertMock).not.toHaveBeenCalled();
+  });
+
+  it("Content-Type ausente → 415", async () => {
+    const req = new NextRequest("http://localhost/api/contact", {
+      method: "POST",
+      headers: { "x-forwarded-for": "10.9.9.11" },
+      body: JSON.stringify(leadValido),
+    });
+    expect((await POST(req)).status).toBe(415);
+  });
+
+  it("acepta application/json con charset", async () => {
+    const req = new NextRequest("http://localhost/api/contact", {
+      method: "POST",
+      headers: { "content-type": "application/json; charset=utf-8", "x-forwarded-for": "10.9.9.12" },
+      body: JSON.stringify(leadValido),
+    });
+    expect((await POST(req)).status).toBe(200);
+  });
+
+  it("Origin de otro sitio → 403 y cero inserts", async () => {
+    const req = new NextRequest("http://localhost/api/contact", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        origin: "https://sitio-ajeno.example",
+        "x-forwarded-for": "10.9.9.13",
+      },
+      body: JSON.stringify(leadValido),
+    });
+    expect((await POST(req)).status).toBe(403);
+    expect(insertMock).not.toHaveBeenCalled();
+  });
+
+  it("Origin del mismo sitio → 200", async () => {
+    const req = new NextRequest("http://localhost/api/contact", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        origin: "http://localhost",
+        "x-forwarded-for": "10.9.9.14",
+      },
+      body: JSON.stringify(leadValido),
+    });
+    expect((await POST(req)).status).toBe(200);
+  });
+
+  it("Origin malformado → 403", async () => {
+    const req = new NextRequest("http://localhost/api/contact", {
+      method: "POST",
+      headers: { "content-type": "application/json", origin: "null", "x-forwarded-for": "10.9.9.15" },
+      body: JSON.stringify(leadValido),
+    });
+    expect((await POST(req)).status).toBe(403);
+  });
+
+  it("nombre con salto de línea → 422, sin insert ni email", async () => {
+    const res = await POST(requestWith({ ...leadValido, nombre: "Ana\r\nBcc: x@ejemplo.com" }));
+    expect(res.status).toBe(422);
+    expect(insertMock).not.toHaveBeenCalled();
+    expect(sendMock).not.toHaveBeenCalled();
+  });
+
+  it("el asunto del email nunca contiene CR ni LF", async () => {
+    await POST(requestWith({ ...leadValido }));
+    expect(sendMock.mock.calls[0][0].subject).not.toMatch(/[\r\n]/);
   });
 
   it("email inválido → 422 y cero inserts", async () => {
