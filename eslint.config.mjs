@@ -12,6 +12,11 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Salidas locales de herramientas, sin versionar (ver .gitignore).
+    ".playwright-mcp/**",
+    ".design-sync/**",
+    ".ds-sync/**",
+    "ds-bundle/**",
   ]),
   {
     rules: {

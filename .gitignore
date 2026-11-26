@@ -48,3 +48,16 @@ graphify-out/
 
 # scratch del proceso de desarrollo asistido (ledger, briefs, reportes)
 .superpowers/
+
+# credenciales que nunca deben versionarse (además de *.pem y .env*)
+*.key
+*.p12
+*.pfx
+credentials*.json
+service-account*.json
+
+# salidas locales de herramientas (navegador de pruebas y sincronización de diseño)
+.playwright-mcp/
+.design-sync/
+.ds-sync/
+ds-bundle/
