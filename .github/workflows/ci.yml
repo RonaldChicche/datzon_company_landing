@@ -6,17 +6,28 @@ on:
   pull_request:
     branches: [main]
 
+# El job solo lee el repositorio. Sin esto, el token de GitHub del job recibe
+# los permisos por defecto de la organización, que pueden incluir escritura.
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: pnpm/action-setup@v4
+      # Acciones fijadas por SHA de commit: un tag como v4 lo puede mover quien
+      # controle la acción; un SHA no. El comentario dice a qué versión equivale.
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
-          version: 10
+          # No dejar el token guardado en .git/config para los pasos siguientes.
+          persist-credentials: false
 
-      - uses: actions/setup-node@v4
+      - uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+        with:
+          # Versión exacta: el formato del lockfile depende de la versión de pnpm.
+          version: 10.34.9
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           # supabase-js 2.110 exige Node >= 22 (WebSocket nativo); ver engines en package.json
           node-version: 22
@@ -28,15 +39,18 @@ jobs:
       - name: Type check
         run: pnpm exec tsc --noEmit
 
+      - name: Lint
+        run: pnpm lint
+
       - name: Tests
         run: pnpm test
 
+      # Sin secretos: RESEND_API_KEY, CONTACT_EMAIL y las claves de Supabase se
+      # leen por petición en los Route Handlers, nunca al compilar.
       - name: Build
         run: pnpm build
-        env:
-          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
-          CONTACT_EMAIL: ${{ secrets.CONTACT_EMAIL }}
 
+      # Bloqueante: un aviso alto o crítico hace fallar CI. Antes tenía
+      # continue-on-error y así pasaron inadvertidos los RCE de Next 16.2.6.
       - name: Audit
-        run: pnpm audit --audit-level=moderate
-        continue-on-error: true
+        run: pnpm audit --audit-level=high
