@@ -2,9 +2,13 @@
  * Sube los assets de /robotica al bucket "landing" en Supabase Storage,
  * bajo site/robotica/.
  *
- * Uso: pnpm tsx scripts/upload-robotica-assets.ts
+ * Uso: pnpm tsx scripts/upload-robotica-assets.ts [carpeta]
  *
- * Staging esperado en /tmp/robotica-assets/:
+ * Staging por defecto en scripts/robotica-assets/ (ignorada por git). Antes
+ * era /tmp/robotica-assets, una ruta compartida que cualquier cuenta de la
+ * máquina podía crear primero y llenar de enlaces simbólicos: el script los
+ * seguía y publicaba sus destinos en el bucket público. Ver
+ * scripts/lib/staging.ts. Contenido esperado:
  *   paletizado.mp4, soldadura.mp4, servicio.mp4
  *   paletizado-poster.jpg, soldadura-poster.jpg, servicio-poster.jpg
  *   apps/{paletizado,soldadura,pick-place,pintura,manipulacion,inspeccion,
@@ -18,9 +22,10 @@
  */
 
 import { createClient } from "@supabase/supabase-js";
-import { readdirSync, readFileSync, statSync } from "node:fs";
-import { join } from "node:path";
+import { existsSync, readFileSync, statSync } from "node:fs";
+import { join, resolve } from "node:path";
 import { assertDatzonProject } from "@/lib/supabase/project";
+import { assertPrivateDir, listStagedFiles } from "./lib/staging";
 
 // ── Cargar .env.local (Node 20.12+ nativo, mismo patrón que optimize-upload.ts) ──
 try {
@@ -55,7 +60,9 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
 });
 
 const BUCKET = "landing";
-const STAGING = "/tmp/robotica-assets";
+const STAGING = resolve(process.argv[2] ?? "scripts/robotica-assets");
+/** Solo lo que /robotica usa: vídeos y pósters/miniaturas. */
+const EXTENSIONES = [".mp4", ".jpg"];
 
 const contentType = (f: string) =>
   f.endsWith(".mp4")
@@ -74,13 +81,17 @@ async function subir(local: string, remoto: string): Promise<void> {
 }
 
 async function main(): Promise<void> {
-  for (const f of readdirSync(STAGING)) {
-    if (f === "apps") continue;
-    if (!statSync(join(STAGING, f)).isFile()) continue;
+  // upsert: true es intencional: al re-renderizar una demo se reemplaza el
+  // vídeo publicado. Es seguro porque la carpeta es propia y no admite enlaces.
+  assertPrivateDir(STAGING);
+  for (const f of listStagedFiles(STAGING, EXTENSIONES)) {
     await subir(join(STAGING, f), `site/robotica/${f}`);
   }
-  for (const f of readdirSync(join(STAGING, "apps"))) {
-    await subir(join(STAGING, "apps", f), `site/robotica/apps/${f}`);
+  const apps = join(STAGING, "apps");
+  if (!existsSync(apps)) return;
+  assertPrivateDir(apps);
+  for (const f of listStagedFiles(apps, EXTENSIONES)) {
+    await subir(join(apps, f), `site/robotica/apps/${f}`);
   }
 }
 
