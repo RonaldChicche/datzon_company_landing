@@ -19,6 +19,7 @@ export default function Footer() {
               width={614}
               height={120}
               className="h-[26px] w-auto mb-[18px]"
+              unoptimized
             />
             <p>
               Ingeniería industrial de extremo a extremo.

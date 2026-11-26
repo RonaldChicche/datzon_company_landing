@@ -53,6 +53,9 @@ export default function Header() {
             height={120}
             className="h-7 w-auto"
             priority
+            // Un SVG no se rasteriza: optimizarlo no aporta nada y obligaba a
+            // dejar dangerouslyAllowSVG activo en next.config.ts.
+            unoptimized
           />
         </Link>
 

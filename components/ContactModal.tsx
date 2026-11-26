@@ -265,7 +265,12 @@ export default function ContactModal({ isOpen, onClose }: ContactModalProps) {
 
                   <p className="text-[10px] text-center text-white/30 font-mono mt-2">
                     Al enviar aceptas nuestra{" "}
-                    <Link href="/politica-privacidad" className="text-primary-container hover:underline" target="_blank">
+                    <Link
+                      href="/politica-privacidad"
+                      className="text-primary-container hover:underline"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
                       Política de Privacidad
                     </Link>
                   </p>

@@ -41,6 +41,10 @@ export default function YouTubeFacade({ videoId, poster, title, playLabel }: You
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen
           referrerPolicy="strict-origin-when-cross-origin"
+          // Defensa en profundidad: el reproductor solo necesita sus scripts,
+          // su propio origen, pantalla completa y abrir youtube.com en otra
+          // pestaña. Sin allow-top-navigation no puede redirigir esta página.
+          sandbox="allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox"
         />
       ) : (
         <button
